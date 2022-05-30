@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="ZoomAndPanSample.ZoomAndPanScrollViewerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ZoomAndPanSample"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:zoomAndPan="clr-namespace:ZoomAndPan;assembly=ZoomAndPan"
+             d:DesignHeight="400"
+             d:DesignWidth="800"
+             FocusManager.FocusedElement="{Binding ElementName=ZoomAndPanControl}"
+             mc:Ignorable="d">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Minus" Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomOutCommand}" />
+        <KeyBinding Key="Subtract" Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomOutCommand}" />
+        <KeyBinding Key="Add" Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomInCommand}" />
+        <KeyBinding Key="OemPlus" Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomInCommand}" />
+        <KeyBinding Key="Back" Command="{Binding ElementName=ZoomAndPanControl, Path=UndoZoomCommand}" />
+        <KeyBinding Command="{Binding ElementName=ZoomAndPanControl, Path=UndoZoomCommand}" Gesture="CTRL+Z" />
+        <KeyBinding Command="{Binding ElementName=ZoomAndPanControl, Path=RedoZoomCommand}" Gesture="CTRL+Y" />
+        <KeyBinding Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomOutCommand}" Gesture="SHIFT+Minus" />
+        <KeyBinding Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomInCommand}" Gesture="SHIFT+OemPlus" />
+    </UserControl.InputBindings>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+            <CheckBox Name="CrosshairsCheckBox"
+                      VerticalAlignment="Center"
+                      Content="Show Crosshairs" />
+        </StackPanel>
+        <StackPanel Name="ViewBoxContent"
+                    Grid.Row="1"
+                    Margin="5,5,5,5"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <!--
+                The fit button.  Causes the content to be scaled so that it fits in the viewport.
+            -->
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=UndoZoomCommand}"
+                    Content="Undo" />
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=RedoZoomCommand}"
+                    Content="Redo" />
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=FitCommand}"
+                    Content="Fit" />
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=FillCommand}"
+                    Content="Fill" />
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomPercentCommand}"
+                    Content="100%" />
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomPercentCommand}"
+                    Content="200%">
+                <Button.CommandParameter>
+                    <system:Double>200</system:Double>
+                </Button.CommandParameter>
+            </Button>
+            <Border Width="5" />
+            <Button Width="40"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomRatioFromMinimumCommand}"
+                    Content="x 4">
+                <Button.CommandParameter>
+                    <system:Double>4</system:Double>
+                </Button.CommandParameter>
+            </Button>
+            <Border Width="5" />
+            <TextBlock Width="50"
+                       VerticalAlignment="Center"
+                       Text="{Binding ElementName=ZoomAndPanControl, Path=ViewportZoom, StringFormat=p1}"
+                       TextAlignment="Right" />
+            <Border Width="10" />
+            <!--  Button to zoom out.  -->
+            <Button Width="25"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomOutCommand}"
+                    Content="-" />
+            <Border Width="5" />
+
+            <!--  Slider to change the current zoom level.  -->
+            <Slider Width="120"
+                    LargeChange="20"
+                    Maximum="{Binding ElementName=ZoomAndPanControl, Path=ZoomAndPanContent.MaximumZoom, Converter={zoomAndPan:ZoomAdjustConverter}}"
+                    Minimum="{Binding ElementName=ZoomAndPanControl, Path=ZoomAndPanContent.MinimumZoomClamped, Converter={zoomAndPan:ZoomAdjustConverter}}"
+                    Value="{Binding ElementName=ZoomAndPanControl, Path=ViewportZoom, Converter={zoomAndPan:ZoomAdjustConverter}}"
+                    SmallChange=".1"
+                    TickFrequency="10"
+                    TickPlacement="TopLeft" />
+
+            <Border Width="5" />
+            <!--
+                Button to zoom in.
+            -->
+            <Button Width="25"
+                    Command="{Binding ElementName=ZoomAndPanControl, Path=ZoomInCommand}"
+                    Content="+" />
+            <Border Width="5" />
+        </StackPanel>
+
+
+        <!--
+            This is the way to use the ZoomAndPanControl directly
+            
+            Wrap the ZoomAndPanControl in a ScrollViewer.
+            When the scaled content that is displayed in ZoomAndPanControl is larger than the viewport onto the content
+            ScrollViewer's scrollbars can be used to manipulate the offset of the viewport.
+        -->
+
+        <!--
+            This is the control wraps the ZoomAndPanControl in a ScrollViewer
+        -->
+        <ScrollViewer x:Name="scroller"
+                      Grid.Row="0"
+                      CanContentScroll="True"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
+
+            <!--
+                This is the control that handles zooming and panning.
+            -->
+
+            <zoomAndPan:ZoomAndPanControl Name="ZoomAndPanControl"
+                                          Background="#AACCCCCC"
+                                          MinimumZoomType="FitScreen"
+                                          UseAnimations="{Binding ElementName=AnimationsCheckBox, Path=IsChecked}"
+                                          ZoomAndPanInitialPosition="FillScreen">
+                <!--
+                    This is the content that is displayed.
+                -->
+                <Grid x:Name="theGrid">
+                    <!--
+                        This Canvas is the main part of the content that is displayed.
+                    -->
+                    <!--<local:ImageColorPicker x:Name="actualContent"
+                                            Scale="{Binding ElementName=ZoomAndPanControl, Path=ViewportZoom}"
+                                            Source="Colors.jpg" />-->
+                    <Canvas x:Name="actualContent"
+                            Width="2000"
+                            Height="2000"
+                            Background="White">
+
+                        <!--
+                            Add some rectangles that the user can drag about.
+                        -->
+
+                        <Rectangle Canvas.Left="50"
+                                   Canvas.Top="50"
+                                   Width="80"
+                                   Height="150"
+                                   Fill="Blue"
+                                   Cursor="Hand"
+                                   MouseDown="Rectangle_MouseDown"
+                                   MouseMove="Rectangle_MouseMove"
+                                   MouseUp="Rectangle_MouseUp" />
+                        <Rectangle Canvas.Left="550"
+                                   Canvas.Top="350"
+                                   Width="80"
+                                   Height="150"
+                                   Fill="Green"
+                                   Cursor="Hand"
+                                   MouseDown="Rectangle_MouseDown"
+                                   MouseMove="Rectangle_MouseMove"
+                                   MouseUp="Rectangle_MouseUp" />
+                        <Rectangle Canvas.Left="850"
+                                   Canvas.Top="850"
+                                   Width="30"
+                                   Height="20"
+                                   Fill="Purple"
+                                   Cursor="Hand"
+                                   MouseDown="Rectangle_MouseDown"
+                                   MouseMove="Rectangle_MouseMove"
+                                   MouseUp="Rectangle_MouseUp" />
+                        <Rectangle Canvas.Left="1850"
+                                   Canvas.Top="1850"
+                                   Width="80"
+                                   Height="150"
+                                   Fill="Red"
+                                   Cursor="Hand"
+                                   MouseDown="Rectangle_MouseDown"
+                                   MouseMove="Rectangle_MouseMove"
+                                   MouseUp="Rectangle_MouseUp" />
+                    </Canvas>
+                    <local:CenteredCrossHairCanvas HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Stretch"
+                                                   StrokeThickness="2"
+                                                   Opacity=".5"
+                                                   Scale="{Binding ElementName=ZoomAndPanControl, Path=ViewportZoom, Mode=TwoWay}"
+                                                   Show="{Binding ElementName=CrosshairsCheckBox, Path=IsChecked}"
+                                                   StrokeBrush="Green" />
+                </Grid>
+            </zoomAndPan:ZoomAndPanControl>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2"
+                    Margin="10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+            <TextBlock FontWeight="Bold" Text="Mouse Position" />
+            <TextBlock Margin="10,0" Text="{Binding ElementName=ZoomAndPanControl, Path=MousePosition.X, StringFormat=X: {0:F0}}" />
+            <TextBlock Margin="10,0" Text="{Binding ElementName=ZoomAndPanControl, Path=MousePosition.Y, StringFormat=Y: {0:F0}}" />
+        </StackPanel>
+        <CheckBox Name="AnimationsCheckBox"
+                  Grid.Row="2"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Bottom"
+                  Content="Use Animations"
+                  IsChecked="True" />
+        <zoomAndPan:ZoomAndPanViewBox Grid.Row="2"
+                                      Width="100"
+                                      Height="100"
+                                      Background="#AACCCCCC"
+                                      DataContext="{Binding ElementName=ZoomAndPanControl}"
+                                      Visual="{Binding ElementName=actualContent}" />
+    </Grid>
+</UserControl>
