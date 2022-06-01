@@ -61,13 +61,14 @@ namespace Maps
                         args = new object[] { zoom, i, j };
 
                     query = string.Format("https://static.xam.nu/dayz/maps/livonia/1.17-1/topographic/{0}/{1}/{2}.jpg", args);
+                    
                     //TODO: replace WebClient on HttpClient
                     bytes = new WebClient().DownloadData(query);
 
-                    //nameFile = string.Format("LivoniaTerrain({0}.{1}.{2}).jpg", zoom, i, j);
-                    //pathToFile = Path.Combine(pathToileFolder, nameFile);
-                    //File.WriteAllBytes(pathToFile, bytes);
-                    //Console.WriteLine(nameFile);
+                    nameFile = string.Format("LivoniaTerrain({0}.{1}.{2}).jpg", zoom, i, j);
+                    pathToFile = Path.Combine(pathToileFolder, nameFile);
+                    File.WriteAllBytes(pathToFile, bytes);
+                    Console.WriteLine(nameFile);
                 }
             }
         }
