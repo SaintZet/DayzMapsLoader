@@ -1,0 +1,11 @@
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\bin\Debug\ZoomAndPan.dll
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\bin\Debug\ZoomAndPan.pdb
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan.csproj.AssemblyReference.cache
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan_MarkupCompile.cache
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan_MarkupCompile.lref
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\Themes\Generic.baml
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan.g.resources
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan.csproj.CoreCompileInputs.cache
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan.dll
+C:\Users\repos\SurviveRunner\SaintZet\SurviveRunner\AdvancedZoomAndPanSample\ZoomAndPan\obj\Debug\ZoomAndPan.pdb

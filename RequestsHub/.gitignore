@@ -12,6 +12,7 @@
 *.editorconfig
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+.vs/
 
 # Mono auto generated files
 mono_crash.*
