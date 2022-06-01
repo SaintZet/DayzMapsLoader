@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DayZona": {
+      "commandName": "Project",
+      "commandLineArgs": "GetImages dayzona livonia -zoom:7"
+    }
+  }
+}
