@@ -1,25 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
 namespace RequestsHub
 {
-    interface IPictureResizer
+    internal interface IPictureResizer
     {
-        Bitmap Resize(Image image, int width, int height);
         Graphics GraphicsSettings(Graphics graphics);
-        
+
+        Bitmap Resize(Image image, int width, int height);
     }
 
     internal class PictureResizer : IPictureResizer
     {
         private Bitmap resizedPicture;
 
+        public Graphics GraphicsSettings(Graphics graphics)
+        {
+            graphics.CompositingMode = CompositingMode.SourceCopy;
+            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            return graphics;
+        }
 
         Bitmap IPictureResizer.Resize(Image image, int width, int height)
         {
@@ -41,18 +46,5 @@ namespace RequestsHub
 
             return resizedPicture;
         }
-        public Graphics GraphicsSettings(Graphics graphics)
-        {
-            graphics.CompositingMode = CompositingMode.SourceCopy;
-            graphics.CompositingQuality = CompositingQuality.HighQuality;
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            graphics.SmoothingMode = SmoothingMode.HighQuality;
-            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            return graphics;
-        }
     }
-
-
-    }
-
+}

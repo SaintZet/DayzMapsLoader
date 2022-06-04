@@ -7,8 +7,8 @@ namespace RequestsHub
     {
         public static void Main(string[] args)
         {
-            var MP = new MergePictures();
-            MP.GetFullMap(18000, 18000);
+            //var MP = new MergePictures();
+            //MP.GetFullMap(18000, 18000);
             if (args.Length < 3 && args.Length != 1)
             {
                 Console.WriteLine("Invalid args. Use 'help' or '-h' please.");

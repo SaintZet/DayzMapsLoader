@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RequestsHub
+﻿namespace RequestsHub
 {
-    interface IMergePictureWorkingAnimation
+    internal interface IMergePictureWorkingAnimation
     {
         void Spin(string DirectoryName);
     }
+
     internal class MergePictureWorkingAnimation : IMergePictureWorkingAnimation
     {
-        int counter;
-        const int LastFileCount = 128;
+        private const int LastFileCount = 128;
+        private int counter;
 
         public MergePictureWorkingAnimation()
         {
             counter = 0;
         }
+
         public void Spin(string DirectoryName)
         {
             counter++;
-            
+
             if (counter == LastFileCount)
             {
                 Console.WriteLine($"{DirectoryName} - done!");
