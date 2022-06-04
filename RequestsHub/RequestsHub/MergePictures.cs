@@ -7,50 +7,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DayZona
+namespace RequestsHub
 {
     internal class MergePictures
     {
-        public Image[][] GetPicturesFromFolder()
+        public void GetFullMap(int xLength = 12000, int yLength = 12000)
         {
-            //List<Image> images = new List<Image>();
+            const string directoryPath = @"D:\LivoniaMap\";
+            const string finalPath = @"C:/Users/repos/SurviveRunner/SaintZet/SurviveRunner/AdvancedZoomAndPanSample/LivoniaMap.jpg";
+            IPictureResizer pictureResizer;
+            IMergePictureWorkingAnimation workingAnimation;
 
-            Image[][] images = null;
+            DirectoryInfo folderDir = new DirectoryInfo(directoryPath);
 
-            DirectoryInfo folderDir = new DirectoryInfo(@"D:\LivoniaMap\");
-
-            List<DirectoryInfo> targetDirectories = folderDir.GetDirectories().ToList();
-            List<string> targetDirectoriesName = targetDirectories.Select(d => d.FullName).OrderBy(s=>s.Length).ThenBy(s=>s).ToList<string>();
+            List<string> targetDirectoriesName = folderDir.GetDirectories()
+                                                            .Select(d => d.FullName)
+                                                            .OrderBy(s=>s.Length)
+                                                            .ThenBy(s=>s)
+                                                            .ToList<string>();
          
-            using (Bitmap bit = new Bitmap(30000, 23622, PixelFormat.Format24bppRgb))
+            using (Bitmap bitmap = new Bitmap(xLength, yLength, PixelFormat.Format24bppRgb))
             {
-                using (Graphics g = Graphics.FromImage(bit))
+                using (Graphics graphic = Graphics.FromImage(bitmap))
                 {
                     int x, y = 0;
-                    foreach(var directoryString in targetDirectoriesName)
+                    foreach(string currentDirectoryName in targetDirectoriesName)
                     {
-                        x = 0;
-                        DirectoryInfo directory = new DirectoryInfo(directoryString); 
-                        foreach (var pictureFullName in directory.GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s))
+                        x = 0; 
+                        workingAnimation = new MergePictureWorkingAnimation();
+                        foreach (string pictureFullName in GetMapPieces(currentDirectoryName))
                         {
-                            Image resizedImage = ResizeImage(Image.FromFile(pictureFullName), 234, 186);
-                            g.DrawImage(resizedImage
-                                        , x == 0 ? 0 : x * 234
-                                        , y == 0 ? 0 : y * 186);
-                            Console.WriteLine(pictureFullName + " was placed on " + x * 234 + ", " + y * 186);
-                            x++;
+                           
+                            workingAnimation.Spin(currentDirectoryName);
+
+                            pictureResizer = new PictureResizer();
+                            Image resizedImage = pictureResizer.Resize(Image.FromFile(pictureFullName), (xLength / 128), (yLength / 128));
+                            
+                            graphic.DrawImage(resizedImage
+                                        , x == 0 ? 0 : x * (xLength/128)
+                                        , y == 0 ? 0 : y * (yLength/128));
+                             x++;
                         }
                         y++;
                     }
-                    g.Save();
+                    graphic.Save();
                 }
-                bit.Save(@"D:/testmerge.jpeg", ImageFormat.Jpeg);
+                bitmap.Save(finalPath, ImageFormat.Jpeg);
             }
-
-
-                return images;
         }
-        public static Bitmap ResizeImage(Image image, int width, int height)
+        
+        private IEnumerable<string> GetMapPieces(string currentDirectoryName)
+        {
+            DirectoryInfo directory = new DirectoryInfo(currentDirectoryName);
+
+            return directory.GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s);
+        }
+
+        private Bitmap ResizeImage(Image image, int width, int height)
         {
             Rectangle destRect = new Rectangle(0, 0, width, height);
             Bitmap destImage = new Bitmap(width, height);
