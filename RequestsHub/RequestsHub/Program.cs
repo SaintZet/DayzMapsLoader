@@ -3,12 +3,24 @@ using RequestsHub.Damain;
 
 namespace RequestsHub
 {
+    public struct Args
+    {
+        public Direction Direction { get; set; }
+        public NameMap NameMap { get; set; }
+        public NameOfService NameOfService { get; set; }
+        public string PathToSave { get; set; }
+        public TypeMap TypeMap { get; set; }
+        public int Zoom { get; set; }
+    }
+
     public static class Program
     {
+        public static bool IsNumeric(string value) => value.All(char.IsNumber);
+
         public static void Main(string[] args)
         {
-            //var MP = new MergePictures();
-            //MP.GetFullMap(18000, 18000);
+            var MP = new MergePictures();
+            MP.GetFullMap(17000, 17000, @"D:\LivoniaMap", @"D:\");
             if (args.Length < 3 && args.Length != 1)
             {
                 Console.WriteLine("Invalid args. Use 'help' or '-h' please.");
@@ -21,6 +33,23 @@ namespace RequestsHub
             }
 
             MarshallerArgs(args);
+        }
+
+        private static void GetImages(ref Args args)
+        {
+            switch (args.NameMap)
+            {
+                case NameMap.livonia:
+                    ImageRetrieve livonia = new ImageRetrieve(args.NameOfService, args.NameMap, args.TypeMap);
+                    livonia.GetImages(args.PathToSave, args.Direction, args.Zoom);
+                    break;
+
+                case NameMap.chernorus:
+                    throw new NotImplementedException();
+
+                default:
+                    break;
+            }
         }
 
         private static void MarshallerArgs(string[] args)
@@ -89,34 +118,5 @@ namespace RequestsHub
                 Console.WriteLine("Invalid args. Use 'help' or '-h' please.");
             }
         }
-
-        private static void GetImages(ref Args args)
-        {
-            switch (args.NameMap)
-            {
-                case NameMap.livonia:
-                    ImageRetrieve livonia = new ImageRetrieve(args.NameOfService, args.NameMap, args.TypeMap);
-                    livonia.GetImages(args.PathToSave, args.Direction, args.Zoom);
-                    break;
-
-                case NameMap.chernorus:
-                    throw new NotImplementedException();
-
-                default:
-                    break;
-            }
-        }
-
-        public static bool IsNumeric(string value) => value.All(char.IsNumber);
-    }
-
-    public struct Args
-    {
-        public NameOfService NameOfService { get; set; }
-        public NameMap NameMap { get; set; }
-        public string PathToSave { get; set; }
-        public TypeMap TypeMap { get; set; }
-        public Direction Direction { get; set; }
-        public int Zoom { get; set; }
     }
 }

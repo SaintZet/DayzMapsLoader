@@ -1,11 +1,6 @@
 ﻿namespace RequestsHub
 {
-    internal interface IMergePictureWorkingAnimation
-    {
-        void Spin(string DirectoryName);
-    }
-
-    internal class MergePictureWorkingAnimation : IMergePictureWorkingAnimation
+    internal class MergePictureWorkingAnimation
     {
         private const int LastFileCount = 128;
         private int counter;
