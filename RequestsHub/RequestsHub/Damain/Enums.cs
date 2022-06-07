@@ -1,15 +1,19 @@
-﻿namespace RequestsHub.Damain
+﻿namespace RequestsHub.Domain
 {
-    public enum NameOfService
+    public enum MapsProvider
     {
         dayzona,
-        izurvive,
+        ginfo,
     }
 
     public enum NameMap
     {
-        livonia,
         chernorus,
+        livonia,
+        namalsk,
+        esseker,
+        takistan,
+        banov
     }
 
     public enum TypeMap

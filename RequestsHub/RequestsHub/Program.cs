@@ -1,5 +1,6 @@
-﻿using DayZona.Helpers;
-using RequestsHub.Damain;
+﻿using RequestsHub.Damain;
+using RequestsHub.Damain.Services;
+using RequestsHub.Domain;
 
 namespace RequestsHub
 {
@@ -79,7 +80,7 @@ namespace RequestsHub
         {
             try
             {
-                argsStructure.NameOfService = (NameOfService)Enum.Parse(typeof(NameOfService), args[1]);
+                argsStructure.NameOfService = (MapsProvider)Enum.Parse(typeof(MapsProvider), args[1]);
                 argsStructure.NameMap = (NameMap)Enum.Parse(typeof(NameMap), args[2]);
             }
             catch (Exception)
@@ -110,7 +111,7 @@ namespace RequestsHub
 
     public struct Args
     {
-        public NameOfService NameOfService { get; set; }
+        public MapsProvider NameOfService { get; set; }
         public NameMap NameMap { get; set; }
         public string PathToSave { get; set; }
         public TypeMap TypeMap { get; set; }

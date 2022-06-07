@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DayZona.Helpers
+namespace RequestsHub.Damain.Services
 {
     internal static class DocumentationManager
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DayZona
+namespace RequestsHub.Damain.Services
 {
     internal class MergePictures
     {
@@ -20,17 +20,17 @@ namespace DayZona
             DirectoryInfo folderDir = new DirectoryInfo(@"D:\LivoniaMap\");
 
             List<DirectoryInfo> targetDirectories = folderDir.GetDirectories().ToList();
-            List<string> targetDirectoriesName = targetDirectories.Select(d => d.FullName).OrderBy(s=>s.Length).ThenBy(s=>s).ToList<string>();
-         
+            List<string> targetDirectoriesName = targetDirectories.Select(d => d.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
+
             using (Bitmap bit = new Bitmap(30000, 23622, PixelFormat.Format24bppRgb))
             {
                 using (Graphics g = Graphics.FromImage(bit))
                 {
                     int x, y = 0;
-                    foreach(var directoryString in targetDirectoriesName)
+                    foreach (var directoryString in targetDirectoriesName)
                     {
                         x = 0;
-                        DirectoryInfo directory = new DirectoryInfo(directoryString); 
+                        DirectoryInfo directory = new DirectoryInfo(directoryString);
                         foreach (var pictureFullName in directory.GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s))
                         {
                             Image resizedImage = ResizeImage(Image.FromFile(pictureFullName), 234, 186);
@@ -48,7 +48,7 @@ namespace DayZona
             }
 
 
-                return images;
+            return images;
         }
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
@@ -74,6 +74,6 @@ namespace DayZona
 
             return destImage;
         }
-        
+
     }
 }

@@ -1,6 +1,7 @@
-﻿using System.Net;
+﻿using RequestsHub.Domain;
+using System.Net;
 
-namespace RequestsHub.Damain
+namespace RequestsHub.Damain.Services
 {
     public class ImageRetrieve
     {
@@ -12,24 +13,24 @@ namespace RequestsHub.Damain
         private string nameOfService;
         private string typeMap;
 
-        public ImageRetrieve(NameOfService nameOfService, NameMap nameMap, TypeMap typeMap)
+        public ImageRetrieve(MapsProvider nameOfService, NameMap nameMap, TypeMap typeMap)
         {
             this.nameMap = Enum.GetName(typeof(NameMap), nameMap).ToLower();
-            this.nameOfService = Enum.GetName(typeof(NameOfService), nameOfService).ToLower();
+            this.nameOfService = Enum.GetName(typeof(MapsProvider), nameOfService).ToLower();
             this.typeMap = Enum.GetName(typeof(TypeMap), typeMap).ToLower();
 
             mainQuery = BildQuery(nameOfService);
         }
 
-        private string BildQuery(NameOfService nameOfService)
+        private string BildQuery(MapsProvider nameOfService)
         {
             switch (nameOfService)
             {
                 //if we have to much code in this place - make Interface and implemented class for services
-                case NameOfService.dayzona:
+                case MapsProvider.dayzona:
                     return $"https://static.xam.nu/dayz/maps/{nameMap}/1.17-1/{typeMap}";
 
-                case NameOfService.izurvive:
+                case MapsProvider.ginfo:
                 default:
                     break;
             }
