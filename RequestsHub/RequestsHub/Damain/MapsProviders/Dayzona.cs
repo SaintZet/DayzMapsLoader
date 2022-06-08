@@ -1,4 +1,5 @@
 ﻿using RequestsHub.Domain.Contracts;
+using RequestsHub.Domain.DataTypes;
 using RequestsHub.Domain.Maps;
 
 namespace RequestsHub.Domain.MapsProviders
@@ -11,15 +12,11 @@ namespace RequestsHub.Domain.MapsProviders
         {
             Chernorus chernorus = new Chernorus
             {
-                Height = 128,
-                Width = 128,
                 Version = "1.18",
             };
 
             Livonia livonia = new Livonia
             {
-                Height = 128,
-                Width = 128,
                 Version = "1.18",
             };
 
@@ -38,7 +35,7 @@ namespace RequestsHub.Domain.MapsProviders
             throw new NotImplementedException();
         }
 
-        public void SaveImages(TypeMap typeMap, NameMap nameMap, int zoom, string pathToSaveImages)
+        public void SaveImages(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RequestsHub.Domain.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace RequestsHub.Domain.Contracts
 
         public void SaveImage(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImage);
 
-        public void SaveImages(TypeMap typeMap, NameMap nameMap, int zoom, string pathToSaveImages);
+        public void SaveImages(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages);
     }
 }

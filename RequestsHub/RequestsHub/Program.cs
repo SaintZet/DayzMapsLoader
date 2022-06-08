@@ -1,6 +1,5 @@
-﻿using RequestsHub.Damain;
-using RequestsHub.Damain.Services;
-using RequestsHub.Domain;
+﻿using RequestsHub.Damain.Services;
+using RequestsHub.Domain.DataTypes;
 
 namespace RequestsHub
 {

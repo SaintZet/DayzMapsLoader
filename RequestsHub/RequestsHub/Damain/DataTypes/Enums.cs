@@ -1,5 +1,11 @@
-﻿namespace RequestsHub.Domain
+﻿namespace RequestsHub.Domain.DataTypes
 {
+    public enum Direction
+    {
+        horizontal,
+        vertical,
+    }
+
     public enum MapsProvider
     {
         dayzona,
@@ -21,11 +27,5 @@
         topographic,
         satellite,
         tourist
-    }
-
-    public enum Direction
-    {
-        horizontal,
-        vertical,
     }
 }

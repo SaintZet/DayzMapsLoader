@@ -1,13 +1,15 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Damain.DataTypes;
+using RequestsHub.Domain.Contracts;
+using RequestsHub.Domain.DataTypes;
 
 namespace RequestsHub.Domain.Maps
 {
     internal class Takistan : IMap
     {
-        public Takistan(int height, int width, string version)
+        public Takistan(Dictionary<int, MapSize> keyValuePairsSize, List<TypeMap> typesMap, string version)
         {
-            Height = height;
-            Width = width;
+            KeyValuePairsSize = keyValuePairsSize;
+            TypesMap = typesMap;
             Version = version;
         }
 
@@ -15,10 +17,9 @@ namespace RequestsHub.Domain.Maps
         {
         }
 
+        public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
         public NameMap Name => NameMap.takistan;
-        public TypeMap Type { get; set; }
-        public int Height { get; set; }
-        public int Width { get; set; }
-        public string Version { get; set; } = null!;
+        public List<TypeMap> TypesMap { get; set; }
+        public string Version { get; set; }
     }
 }

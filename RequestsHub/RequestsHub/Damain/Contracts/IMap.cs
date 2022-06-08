@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RequestsHub.Damain.DataTypes;
+using RequestsHub.Domain.DataTypes;
 
 namespace RequestsHub.Domain.Contracts
 {
     internal interface IMap
     {
+        Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
         NameMap Name { get; }
-        int Height { get; set; }
-        int Width { get; set; }
+        List<TypeMap> TypesMap { get; set; }
         string Version { get; set; }
     }
 }

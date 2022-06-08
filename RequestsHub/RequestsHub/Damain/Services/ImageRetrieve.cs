@@ -1,4 +1,4 @@
-﻿using RequestsHub.Domain;
+﻿using RequestsHub.Domain.DataTypes;
 using System.Net;
 
 namespace RequestsHub.Damain.Services

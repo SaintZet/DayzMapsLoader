@@ -1,13 +1,15 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Damain.DataTypes;
+using RequestsHub.Domain.Contracts;
+using RequestsHub.Domain.DataTypes;
 
 namespace RequestsHub.Domain.Maps
 {
     internal class Chernorus : IMap
     {
-        public Chernorus(int height, int width, string version)
+        public Chernorus(Dictionary<int, MapSize> keyValuePairsSize, List<TypeMap> typesMap, string version)
         {
-            Height = height;
-            Width = width;
+            KeyValuePairsSize = keyValuePairsSize;
+            TypesMap = typesMap;
             Version = version;
         }
 
@@ -15,9 +17,9 @@ namespace RequestsHub.Domain.Maps
         {
         }
 
-        public int Height { get; set; }
+        public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
         public NameMap Name => NameMap.chernorus;
-        public string Version { get; set; } = null!;
-        public int Width { get; set; }
+        public List<TypeMap> TypesMap { get; set; }
+        public string Version { get; set; }
     }
 }
