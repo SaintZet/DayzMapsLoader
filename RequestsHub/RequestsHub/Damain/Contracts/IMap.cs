@@ -1,5 +1,4 @@
-﻿using RequestsHub.Damain.DataTypes;
-using RequestsHub.Domain.DataTypes;
+﻿using RequestsHub.Domain.DataTypes;
 
 namespace RequestsHub.Domain.Contracts
 {

@@ -1,7 +1,7 @@
 ﻿using RequestsHub.Domain.DataTypes;
 using System.Net;
 
-namespace RequestsHub.Damain.Services
+namespace RequestsHub.Domain.Services
 {
     public class ImageRetrieve
     {

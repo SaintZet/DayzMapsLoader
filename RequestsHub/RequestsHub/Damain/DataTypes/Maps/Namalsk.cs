@@ -1,8 +1,6 @@
-﻿using RequestsHub.Damain.DataTypes;
-using RequestsHub.Domain.Contracts;
-using RequestsHub.Domain.DataTypes;
+﻿using RequestsHub.Domain.Contracts;
 
-namespace RequestsHub.Domain.Maps
+namespace RequestsHub.Domain.DataTypes.Maps
 {
     internal class Namalsk : IMap
     {

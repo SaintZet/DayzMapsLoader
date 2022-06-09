@@ -1,9 +1,4 @@
 ﻿using RequestsHub.Domain.DataTypes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RequestsHub.Domain.Contracts
 {
@@ -11,10 +6,13 @@ namespace RequestsHub.Domain.Contracts
     {
         abstract List<IMap> Maps { get; }
 
-        string QueryBuilder(NameMap nameMap, TypeMap typeMap, int zoom);
+        abstract IMapBuilder Builder { get; }
 
-        public void SaveImage(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImage);
+        public string QueryBuilder(NameMap nameMap, TypeMap typeMap, int zoom);
+        public void GetMap(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImage);
+        public void GetMapInParts(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages);
+        public void GetAllMaps(TypeMap typeMap, int zoom, string pathToSaveImages);
+        public void GetAllMapsInParts(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages);
 
-        public void SaveImages(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages);
     }
 }

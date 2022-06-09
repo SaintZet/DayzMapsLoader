@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RequestsHub.Damain.Services
+namespace RequestsHub.Domain.Services
 {
     internal class MergePictures
     {

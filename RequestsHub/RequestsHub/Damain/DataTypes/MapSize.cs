@@ -1,4 +1,4 @@
-﻿namespace RequestsHub.Damain.DataTypes
+﻿namespace RequestsHub.Domain.DataTypes
 {
     internal class MapSize
     {

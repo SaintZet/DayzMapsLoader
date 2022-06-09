@@ -1,52 +1,12 @@
-﻿using RequestsHub.Damain.DataTypes;
-using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes;
-using RequestsHub.Domain.Maps;
+using RequestsHub.Domain.DataTypes.Maps;
 
 namespace RequestsHub.Domain.MapsProviders
 {
-    internal class Ginfo : IMapProvider
+    internal class GinfoBuilder : IMapBuilder
     {
-        private List<IMap> _mapProvider;
-
-        public Ginfo()
-        {
-            Banov banov = InitializeBanov();
-            Chernorus chernorus = InitializeChernorus();
-            Esseker esseker = InitializeEsseker();
-            Livonia livonia = InitializeLivonia();
-
-            _mapProvider = new List<IMap> { chernorus, livonia };
-        }
-
-        private Esseker InitializeEsseker()
-        {
-            throw new NotImplementedException();
-        }
-
-        private Banov InitializeBanov()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IMap> Maps => _mapProvider;
-
-        public string QueryBuilder(NameMap nameMap, TypeMap typeMap, int zoom)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveImage(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImage)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveImages(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages)
-        {
-            throw new NotImplementedException();
-        }
-
-        private Chernorus InitializeChernorus()
+        public Chernorus InitializeChernorus()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
             KeyValuePairsSize.Add(0, new MapSize(1, 1));
@@ -69,7 +29,7 @@ namespace RequestsHub.Domain.MapsProviders
             };
         }
 
-        private Livonia InitializeLivonia()
+        public Livonia InitializeLivonia()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
             KeyValuePairsSize.Add(0, new MapSize(1, 1));
@@ -89,6 +49,26 @@ namespace RequestsHub.Domain.MapsProviders
                 TypesMap = typesMap,
                 Version = "1.17",
             };
+        }
+
+        public Esseker InitializeEsseker()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Banov InitializeBanov()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Namalsk InitializeNamalsk()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Takistan InitializeTakistan()
+        {
+            throw new NotImplementedException();
         }
     }
 }
