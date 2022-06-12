@@ -6,7 +6,7 @@ namespace RequestsHub.Domain.Contracts
     {
         Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
         NameMap Name { get; }
-        List<TypeMap> TypesMap { get; set; }
+        List<TypeMap> TypesMap { get; }
         string Version { get; set; }
     }
 }

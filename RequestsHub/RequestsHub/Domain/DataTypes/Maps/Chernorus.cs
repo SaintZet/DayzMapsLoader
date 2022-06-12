@@ -4,15 +4,15 @@ namespace RequestsHub.Domain.DataTypes.Maps
 {
     internal class Chernorus : IMap
     {
+        public Chernorus()
+        {
+        }
+
         public Chernorus(Dictionary<int, MapSize> keyValuePairsSize, List<TypeMap> typesMap, string version)
         {
             KeyValuePairsSize = keyValuePairsSize;
             TypesMap = typesMap;
             Version = version;
-        }
-
-        public Chernorus()
-        {
         }
 
         public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }

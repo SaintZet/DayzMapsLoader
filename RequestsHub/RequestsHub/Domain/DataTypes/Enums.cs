@@ -8,7 +8,7 @@
 
     public enum MapsProvider
     {
-        dayzona,
+        xam,
         ginfo,
     }
 
