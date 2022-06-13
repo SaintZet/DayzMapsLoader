@@ -1,6 +1,6 @@
-﻿namespace RequestsHub.Domain.DataTypes
+﻿namespace RequestsHub.Domain.Services
 {
-    internal class PathsToSave
+    internal class PathsService
     {
         private readonly string folderMap;
         private readonly string folderToSave;
@@ -9,7 +9,7 @@
         private string folderHorizontal = "Horizontal";
         private string generalFolderToSave;
 
-        public PathsToSave(string FolderToSave, string FolderMap, string FolderType, string FolderZoom)
+        public PathsService(string FolderToSave, string FolderMap, string FolderType, string FolderZoom)
         {
             folderToSave = FolderToSave;
             folderMap = FolderMap;

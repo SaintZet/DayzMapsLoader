@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RequestsHub.Domain.Services
+namespace RequestsHub.Domain.Services.ConsoleServices
 {
-    internal static class DocumentationManager
+    internal static class Documentation
     {
         internal static StringBuilder GetDocAboutCommands()
         {

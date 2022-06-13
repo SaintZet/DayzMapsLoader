@@ -1,7 +1,8 @@
-﻿using RequestsHub.Domain.Services;
-using RequestsHub.Domain.DataTypes;
+﻿using RequestsHub.Domain.DataTypes;
 using RequestsHub.Domain.MapsProviders;
 using RequestsHub.Domain.Contracts;
+using RequestsHub.Domain.Services.ConsoleServices;
+using RequestsHub.Domain.Services;
 
 namespace RequestsHub
 {
@@ -17,7 +18,7 @@ namespace RequestsHub
 
             if (args.Length == 1 && string.Equals(args[0], "help", StringComparison.OrdinalIgnoreCase) || string.Equals(args[0], "-h", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine(DocumentationManager.GetDocAboutCommands());
+                Console.WriteLine(Documentation.GetDocAboutCommands());
             }
             SelectCommand(args[0], ValidateArgs(args));
         }
@@ -62,7 +63,7 @@ namespace RequestsHub
                 if (arg.Contains("-zoom:"))
                 {
                     string argNew = arg.Replace("-zoom:", "");
-                    if (IsNumeric(argNew))
+                    if (argNew.All(char.IsNumber))
                     {
                         argsStructure.Zoom = int.Parse(argNew);
                         continue;
@@ -82,8 +83,6 @@ namespace RequestsHub
             }
         }
 
-        private static bool IsNumeric(string value) => value.All(char.IsNumber);
-
         private static void SelectCommand(string nameCommand, ArgsFromConsole args)
         {
             IMapProvider mapProvider;
@@ -102,7 +101,7 @@ namespace RequestsHub
                     break;
             }
 
-            ImageRetrieve imageRetrieve = new(mapProvider, args);
+            ImageRetrieve imageRetrieve = new(mapProvider, args.NameMap, args.TypeMap, args.Zoom);
             switch (nameCommand)
             {
                 case "GetMap":

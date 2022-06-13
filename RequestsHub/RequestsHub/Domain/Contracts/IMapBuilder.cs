@@ -1,5 +1,6 @@
 ﻿using RequestsHub.Domain.DataTypes;
 using RequestsHub.Domain.DataTypes.Maps;
+using RequestsHub.Domain.Services.PathsService;
 
 namespace RequestsHub.Domain.Contracts
 {
@@ -17,7 +18,7 @@ namespace RequestsHub.Domain.Contracts
 
         public abstract Takistan InitializeTakistan();
 
-        public PathsToSave InitializePaths(IMap map, TypeMap typeMap, int zoom, string pathToSaveImage)
+        public PathsService InitializePaths(IMap map, TypeMap typeMap, int zoom, string pathToSaveImage)
         {
             if (pathToSaveImage == null)
             {
@@ -30,7 +31,7 @@ namespace RequestsHub.Domain.Contracts
                 throw new ArgumentException("Bad path!");
             }
 
-            return new PathsToSave(pathToSaveImage, map.Name.ToString(), typeMap.ToString(), zoom.ToString());
+            return new PathsService(pathToSaveImage, map.Name.ToString(), typeMap.ToString(), zoom.ToString());
         }
     }
 }

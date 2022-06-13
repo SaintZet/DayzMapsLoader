@@ -7,18 +7,17 @@ namespace RequestsHub.Domain.Services
     public class ImageRetrieve
     {
         private IMapProvider mapProvider;
-        private PathsToSave pathsToSave;
+        private PathsService pathsToSave;
         private int zoom;
         private string nameMap;
         private string typeMap;
 
-        internal ImageRetrieve(IMapProvider mapProvider, ArgsFromConsole args)
+        internal ImageRetrieve(IMapProvider mapProvider, NameMap nameMap, TypeMap typeMap, int zoom)
         {
             this.mapProvider = mapProvider;
-
-            nameMap = Enum.GetName(typeof(NameMap), args.NameMap).ToLower();
-            typeMap = Enum.GetName(typeof(TypeMap), args.TypeMap).ToLower();
-            zoom = args.Zoom;
+            this.nameMap = Enum.GetName(typeof(NameMap), nameMap).ToLower();
+            this.typeMap = Enum.GetName(typeof(TypeMap), typeMap).ToLower();
+            this.zoom = zoom;
 
             //TODO: Builder for paths class.
         }

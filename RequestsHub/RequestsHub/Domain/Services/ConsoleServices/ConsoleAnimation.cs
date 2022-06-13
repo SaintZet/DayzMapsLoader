@@ -1,14 +1,9 @@
-﻿namespace RequestsHub
+﻿namespace RequestsHub.Domain.Services.ConsoleServices
 {
-    internal class MergePictureWorkingAnimation
+    internal class ConsoleAnimation
     {
         private const int LastFileCount = 128;
         private int counter;
-
-        public MergePictureWorkingAnimation()
-        {
-            counter = 0;
-        }
 
         public void Spin(string DirectoryName)
         {
@@ -16,7 +11,7 @@
 
             if (counter == LastFileCount)
             {
-                Console.WriteLine($"{DirectoryName} - done!");
+                System.Console.WriteLine($"{DirectoryName} - done!");
                 return;
             }
 
