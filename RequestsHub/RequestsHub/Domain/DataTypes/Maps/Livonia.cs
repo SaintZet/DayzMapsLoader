@@ -16,8 +16,10 @@ namespace RequestsHub.Domain.DataTypes.Maps
         }
 
         public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
-        public NameMap Name => NameMap.livonia;
+        public MapName MapName => MapName.livonia;
         public List<TypeMap> TypesMap { get; set; }
         public string Version { get; set; }
+        public string MapNameForProvider { get; set; }
+        public ImageExtension MapExtension { get; set; }
     }
 }

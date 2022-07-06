@@ -6,6 +6,14 @@ namespace RequestsHub.Domain.MapsProviders
 {
     internal class GinfoBuilder : IMapBuilder
     {
+        private MapProvider mapsProviderName;
+
+        public GinfoBuilder(MapProvider parentName)
+        {
+            this.mapsProviderName = parentName;
+        }
+
+        //https://maps.izurvive.com/maps/ChernarusPlus-Top/1.0.0/tiles/8/246/255.webp
         public override Chernorus InitializeChernorus()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -24,11 +32,14 @@ namespace RequestsHub.Domain.MapsProviders
             return new Chernorus
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.webp,
+                MapNameForProvider = "ChernarusPlus",
                 TypesMap = typesMap,
                 Version = "1.0.0",
             };
         }
 
+        //https://maps.izurvive.com/maps/Livonia-Top/1.17/tiles/7/127/0.png
         public override Livonia InitializeLivonia()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -46,11 +57,14 @@ namespace RequestsHub.Domain.MapsProviders
             return new Livonia
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.png,
+                MapNameForProvider = "Livonia",
                 TypesMap = typesMap,
                 Version = "1.17",
             };
         }
 
+        //https://maps.izurvive.com/maps/Banov-Top/1.4.1/tiles/4/12/11.webp
         public override Banov InitializeBanov()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -68,11 +82,14 @@ namespace RequestsHub.Domain.MapsProviders
             return new Banov
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.webp,
+                MapNameForProvider = "Banov",
                 TypesMap = typesMap,
                 Version = "1.4.1",
             };
         }
 
+        //https://maps.izurvive.com/maps/Esseker-Top/1.1.0/tiles/4/7/7.png
         //another direction
         public override Esseker InitializeEsseker()
         {
@@ -91,11 +108,14 @@ namespace RequestsHub.Domain.MapsProviders
             return new Esseker
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.png,
+                MapNameForProvider = "Esseker",
                 TypesMap = typesMap,
                 Version = "1.1.0",
             };
         }
 
+        //https://maps.izurvive.com/maps/Namalsk-Top/0.1.0/tiles/5/19/21.png
         //another direction
         public override Namalsk InitializeNamalsk()
         {
@@ -114,11 +134,14 @@ namespace RequestsHub.Domain.MapsProviders
             return new Namalsk
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.png,
+                MapNameForProvider = "Namalsk",
                 TypesMap = typesMap,
-                Version = "1.1.0",
+                Version = "0.1.0",
             };
         }
 
+        //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/3/0/3.png
         //another direction
         public override Takistan InitializeTakistan()
         {
@@ -137,6 +160,8 @@ namespace RequestsHub.Domain.MapsProviders
             return new Takistan
             {
                 KeyValuePairsSize = KeyValuePairsSize,
+                MapExtension = ImageExtension.png,
+                MapNameForProvider = "TakistanPlus",
                 TypesMap = typesMap,
                 Version = "1.1.0",
             };

@@ -3,6 +3,7 @@ using RequestsHub.Domain.MapsProviders;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.Services.ConsoleServices;
 using RequestsHub.Domain.Services;
+using System.Diagnostics;
 
 namespace RequestsHub
 {
@@ -10,6 +11,9 @@ namespace RequestsHub
     {
         public static void Main(string[] args)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             if (args.Length < 3 && args.Length != 1)
             {
                 Console.WriteLine("Invalid args. Use 'help' or '-h' please.");
@@ -21,6 +25,9 @@ namespace RequestsHub
                 Console.WriteLine(Documentation.GetDocAboutCommands());
             }
             SelectCommand(args[0], ValidateArgs(args));
+
+            stopWatch.Stop();
+            Console.WriteLine($"All time: {stopWatch.Elapsed}");
         }
 
         private static ArgsFromConsole ValidateArgs(string[] args)
@@ -47,8 +54,8 @@ namespace RequestsHub
         {
             try
             {
-                argsStructure.NameProvider = (MapsProvider)Enum.Parse(typeof(MapsProvider), args[1]);
-                argsStructure.NameMap = (NameMap)Enum.Parse(typeof(NameMap), args[2]);
+                argsStructure.NameProvider = (MapProvider)Enum.Parse(typeof(MapProvider), args[1]);
+                argsStructure.NameMap = (MapName)Enum.Parse(typeof(MapName), args[2]);
             }
             catch (Exception)
             {
@@ -88,11 +95,11 @@ namespace RequestsHub
             IMapProvider mapProvider;
             switch (args.NameProvider)
             {
-                case MapsProvider.xam:
+                case MapProvider.xam:
                     mapProvider = new Xam();
                     break;
 
-                case MapsProvider.ginfo:
+                case MapProvider.ginfo:
                     mapProvider = new Ginfo();
                     break;
 
@@ -101,7 +108,7 @@ namespace RequestsHub
                     break;
             }
 
-            ImageRetrieve imageRetrieve = new(mapProvider, args.NameMap, args.TypeMap, args.Zoom);
+            ImageRetrieve imageRetrieve = new(mapProvider, args.NameMap, args.TypeMap, args.Zoom, args.PathToSave);
             switch (nameCommand)
             {
                 case "GetMap":
@@ -118,6 +125,10 @@ namespace RequestsHub
 
                 case "GetAllMaps":
                     imageRetrieve.GetAllMaps();
+                    break;
+
+                case "MergePartsMap":
+                    imageRetrieve.MergePartsMap();
                     break;
             }
         }

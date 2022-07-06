@@ -8,7 +8,7 @@ namespace RequestsHub.Domain.MapsProviders
     {
         public Xam()
         {
-            Builder = new XamBuilder();
+            Builder = new XamBuilder(Name);
 
             Chernorus chernorus = Builder.InitializeChernorus();
             Livonia livonia = Builder.InitializeLivonia();
@@ -25,9 +25,6 @@ namespace RequestsHub.Domain.MapsProviders
 
         public IMapBuilder Builder { get; }
 
-        public string QreateQuery(NameMap nameMap, TypeMap typeMap, int zoom)
-        {
-            throw new NotImplementedException();
-        }
+        public MapProvider Name { get => MapProvider.xam; }
     }
 }

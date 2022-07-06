@@ -2,7 +2,7 @@
   "profiles": {
     "DayZona": {
       "commandName": "Project",
-      "commandLineArgs": "GetImages dayzona livonia -zoom:7"
+      "commandLineArgs": "MergePartsMap xam chernorus -zoom:4 topographic D:\\Projects\\MapsFromRequestHub"
     }
   }
 }

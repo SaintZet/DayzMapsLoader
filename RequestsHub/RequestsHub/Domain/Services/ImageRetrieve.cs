@@ -1,123 +1,159 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes;
+using System.Diagnostics;
+using System.Drawing;
 using System.Net;
 
 namespace RequestsHub.Domain.Services
 {
     public class ImageRetrieve
     {
-        private IMapProvider mapProvider;
-        private PathsService pathsToSave;
-        private int zoom;
-        private string nameMap;
-        private string typeMap;
+        private readonly IMapProvider mapProvider;
+        private readonly int zoom;
+        private readonly TypeMap typeMap;
+        private readonly PathsService pathsService;
+        private IMap currentMap;
 
-        internal ImageRetrieve(IMapProvider mapProvider, NameMap nameMap, TypeMap typeMap, int zoom)
+        internal ImageRetrieve(IMapProvider mapProvider, MapName nameMap, TypeMap typeMap, int zoom, string pathsToSave)
         {
             this.mapProvider = mapProvider;
-            this.nameMap = Enum.GetName(typeof(NameMap), nameMap).ToLower();
-            this.typeMap = Enum.GetName(typeof(TypeMap), typeMap).ToLower();
+            this.typeMap = typeMap;
             this.zoom = zoom;
 
-            //TODO: Builder for paths class.
+            pathsToSave = Validate.PathToSave(pathsToSave);
+            currentMap = Validate.CheckMapAtProvider(mapProvider, nameMap);
+            Validate.CheckTypeAtMap(currentMap, typeMap);
+            Validate.CheckZoomAtMap(currentMap, zoom);
+            string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name);
+            pathsService = new(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
         }
 
-        public void GetAllMaps() //TypeMap typeMap, int zoom, string pathToSaveImages
+        public void MergePartsMap()
         {
-            throw new NotImplementedException();
+            var pathSource = $"{pathsService.GeneralFolderToSave}";
+            Directory.CreateDirectory(pathSource);
+
+            Directory.CreateDirectory(pathsService.GeneralFolderToSave);
+            var pathSave = $@"{pathsService.GeneralFolderToSave}\{currentMap.MapName}.{currentMap.MapExtension}";
+            new MergeImages().MergeAndSave(pathSource, pathSave);
         }
 
-        public void GetAllMapsInParts() //NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages
+        public void GetAllMaps()
         {
-            throw new NotImplementedException();
+            foreach (IMap map in mapProvider.Maps)
+            {
+                currentMap = Validate.CheckMapAtProvider(mapProvider, map.MapName);
+                pathsService.FolderMap = currentMap.MapName.ToString();
+                GetMap();
+            }
         }
 
-        public void GetMap() //NameMap nameMap, TypeMap typeMap, int zoom, string directorySaveImage
+        public void GetAllMapsInParts()
         {
-            throw new NotImplementedException();
-            //var map = ValidateParameters(nameMap, typeMap, zoom);
-            //if (map == null)
-            //{
-            //    throw new ArgumentException("No valid map.");
-            //}
-
-            //pathsToSave = Builder.InitializePaths(map, typeMap, zoom, directorySaveImage);
+            foreach (var map in mapProvider.Maps)
+            {
+                foreach (MapName nameMap in Enum.GetValues(typeof(MapName)))
+                {
+                    currentMap = Validate.CheckMapAtProvider(mapProvider, nameMap);
+                    pathsService.FolderMap = currentMap.MapName.ToString();
+                    GetPartsMap();
+                }
+            }
         }
 
-        public void GetPartsMap() //NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages
+        public void GetMap()
         {
-            throw new NotImplementedException();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            byte[] bytes;
+            //TODO: use linq;
+            KeyValuePair<int, MapSize> keyValuePair = default;
+            foreach (var item in currentMap.KeyValuePairsSize)
+            {
+                if (item.Key == zoom)
+                {
+                    keyValuePair = item;
+                }
+            }
+            int axisY = keyValuePair.Value.Height;
+            int axisX = keyValuePair.Value.Width;
+
+            WebClient webClient = new();
+            var queryBuilder = new QueryBuilder(mapProvider, currentMap, typeMap, zoom);
+            string query;
+
+            Image[][] verticals = new Image[axisY][];
+            Image[] horizontal;
+            for (int y = 0; y < axisY; y++)
+            {
+                horizontal = new Image[axisX];
+                for (int x = 0; x < axisX; x++)
+                {
+                    query = queryBuilder.GetQuery(x, y);
+                    bytes = webClient.DownloadData(query);
+
+                    horizontal[x] = CastToImage(bytes);
+                }
+                verticals[y] = horizontal;
+            }
+
+            Directory.CreateDirectory(pathsService.GeneralFolderToSave);
+            var path = $@"{pathsService.GeneralFolderToSave}\{currentMap.MapName}.{currentMap.MapExtension}";
+
+            new MergeImages().MergeAndSave(verticals, path);
+
+            stopWatch.Stop();
+            Console.WriteLine("Work time: {0}", stopWatch.Elapsed);
         }
 
-        //private IMap? ValidateParameters(NameMap nameMap, TypeMap typeMap, int zoom)
-        //{
-        //    foreach (IMap map in Maps)
-        //    {
-        //        if (map.Name == nameMap)
-        //        {
-        //            foreach (TypeMap type in map.TypesMap)
-        //            {
-        //                if (type == typeMap)
-        //                {
-        //                    foreach (KeyValuePair<int, MapSize> size in map.KeyValuePairsSize)
-        //                    {
-        //                        if (zoom == size.Key)
-        //                        {
-        //                            return map;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return null;
-        //}
+        public void GetPartsMap()
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            byte[] bytes;
 
-        //private string BildQuery(MapsProvider nameOfService)
-        //{
-        //    switch (nameOfService)
-        //    {
-        //        //if we have to much code in this place - make Interface and implemented class for services
-        //        case MapsProvider.xam:
-        //            return $"https://static.xam.nu/dayz/maps/{nameMap}/1.17-1/{typeMap}";
+            //TODO: use linq;
+            KeyValuePair<int, MapSize> keyValuePair = default;
+            foreach (var item in currentMap.KeyValuePairsSize)
+            {
+                if (item.Key == zoom)
+                {
+                    keyValuePair = item;
+                }
+            }
+            int axisY = keyValuePair.Value.Height;
+            int axisX = keyValuePair.Value.Width;
 
-        //        case MapsProvider.ginfo:
-        //        default:
-        //            break;
-        //    }
-        //    return "";
-        //}
+            WebClient webClient = new();
+            QueryBuilder queryBuilder = new(mapProvider, currentMap, typeMap, zoom);
+            string query;
 
-        //internal bool GetImages(string pathToSaveFolder, Direction directrion, int zoom)
-        //{
-        //    if (pathToSaveFolder is null)
-        //    {
-        //        pathToSaveFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        //    }
-        //    pathToSaveFolder += $"/{nameOfService}/{nameMap}/{typeMap}";
+            for (int y = 0; y < axisY; y++)
+            {
+                string pathToFolder = pathsService.GeneralFolderToSave + @"\Horizontal " + y.ToString();
+                Directory.CreateDirectory(pathToFolder);
 
-        // byte[] bytes; string nameFile; string pathToFile; string pathToileFolder; string query;
+                for (int x = 0; x < axisX; x++)
+                {
+                    query = queryBuilder.GetQuery(x, y);
+                    bytes = webClient.DownloadData(query);
 
-        // for (int i = 0; i < maximumFirstPlane; i++) { pathToileFolder =
-        // $"{pathToSaveFolder}/{Enum.GetName(typeof(Direction), directrion)} {i}";
+                    string nameFile = $"({x}.{y}).{currentMap.MapExtension}";
+                    string pathToFile = Path.Combine(pathToFolder, nameFile);
 
-        // Directory.CreateDirectory(pathToileFolder);
+                    File.WriteAllBytes(pathToFile, bytes);
+                    Console.WriteLine(pathToFile);
+                }
+            }
 
-        // for (int j = 0; j < maximumSecondPlane; j++) { object[] args = new object[] { mainQuery,
-        // zoom, j, i };
+            stopWatch.Stop();
+            Console.WriteLine("Work time: {0}", stopWatch.Elapsed);
+        }
 
-        // if (directrion == Direction.vertical) args = new object[] { mainQuery, zoom, i, j };
-
-        // query = string.Format("{0}/{1}/{2}/{3}.jpg", args); //TODO: replace WebClient on
-        // HttpClient bytes = new WebClient().DownloadData(query);
-
-        //            nameFile = $"({zoom}.{i}.{j}).jpg";
-        //            pathToFile = Path.Combine(pathToileFolder, nameFile);
-        //            File.WriteAllBytes(pathToFile, bytes);
-        //            Console.WriteLine(nameFile);
-        //        }
-        //    }
-        //    return true;
-        //}
+        private Image CastToImage(byte[] byteArrayIn)
+        {
+            using var ms = new MemoryStream(byteArrayIn);
+            return Image.FromStream(ms);
+        }
     }
 }

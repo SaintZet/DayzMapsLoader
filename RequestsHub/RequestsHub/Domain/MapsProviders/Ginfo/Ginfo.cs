@@ -8,7 +8,7 @@ namespace RequestsHub.Domain.MapsProviders
     {
         public Ginfo()
         {
-            Builder = new GinfoBuilder();
+            Builder = new GinfoBuilder(Name);
 
             Chernorus chernorus = Builder.InitializeChernorus();
             Livonia livonia = Builder.InitializeLivonia();
@@ -21,12 +21,7 @@ namespace RequestsHub.Domain.MapsProviders
         }
 
         public List<IMap> Maps { get; }
-
-        public IMapBuilder Builder { get; set; }
-
-        public string QreateQuery(NameMap nameMap, TypeMap typeMap, int zoom)
-        {
-            throw new NotImplementedException();
-        }
+        public MapProvider Name { get => MapProvider.ginfo; }
+        public IMapBuilder Builder { get; }
     }
 }

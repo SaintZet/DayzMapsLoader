@@ -6,13 +6,13 @@
         vertical,
     }
 
-    public enum MapsProvider
+    public enum MapProvider
     {
         xam,
         ginfo,
     }
 
-    public enum NameMap
+    public enum MapName
     {
         chernorus,
         livonia,
@@ -27,5 +27,12 @@
         topographic,
         satellite,
         tourist
+    }
+
+    public enum ImageExtension
+    {
+        png,
+        jpg,
+        webp,
     }
 }

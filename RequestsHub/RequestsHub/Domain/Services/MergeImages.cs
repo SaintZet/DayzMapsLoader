@@ -6,59 +6,82 @@ namespace RequestsHub.Domain.Services
 {
     internal class MergeImages
     {
-        public void GetFullMap(int xLength = 12000, int yLength = 12000, string directoryPath = null, string finalPath = null, string fileName = "LivoniaMap.jpeg")
+        private readonly int xLength;
+        private readonly int yLength;
+
+        public MergeImages(int xLength = 25000, int yLength = 25000)
         {
-            if (directoryPath is null || finalPath is null)
+            this.xLength = xLength;
+            this.yLength = yLength;
+        }
+
+        public void MergeAndSave(Image[][] source, string PathSave)
+        {
+            int height, width;
+            Image resizedImage;
+            using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
+            using (Graphics graphic = Graphics.FromImage(bitmap))
             {
-                throw new Exception($"Parameter {nameof(directoryPath)} or {nameof(finalPath)} is null");
+                for (int y = 0; y < source[y].Length; y++)
+                {
+                    for (int x = 0; x < source.Length; x++)
+                    {
+                        width = xLength / source[y].Length;
+                        height = yLength / source.Length;
+                        resizedImage = new ImageResizer().Resize(source[y][x], width, height);
+                        width = x == 0 ? 0 : x * (xLength / source[y].Length);
+                        height = y == 0 ? 0 : y * (yLength / source.Length);
+                        graphic.DrawImage(resizedImage, width, height);
+                    }
+                }
+                graphic.Save();
             }
+            bitmap.Save(PathSave, ImageFormat.Bmp);
+        }
 
-            DirectoryInfo folderDir = new DirectoryInfo(directoryPath);
+        public void MergeAndSave(string resourcePath, string PathSave)
+        {
+            DirectoryInfo folderDir = new DirectoryInfo(resourcePath);
 
-            List<string> targetDirectoriesName = folderDir.GetDirectories()
+            List<string> verticals = folderDir.GetDirectories()
                                                             .Select(d => d.FullName)
                                                             .OrderBy(s => s.Length)
                                                             .ThenBy(s => s)
                                                             .ToList();
-            DirectoryInfo fileDir = new DirectoryInfo(targetDirectoriesName[0]);
-            int fileCountThatShouldBe = fileDir.GetFiles().Length;
+            int verticalCount = verticals.Count;
+            Image image;
+            List<string> horizontal;
 
-            using (Bitmap bitmap = new Bitmap(xLength, yLength, PixelFormat.Format24bppRgb))
+            using Bitmap bitmap = new Bitmap(xLength, yLength, PixelFormat.Format24bppRgb);
+
+            using (Graphics graphic = Graphics.FromImage(bitmap))
             {
-                using (Graphics graphic = Graphics.FromImage(bitmap))
+                int height, width;
+
+                for (int y = 0; y < verticals.Count; y++)
                 {
-                    int x, y = 0;
-                    foreach (string currentDirectoryName in targetDirectoriesName)
+                    //resource[y] it's currentDirectoryName
+                    horizontal = GetMapPieces(verticals[y]);
+                    for (int x = 0; x < horizontal.Count; x++)
                     {
-                        x = 0;
-                        ConsoleAnimation workingAnimation = new();
-                        foreach (string pictureFullName in GetMapPieces(currentDirectoryName))
-                        {
-                            workingAnimation.Spin(currentDirectoryName);
+                        height = yLength / verticals.Count;
+                        width = xLength / horizontal.Count;
+                        //horizontal[x] it's pictureFullName
+                        image = Image.FromFile(horizontal[x]);
+                        image = new ImageResizer().Resize(image, width, height);
 
-                            var image = Image.FromFile(pictureFullName);
-                            var width = xLength / 128;
-                            var height = yLength / 128;
+                        width = x == 0 ? 0 : x * (xLength / horizontal.Count);
+                        height = y == 0 ? 0 : y * (yLength / verticals.Count);
 
-                            Image resizedImage = new ImageResizer().Resize(image, width, height);
-
-                            width = x == 0 ? 0 : x * (xLength / fileCountThatShouldBe);
-                            height = y == 0 ? 0 : y * (yLength / targetDirectoriesName.Count());
-                            graphic.DrawImage(resizedImage, width, height);
-
-                            x++;
-                        }
-                        y++;
+                        graphic.DrawImage(image, width, height);
                     }
-                    graphic.Save();
                 }
-                bitmap.Save(finalPath + fileName, ImageFormat.Jpeg);
+                graphic.Save();
             }
+            bitmap.Save(PathSave, ImageFormat.Bmp);
         }
 
-        private IEnumerable<string> GetMapPieces(string currentDirectoryName) => new DirectoryInfo(currentDirectoryName).GetFiles()
-                                                                                                                      .Select(s => s.FullName)
-                                                                                                                      .OrderBy(s => s.Length)
-                                                                                                                      .ThenBy(s => s);
+        private List<string> GetMapPieces(string currentDirectoryName) =>
+            new DirectoryInfo(currentDirectoryName).GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
     }
 }
