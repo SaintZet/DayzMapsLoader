@@ -4,8 +4,31 @@ using System.Drawing.Imaging;
 
 namespace RequestsHub.Domain.Services
 {
+
     internal class ImageResizer
     {
+        public Bitmap Resize(byte[] source, int width, int height)
+        {
+            Image image = Image.FromStream(new MemoryStream(source));
+            Rectangle destRect = new(0, 0, width, height);
+            Bitmap resizedPicture = new(width, height);
+
+            resizedPicture.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (Graphics graphics = Graphics.FromImage(resizedPicture))
+            {
+                GraphicsSettings(graphics);
+
+                using (ImageAttributes wrapMode = new())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return resizedPicture;
+        }
+
         public Bitmap Resize(Image image, int width, int height)
         {
             Rectangle destRect = new(0, 0, width, height);

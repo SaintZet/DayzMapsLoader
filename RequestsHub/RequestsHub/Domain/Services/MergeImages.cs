@@ -9,28 +9,34 @@ namespace RequestsHub.Domain.Services
         private readonly int xLength;
         private readonly int yLength;
 
-        public MergeImages(int xLength = 25000, int yLength = 25000)
+        public MergeImages(int xLength = 1000, int yLength = 1000)
         {
             this.xLength = xLength;
             this.yLength = yLength;
         }
 
-        public void MergeAndSave(Image[][] source, string PathSave)
+        public void MergeAndSave(byte[,][] map, string PathSave)
         {
             int height, width;
+            int countVerticals = map.GetLength(0);
+            int countHorizontals = map.GetLength(1);
             Image resizedImage;
+
             using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
             using (Graphics graphic = Graphics.FromImage(bitmap))
             {
-                for (int y = 0; y < source[y].Length; y++)
+                for (int y = 0; y < countVerticals; y++)
                 {
-                    for (int x = 0; x < source.Length; x++)
+                    for (int x = 0; x < countHorizontals; x++)
                     {
-                        width = xLength / source[y].Length;
-                        height = yLength / source.Length;
-                        resizedImage = new ImageResizer().Resize(source[y][x], width, height);
-                        width = x == 0 ? 0 : x * (xLength / source[y].Length);
-                        height = y == 0 ? 0 : y * (yLength / source.Length);
+                        height = yLength / countVerticals;
+                        width = xLength / countHorizontals;
+
+                        resizedImage = new ImageResizer().Resize(map[y,x], width, height);
+
+                        height = y == 0 ? 0 : y * (yLength / countVerticals);
+                        width = x == 0 ? 0 : x * (xLength / countHorizontals);
+
                         graphic.DrawImage(resizedImage, width, height);
                     }
                 }
@@ -66,6 +72,7 @@ namespace RequestsHub.Domain.Services
                     {
                         height = yLength / verticals.Count;
                         width = xLength / horizontal.Count;
+
                         //horizontal[x] it's pictureFullName
                         image = Image.FromFile(horizontal[x]);
                         image = new ImageResizer().Resize(image, width, height);

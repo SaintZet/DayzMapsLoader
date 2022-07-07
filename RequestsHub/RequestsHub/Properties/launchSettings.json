@@ -2,7 +2,7 @@
   "profiles": {
     "DayZona": {
       "commandName": "Project",
-      "commandLineArgs": "MergePartsMap xam chernorus -zoom:4 topographic D:\\Projects\\MapsFromRequestHub"
+      "commandLineArgs": "GetAllMaps xam -zoom:4 topographic D:\\Projects\\SurviveRunner"
     }
   }
 }

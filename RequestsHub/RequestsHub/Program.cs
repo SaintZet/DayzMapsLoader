@@ -55,7 +55,11 @@ namespace RequestsHub
             try
             {
                 argsStructure.NameProvider = (MapProvider)Enum.Parse(typeof(MapProvider), args[1]);
-                argsStructure.NameMap = (MapName)Enum.Parse(typeof(MapName), args[2]);
+                //TODO: need refactoring
+                if (args[0] != "MergePartsAllMap" && args[0] != "GetAllMaps" && args[0] != "GetAllMapsInParts")
+                {
+                    argsStructure.NameMap = (MapName)Enum.Parse(typeof(MapName), args[2]);
+                }
             }
             catch (Exception)
             {
@@ -125,6 +129,10 @@ namespace RequestsHub
 
                 case "GetAllMaps":
                     imageRetrieve.GetAllMaps();
+                    break;
+
+                case "MergePartsAllMap":
+                    imageRetrieve.MergePartsAllMap();
                     break;
 
                 case "MergePartsMap":
