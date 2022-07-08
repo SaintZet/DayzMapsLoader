@@ -1,8 +1,28 @@
 {
   "profiles": {
-    "DayZona": {
+    "GetAllMaps": {
       "commandName": "Project",
-      "commandLineArgs": "GetAllMaps xam -zoom:4 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "GetAllMaps xam -zoom:3 topographic D:\\Projects\\SurviveRunner"
+    },
+    "GetAllMapsInParts": {
+      "commandName": "Project",
+      "commandLineArgs": "GetAllMapsInParts xam -zoom:3 topographic D:\\Projects\\SurviveRunner"
+    },
+    "GetMap": {
+      "commandName": "Project",
+      "commandLineArgs": "GetMap xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
+    },
+    "GetMapInParts ": {
+      "commandName": "Project",
+      "commandLineArgs": "GetMapInParts xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
+    },
+    "MergePartsAllMaps ": {
+      "commandName": "Project",
+      "commandLineArgs": "MergePartsAllMaps xam -zoom:3 topographic D:\\Projects\\SurviveRunner"
+    },
+    "MergePartsMap": {
+      "commandName": "Project",
+      "commandLineArgs": "MergePartsMap xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
     }
   }
 }

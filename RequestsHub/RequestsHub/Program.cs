@@ -119,8 +119,8 @@ namespace RequestsHub
                     imageRetrieve.GetMap();
                     break;
 
-                case "GetPartsMap":
-                    imageRetrieve.GetPartsMap();
+                case "GetMapInParts":
+                    imageRetrieve.GetMapInParts();
                     break;
 
                 case "GetAllMapsInParts":
@@ -131,8 +131,8 @@ namespace RequestsHub
                     imageRetrieve.GetAllMaps();
                     break;
 
-                case "MergePartsAllMap":
-                    imageRetrieve.MergePartsAllMap();
+                case "MergePartsAllMaps":
+                    imageRetrieve.MergePartsAllMaps();
                     break;
 
                 case "MergePartsMap":

@@ -21,21 +21,17 @@ namespace RequestsHub.Domain.Services
             this.typeMap = typeMap;
             this.zoom = zoom;
 
-            pathsToSave = Validate.PathToSave(pathsToSave);
-            currentMap = Validate.CheckMapAtProvider(mapProvider, nameMap);
-            Validate.CheckTypeAtMap(currentMap, typeMap);
-            Validate.CheckZoomAtMap(currentMap, zoom);
-            string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name);
-            pathsService = new(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
+            pathsService = InitializePathService(pathsToSave, nameMap);
+            Console.WriteLine($"Directory to save: {pathsService.FolderMap}");
         }
 
         public void MergePartsMap()
         {
-            var pathSource = $"{pathsService.GeneralFolderToSave}";
+            var pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
             Directory.CreateDirectory(pathSource);
 
-            Directory.CreateDirectory(pathsService.GeneralFolderToSave);
-            var pathSave = $@"{pathsService.GeneralFolderToSave}\{currentMap.MapName}.{currentMap.MapExtension}";
+            Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
+            var pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
             new MergeImages().MergeAndSave(pathSource, pathSave);
         }
 
@@ -55,7 +51,7 @@ namespace RequestsHub.Domain.Services
             {
                 currentMap = Validate.CheckMapAtProvider(mapProvider, map.MapName);
                 pathsService.FolderMap = currentMap.MapName.ToString();
-                GetPartsMap();
+                GetMapInParts();
             }
         }
 
@@ -76,44 +72,38 @@ namespace RequestsHub.Domain.Services
             WebClient webClient = new();
             var queryBuilder = new QueryBuilder(mapProvider, currentMap, typeMap, zoom);
             string query;
+            byte[,][] verticals = new byte[axisY, axisX][];
+
+            Console.Write($"Download {currentMap.MapName}".PadRight(20));
 
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            ProgressBar progressBar = new(axisX* axisY);
-
-            byte[,][]verticals = new byte[axisY, axisX][];
-            for (int y = 0; y < axisY; y++)
+            using (ProgressBar progress = new())
             {
-                for (int x = 0; x < axisX; x++)
+                for (int y = 0; y < axisY; y++)
                 {
-                    query = queryBuilder.GetQuery(x, y);
+                    for (int x = 0; x < axisX; x++)
+                    {
+                        query = queryBuilder.GetQuery(x, y);
+                        verticals[y, x] = webClient.DownloadData(query);
 
-                    verticals[y,x] = webClient.DownloadData(query);
-                    progressBar++;
+                        progress.Report((double)(y * axisX + x) / (axisX * axisY));
+                    }
                 }
             }
+
             stopWatch.Stop();
-            Console.WriteLine("Download time: {0}", stopWatch.Elapsed);
+            Console.Write(" time: {0} ", stopWatch.Elapsed);
 
-            Directory.CreateDirectory(pathsService.GeneralFolderToSave);
-            var path = $@"{pathsService.GeneralFolderToSave}\{currentMap.MapName}.{currentMap.MapExtension}";
-
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
+            Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
+            var path = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
 
             new MergeImages().MergeAndSave(verticals, path);
-
-            stopWatch.Stop();
-            Console.WriteLine("Merge time: {0}", stopWatch.Elapsed);
         }
 
-        public void GetPartsMap()
+        public void GetMapInParts()
         {
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            byte[] bytes;
-
             //TODO: use linq;
             KeyValuePair<int, MapSize> keyValuePair = default;
             foreach (var item in currentMap.KeyValuePairsSize)
@@ -129,30 +119,37 @@ namespace RequestsHub.Domain.Services
             WebClient webClient = new();
             QueryBuilder queryBuilder = new(mapProvider, currentMap, typeMap, zoom);
             string query;
+            byte[] bytes;
 
-            for (int y = 0; y < axisY; y++)
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            using (ProgressBar progress = new())
             {
-                string pathToFolder = pathsService.GeneralFolderToSave + @"\Horizontal " + y.ToString();
-                Directory.CreateDirectory(pathToFolder);
-
-                for (int x = 0; x < axisX; x++)
+                for (int y = 0; y < axisY; y++)
                 {
-                    query = queryBuilder.GetQuery(x, y);
-                    bytes = webClient.DownloadData(query);
+                    string pathToFolder = pathsService.GeneralPathToFolderWithFile + @"\Horizontal " + y.ToString();
+                    Directory.CreateDirectory(pathToFolder);
 
-                    string nameFile = $"({x}.{y}).{currentMap.MapExtension}";
-                    string pathToFile = Path.Combine(pathToFolder, nameFile);
+                    for (int x = 0; x < axisX; x++)
+                    {
+                        query = queryBuilder.GetQuery(x, y);
+                        bytes = webClient.DownloadData(query);
 
-                    File.WriteAllBytes(pathToFile, bytes);
-                    Console.WriteLine(pathToFile);
+                        string nameFile = $"({x}.{y}).{currentMap.MapExtension}";
+                        string pathToFile = Path.Combine(pathToFolder, nameFile);
+
+                        File.WriteAllBytes(pathToFile, bytes);
+                        Console.WriteLine(pathToFile);
+                    }
                 }
             }
 
             stopWatch.Stop();
-            Console.WriteLine("Work time: {0}", stopWatch.Elapsed);
+            Console.Write(" time: {0} ", stopWatch.Elapsed);
         }
 
-        internal void MergePartsAllMap()
+        internal void MergePartsAllMaps()
         {
             foreach (IMap map in mapProvider.Maps)
             {
@@ -160,6 +157,18 @@ namespace RequestsHub.Domain.Services
                 pathsService.FolderMap = currentMap.MapName.ToString();
                 MergePartsMap();
             }
+        }
+
+        private PathsService InitializePathService(string pathsToSave, MapName nameMap)
+        {
+            pathsToSave = Validate.PathToSave(pathsToSave);
+            currentMap = Validate.CheckMapAtProvider(mapProvider, nameMap);
+
+            Validate.CheckTypeAtMap(currentMap, typeMap);
+            Validate.CheckZoomAtMap(currentMap, zoom);
+
+            string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name);
+            return new PathsService(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
         }
 
         private Image CastToImage(byte[] byteArrayIn)

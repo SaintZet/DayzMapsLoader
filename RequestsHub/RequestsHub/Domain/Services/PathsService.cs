@@ -2,22 +2,23 @@
 {
     internal class PathsService
     {
-        public string generalFolderToSave;
-        private readonly string folderToSave;
-        private readonly string providerName;
-        private readonly string folderType;
-        private readonly string folderZoom;
-
         public PathsService(string folderToSave, string providerName, string folderMap, string folderType, string folderZoom)
         {
-            this.folderToSave = folderToSave;
-            this.providerName = providerName;
+            //TODO: delete this (refactoring) if we dont need this variable at stable version.
+
+            GeneralFolder = folderToSave;
             FolderMap = folderMap;
-            this.folderType = folderType;
-            this.folderZoom = folderZoom;
+
+            ProviderName = providerName;
+            TypeFolder = folderType;
+            ZoomFolder = folderZoom;
         }
 
-        public string GeneralFolderToSave => generalFolderToSave = $@"{folderToSave}\{providerName}\{FolderMap}\{folderType}\{folderZoom}";
+        public string GeneralPathToFolderWithFile => $@"{GeneralFolder}\{ProviderName}\{FolderMap}\{TypeFolder}\{ZoomFolder}";
         public string FolderMap { get; set; }
+        public string ProviderName { get; }
+        public string ZoomFolder { get; }
+        public string TypeFolder { get; }
+        public string GeneralFolder { get; }
     }
 }
