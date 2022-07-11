@@ -6,13 +6,6 @@ namespace RequestsHub.Domain.MapsProviders
 {
     internal class GinfoBuilder : IMapBuilder
     {
-        private MapProvider mapsProviderName;
-
-        public GinfoBuilder(MapProvider parentName)
-        {
-            this.mapsProviderName = parentName;
-        }
-
         //https://maps.izurvive.com/maps/ChernarusPlus-Top/1.0.0/tiles/8/246/255.webp
         public override Chernorus InitializeChernorus()
         {
@@ -61,6 +54,7 @@ namespace RequestsHub.Domain.MapsProviders
                 MapNameForProvider = "Livonia",
                 TypesMap = typesMap,
                 Version = "1.17",
+                IsFirstQuadrant = true,
             };
         }
 
@@ -90,7 +84,6 @@ namespace RequestsHub.Domain.MapsProviders
         }
 
         //https://maps.izurvive.com/maps/Esseker-Top/1.1.0/tiles/4/7/7.png
-        //another direction
         public override Esseker InitializeEsseker()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -112,11 +105,11 @@ namespace RequestsHub.Domain.MapsProviders
                 MapNameForProvider = "Esseker",
                 TypesMap = typesMap,
                 Version = "1.1.0",
+                IsFirstQuadrant = true,
             };
         }
 
-        //https://maps.izurvive.com/maps/Namalsk-Top/0.1.0/tiles/5/19/21.png
-        //another direction
+        //https://maps.izurvive.com/maps/Namalsk-Top/0.1.0/tiles/7/0/0.png
         public override Namalsk InitializeNamalsk()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -138,11 +131,11 @@ namespace RequestsHub.Domain.MapsProviders
                 MapNameForProvider = "Namalsk",
                 TypesMap = typesMap,
                 Version = "0.1.0",
+                IsFirstQuadrant = true,
             };
         }
 
-        //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/3/0/3.png
-        //another direction
+        //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/7/0/0.png
         public override Takistan InitializeTakistan()
         {
             Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -164,6 +157,7 @@ namespace RequestsHub.Domain.MapsProviders
                 MapNameForProvider = "TakistanPlus",
                 TypesMap = typesMap,
                 Version = "1.1.0",
+                IsFirstQuadrant = true,
             };
         }
     }

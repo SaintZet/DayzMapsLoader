@@ -4,8 +4,6 @@
     {
         public PathsService(string folderToSave, string providerName, string folderMap, string folderType, string folderZoom)
         {
-            //TODO: delete this (refactoring) if we dont need this variable at stable version.
-
             GeneralFolder = folderToSave;
             FolderMap = folderMap;
 

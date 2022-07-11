@@ -2,7 +2,6 @@
 using RequestsHub.Domain.DataTypes;
 using RequestsHub.Domain.Services.ConsoleServices;
 using System.Diagnostics;
-using System.Drawing;
 using System.Net;
 
 namespace RequestsHub.Domain.Services
@@ -13,7 +12,7 @@ namespace RequestsHub.Domain.Services
         private readonly int zoom;
         private readonly TypeMap typeMap;
         private readonly PathsService pathsService;
-        private IMap currentMap;
+        private IMap? currentMap;
 
         internal ImageRetrieve(IMapProvider mapProvider, MapName nameMap, TypeMap typeMap, int zoom, string pathsToSave)
         {
@@ -22,16 +21,16 @@ namespace RequestsHub.Domain.Services
             this.zoom = zoom;
 
             pathsService = InitializePathService(pathsToSave, nameMap);
-            Console.WriteLine($"Directory to save: {pathsService.FolderMap}");
+            Console.WriteLine($"Directory to save: {pathsService.GeneralFolder}");
         }
 
         public void MergePartsMap()
         {
-            var pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
-            Directory.CreateDirectory(pathSource);
+            string pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
 
             Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
-            var pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+            string pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+
             new MergeImages().MergeAndSave(pathSource, pathSave);
         }
 
@@ -57,99 +56,21 @@ namespace RequestsHub.Domain.Services
 
         public void GetMap()
         {
-            //TODO: use linq;
-            KeyValuePair<int, MapSize> keyValuePair = default;
-            foreach (var item in currentMap.KeyValuePairsSize)
-            {
-                if (item.Key == zoom)
-                {
-                    keyValuePair = item;
-                }
-            }
-            int axisY = keyValuePair.Value.Height;
-            int axisX = keyValuePair.Value.Width;
-
-            WebClient webClient = new();
-            var queryBuilder = new QueryBuilder(mapProvider, currentMap, typeMap, zoom);
-            string query;
-            byte[,][] verticals = new byte[axisY, axisX][];
-
-            Console.Write($"Download {currentMap.MapName}".PadRight(20));
-
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            using (ProgressBar progress = new())
-            {
-                for (int y = 0; y < axisY; y++)
-                {
-                    for (int x = 0; x < axisX; x++)
-                    {
-                        query = queryBuilder.GetQuery(x, y);
-                        verticals[y, x] = webClient.DownloadData(query);
-
-                        progress.Report((double)(y * axisX + x) / (axisX * axisY));
-                    }
-                }
-            }
-
-            stopWatch.Stop();
-            Console.Write(" time: {0} ", stopWatch.Elapsed);
+            byte[,][] source = GetImageFromProvider();
 
             Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
-            var path = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+            string path = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
 
-            new MergeImages().MergeAndSave(verticals, path);
+            new MergeImages().MergeAndSave(source, path);
         }
 
         public void GetMapInParts()
         {
-            //TODO: use linq;
-            KeyValuePair<int, MapSize> keyValuePair = default;
-            foreach (var item in currentMap.KeyValuePairsSize)
-            {
-                if (item.Key == zoom)
-                {
-                    keyValuePair = item;
-                }
-            }
-            int axisY = keyValuePair.Value.Height;
-            int axisX = keyValuePair.Value.Width;
-
-            WebClient webClient = new();
-            QueryBuilder queryBuilder = new(mapProvider, currentMap, typeMap, zoom);
-            string query;
-            byte[] bytes;
-
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            using (ProgressBar progress = new())
-            {
-                for (int y = 0; y < axisY; y++)
-                {
-                    string pathToFolder = pathsService.GeneralPathToFolderWithFile + @"\Horizontal " + y.ToString();
-                    Directory.CreateDirectory(pathToFolder);
-
-                    for (int x = 0; x < axisX; x++)
-                    {
-                        query = queryBuilder.GetQuery(x, y);
-                        bytes = webClient.DownloadData(query);
-
-                        string nameFile = $"({x}.{y}).{currentMap.MapExtension}";
-                        string pathToFile = Path.Combine(pathToFolder, nameFile);
-
-                        File.WriteAllBytes(pathToFile, bytes);
-                        Console.WriteLine(pathToFile);
-                    }
-                }
-            }
-
-            stopWatch.Stop();
-            Console.Write(" time: {0} ", stopWatch.Elapsed);
+            byte[,][] source = GetImageFromProvider();
+            SaveImagesToHardDisk(source);
         }
 
-        internal void MergePartsAllMaps()
+        public void MergePartsAllMaps()
         {
             foreach (IMap map in mapProvider.Maps)
             {
@@ -171,10 +92,97 @@ namespace RequestsHub.Domain.Services
             return new PathsService(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
         }
 
-        private Image CastToImage(byte[] byteArrayIn)
+        private void SaveImagesToHardDisk(byte[,][] source)
         {
-            using var ms = new MemoryStream(byteArrayIn);
-            return Image.FromStream(ms);
+            Stopwatch stopWatch = new();
+            stopWatch.Start();
+
+            var axis = LookupAxis();
+            int axisY = axis.y;
+            int axisX = axis.y;
+
+            string nameFile, pathToFile, pathToFolder;
+            Console.Write("Save ");
+            using (ProgressBar progress = new())
+            {
+                for (int y = 0; y < axisY; y++)
+                {
+                    pathToFolder = $@"{pathsService.GeneralPathToFolderWithFile}\Horizontal{y}";
+                    Directory.CreateDirectory(pathToFolder);
+
+                    for (int x = 0; x < axisX; x++)
+                    {
+                        nameFile = $"({x}.{y}).{currentMap.MapExtension}";
+                        pathToFile = Path.Combine(pathToFolder, nameFile);
+
+                        File.WriteAllBytes(pathToFile, source[x, y]);
+                    }
+                }
+            }
+            stopWatch.Stop();
+            Console.WriteLine("time: {0}", stopWatch.Elapsed);
+        }
+
+        private byte[,][] GetImageFromProvider()
+        {
+            Console.Write($"Download {currentMap.MapName}".PadRight(20));
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            var axis = LookupAxis();
+            int axisY = axis.y;
+            int axisX = axis.y;
+
+            byte[,][] verticals = new byte[axisY, axisX][];
+
+            WebClient webClient = new();
+
+            var queryBuilder = new QueryBuilder(mapProvider, currentMap, typeMap, zoom);
+            string query;
+
+            using (ProgressBar progress = new())
+            {
+                int yReversed = axisY - 1;
+                for (int y = 0; y < axisY; y++)
+                {
+                    for (int x = 0; x < axisX; x++)
+                    {
+                        if (currentMap.IsFirstQuadrant)
+                        {
+                            query = queryBuilder.GetQuery(x, yReversed);
+                        }
+                        else
+                        {
+                            query = queryBuilder.GetQuery(x, y);
+                        }
+
+                        verticals[x, y] = webClient.DownloadData(query);
+
+                        progress.Report((double)(y * axisX + x) / (axisX * axisY));
+                    }
+                    yReversed--;
+                }
+            }
+
+            stopWatch.Stop();
+            Console.Write(" time: {0} ", stopWatch.Elapsed);
+
+            return verticals;
+        }
+
+        private (int x, int y) LookupAxis()
+        {
+            //TODO: use linq;
+            KeyValuePair<int, MapSize> keyValuePair = default;
+            foreach (var item in currentMap.KeyValuePairsSize)
+            {
+                if (item.Key == zoom)
+                {
+                    keyValuePair = item;
+                }
+            }
+
+            return (x: keyValuePair.Value.Width, y: keyValuePair.Value.Height);
         }
     }
 }

@@ -8,16 +8,16 @@ namespace RequestsHub.Domain.MapsProviders
     {
         public Ginfo()
         {
-            Builder = new GinfoBuilder(Name);
+            Builder = new GinfoBuilder();
 
             Chernorus chernorus = Builder.InitializeChernorus();
             Livonia livonia = Builder.InitializeLivonia();
             Banov banov = Builder.InitializeBanov();
             Esseker esseker = Builder.InitializeEsseker();
-            //Namalsk namalsk = Builder.InitializeNamalsk();
-            //Takistan takistan = Builder.InitializeTakistan();
+            Namalsk namalsk = Builder.InitializeNamalsk();
+            Takistan takistan = Builder.InitializeTakistan();
 
-            Maps = new List<IMap> { chernorus, livonia, banov, esseker };
+            Maps = new List<IMap> { livonia, esseker, namalsk, takistan };
         }
 
         public List<IMap> Maps { get; }

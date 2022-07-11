@@ -22,5 +22,6 @@ namespace RequestsHub.Domain.DataTypes.Maps
         public string Version { get; set; }
         public string MapNameForProvider { get; set; }
         public ImageExtension MapExtension { get; set; }
+        public bool IsFirstQuadrant { get; set; }
     }
 }

@@ -10,11 +10,11 @@
     },
     "GetMap": {
       "commandName": "Project",
-      "commandLineArgs": "GetMap xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "GetMap ginfo livonia -zoom:7 topographic D:\\Projects\\SurviveRunner"
     },
     "GetMapInParts ": {
       "commandName": "Project",
-      "commandLineArgs": "GetMapInParts xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "GetMapInParts xam chernorus -zoom:4 topographic D:\\Projects\\SurviveRunner"
     },
     "MergePartsAllMaps ": {
       "commandName": "Project",
@@ -22,7 +22,7 @@
     },
     "MergePartsMap": {
       "commandName": "Project",
-      "commandLineArgs": "MergePartsMap xam chernorus -zoom:3 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "MergePartsMap xam chernorus -zoom:4 topographic D:\\Projects\\SurviveRunner"
     }
   }
 }

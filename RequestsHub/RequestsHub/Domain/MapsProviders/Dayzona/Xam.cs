@@ -8,7 +8,7 @@ namespace RequestsHub.Domain.MapsProviders
     {
         public Xam()
         {
-            Builder = new XamBuilder(Name);
+            Builder = new XamBuilder();
 
             Chernorus chernorus = Builder.InitializeChernorus();
             Livonia livonia = Builder.InitializeLivonia();

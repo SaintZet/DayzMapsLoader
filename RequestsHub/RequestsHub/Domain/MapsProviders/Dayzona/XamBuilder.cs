@@ -6,13 +6,6 @@ namespace RequestsHub.Domain.MapsProviders
 {
     internal class XamBuilder : IMapBuilder
     {
-        private MapProvider mapsProviderName;
-
-        public XamBuilder(MapProvider parentName)
-        {
-            this.mapsProviderName = parentName;
-        }
-
         //https://static.xam.nu/dayz/maps/chernarusplus/1.17-1/topographic/0/0/0.jpg
         public override Chernorus InitializeChernorus()
         {

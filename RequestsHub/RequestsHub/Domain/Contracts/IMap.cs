@@ -10,5 +10,6 @@ namespace RequestsHub.Domain.Contracts
         MapName MapName { get; }
         string MapNameForProvider { get; set; }
         string Version { get; set; }
+        bool IsFirstQuadrant { get; }
     }
 }

@@ -10,21 +10,22 @@ namespace RequestsHub.Domain.Services
         private readonly int xLength;
         private readonly int yLength;
 
-        public MergeImages(int xLength = 1000, int yLength = 1000)
+        public MergeImages(int xLength = 12000, int yLength = 12000)
         {
             this.xLength = xLength;
             this.yLength = yLength;
         }
 
-        public void MergeAndSave(byte[,][] map, string PathSave)
+        public void MergeAndSave(byte[,][] source, string PathSave)
         {
             Stopwatch stopWatch = new();
             stopWatch.Start();
 
             int height, width;
-            int countVerticals = map.GetLength(0);
-            int countHorizontals = map.GetLength(1);
-            Image resizedImage;
+            int countVerticals = source.GetLength(0);
+            int countHorizontals = source.GetLength(1);
+            Image image;
+            ImageResizer resizer = new();
 
             using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
             using (Graphics graphic = Graphics.FromImage(bitmap))
@@ -39,12 +40,13 @@ namespace RequestsHub.Domain.Services
                             height = yLength / countVerticals;
                             width = xLength / countHorizontals;
 
-                            resizedImage = new ImageResizer().Resize(map[y, x], width, height);
+                            image = Image.FromStream(new MemoryStream(source[x, y]));
+                            image = resizer.Resize(image, width, height);
 
                             height = y == 0 ? 0 : y * (yLength / countVerticals);
                             width = x == 0 ? 0 : x * (xLength / countHorizontals);
 
-                            graphic.DrawImage(resizedImage, width, height);
+                            graphic.DrawImage(image, width, height);
                             progress.Report((double)(y * countHorizontals + x) / (countHorizontals * countVerticals));
                         }
                     }
@@ -69,11 +71,8 @@ namespace RequestsHub.Domain.Services
                                                             .OrderBy(s => s.Length)
                                                             .ThenBy(s => s)
                                                             .ToList();
-            int verticalCount = verticals.Count;
-            int horizontalCount = horizontal.Count;
 
             using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
-
             using (Graphics graphic = Graphics.FromImage(bitmap))
             {
                 int height, width;
@@ -109,7 +108,6 @@ namespace RequestsHub.Domain.Services
             Console.WriteLine("time: {0}", stopWatch.Elapsed);
         }
 
-        private List<string> GetMapPieces(string currentDirectoryName) =>
-            new DirectoryInfo(currentDirectoryName).GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
+        private List<string> GetMapPieces(string currentDirectoryName) => new DirectoryInfo(currentDirectoryName).GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
     }
 }
