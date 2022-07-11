@@ -1,6 +1,8 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes;
 using RequestsHub.Domain.Services.ConsoleServices;
+using RequestsHub.Domain.Services.ImageServices;
+using RequestsHub.Infrastructure;
 using System.Diagnostics;
 using System.Net;
 
@@ -11,8 +13,8 @@ namespace RequestsHub.Domain.Services
         private readonly IMapProvider mapProvider;
         private readonly int zoom;
         private readonly TypeMap typeMap;
-        private readonly PathsService pathsService;
-        private IMap? currentMap;
+        private readonly PathService pathsService;
+        private IMap currentMap;
 
         internal ImageRetrieve(IMapProvider mapProvider, MapName nameMap, TypeMap typeMap, int zoom, string pathsToSave)
         {
@@ -29,7 +31,7 @@ namespace RequestsHub.Domain.Services
             string pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
 
             Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
-            string pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+            string pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap?.MapExtension}";
 
             new MergeImages().MergeAndSave(pathSource, pathSave);
         }
@@ -59,7 +61,7 @@ namespace RequestsHub.Domain.Services
             byte[,][] source = GetImageFromProvider();
 
             Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
-            string path = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+            string path = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap?.MapName}.{currentMap?.MapExtension}";
 
             new MergeImages().MergeAndSave(source, path);
         }
@@ -80,7 +82,7 @@ namespace RequestsHub.Domain.Services
             }
         }
 
-        private PathsService InitializePathService(string pathsToSave, MapName nameMap)
+        private PathService InitializePathService(string pathsToSave, MapName nameMap)
         {
             pathsToSave = Validate.PathToSave(pathsToSave);
             currentMap = Validate.CheckMapAtProvider(mapProvider, nameMap);
@@ -89,7 +91,7 @@ namespace RequestsHub.Domain.Services
             Validate.CheckZoomAtMap(currentMap, zoom);
 
             string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name);
-            return new PathsService(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
+            return new PathService(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
         }
 
         private void SaveImagesToHardDisk(byte[,][] source)
@@ -112,7 +114,7 @@ namespace RequestsHub.Domain.Services
 
                     for (int x = 0; x < axisX; x++)
                     {
-                        nameFile = $"({x}.{y}).{currentMap.MapExtension}";
+                        nameFile = $"({x}.{y}).{currentMap?.MapExtension}";
                         pathToFile = Path.Combine(pathToFolder, nameFile);
 
                         File.WriteAllBytes(pathToFile, source[x, y]);
@@ -125,7 +127,7 @@ namespace RequestsHub.Domain.Services
 
         private byte[,][] GetImageFromProvider()
         {
-            Console.Write($"Download {currentMap.MapName}".PadRight(20));
+            Console.Write($"Download {currentMap?.MapName}".PadRight(20));
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 

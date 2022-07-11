@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace RequestsHub.Domain.Services
+namespace RequestsHub.Domain.Services.ImageServices
 {
     internal class ImageResizer
     {

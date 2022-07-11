@@ -1,8 +1,8 @@
-﻿namespace RequestsHub.Domain.Services
+﻿namespace RequestsHub.Infrastructure
 {
-    internal class PathsService
+    internal class PathService
     {
-        public PathsService(string folderToSave, string providerName, string folderMap, string folderType, string folderZoom)
+        public PathService(string folderToSave, string providerName, string folderMap, string folderType, string folderZoom)
         {
             GeneralFolder = folderToSave;
             FolderMap = folderMap;

@@ -1,8 +1,7 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes;
-using RequestsHub.Domain.MapsProviders;
 
-namespace RequestsHub.Domain.Services
+namespace RequestsHub.Infrastructure
 {
     internal class QueryBuilder
     {

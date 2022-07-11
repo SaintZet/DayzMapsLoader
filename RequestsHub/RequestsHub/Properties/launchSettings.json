@@ -10,7 +10,7 @@
     },
     "GetMap": {
       "commandName": "Project",
-      "commandLineArgs": "GetMap ginfo livonia -zoom:7 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "GetMap xam chernorus -zoom:4 topographic D:\\Projects\\SurviveRunner"
     },
     "GetMapInParts ": {
       "commandName": "Project",
