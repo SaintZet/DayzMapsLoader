@@ -3,9 +3,9 @@ using RequestsHub.Domain.DataTypes.Maps;
 
 namespace RequestsHub.Domain.MapsProviders;
 
-internal class GinfoBuilder : IMapBuilder
+internal class XamBuilder : IMapBuilder
 {
-    //https://maps.izurvive.com/maps/ChernarusPlus-Top/1.0.0/tiles/8/246/255.webp
+    //https://static.xam.nu/dayz/maps/chernarusplus/1.17-1/topographic/0/0/0.jpg
     public override Chernorus InitializeChernorus()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -17,21 +17,20 @@ internal class GinfoBuilder : IMapBuilder
         KeyValuePairsSize.Add(5, new MapSize(32, 32));
         KeyValuePairsSize.Add(6, new MapSize(64, 64));
         KeyValuePairsSize.Add(7, new MapSize(128, 128));
-        KeyValuePairsSize.Add(8, new MapSize(256, 256));
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
         return new Chernorus
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.webp,
-            MapNameForProvider = "ChernarusPlus",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "chernarusplus",
             TypesMap = typesMap,
-            Version = "1.0.0",
+            Version = "1.17-1",
         };
     }
 
-    //https://maps.izurvive.com/maps/Livonia-Top/1.17/tiles/7/127/0.png
+    //https://static.xam.nu/dayz/maps/livonia/1.17-1/topographic/7/127/127.jpg
     public override Livonia InitializeLivonia()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -49,15 +48,14 @@ internal class GinfoBuilder : IMapBuilder
         return new Livonia
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.png,
-            MapNameForProvider = "Livonia",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "livonia",
             TypesMap = typesMap,
-            Version = "1.17",
-            IsFirstQuadrant = true,
+            Version = "1.17-1",
         };
     }
 
-    //https://maps.izurvive.com/maps/Banov-Top/1.4.1/tiles/4/12/11.webp
+    //https://static.xam.nu/dayz/maps/banov/04.04/topographic/7/127/127.jpg
     public override Banov InitializeBanov()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -75,14 +73,14 @@ internal class GinfoBuilder : IMapBuilder
         return new Banov
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.webp,
-            MapNameForProvider = "Banov",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "banov",
             TypesMap = typesMap,
-            Version = "1.4.1",
+            Version = "04.04",
         };
     }
 
-    //https://maps.izurvive.com/maps/Esseker-Top/1.1.0/tiles/4/7/7.png
+    //https://static.xam.nu/dayz/maps/esseker/0.58/topographic/0/0/0.jpg
     public override Esseker InitializeEsseker()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -100,15 +98,14 @@ internal class GinfoBuilder : IMapBuilder
         return new Esseker
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.png,
-            MapNameForProvider = "Esseker",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "esseker",
             TypesMap = typesMap,
-            Version = "1.1.0",
-            IsFirstQuadrant = true,
+            Version = "0.58",
         };
     }
 
-    //https://maps.izurvive.com/maps/Namalsk-Top/0.1.0/tiles/7/0/0.png
+    //https://static.xam.nu/dayz/maps/namalsk/04.19/topographic/7/127/127.jpg
     public override Namalsk InitializeNamalsk()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -126,15 +123,14 @@ internal class GinfoBuilder : IMapBuilder
         return new Namalsk
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.png,
-            MapNameForProvider = "Namalsk",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "namalsk",
             TypesMap = typesMap,
-            Version = "0.1.0",
-            IsFirstQuadrant = true,
+            Version = "04.19",
         };
     }
 
-    //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/7/0/0.png
+    //https://static.xam.nu/dayz/maps/takistanplus/1.041/topographic/7/127/127.jpg
     public override Takistan InitializeTakistan()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new Dictionary<int, MapSize>();
@@ -152,11 +148,10 @@ internal class GinfoBuilder : IMapBuilder
         return new Takistan
         {
             KeyValuePairsSize = KeyValuePairsSize,
-            MapExtension = ImageExtension.png,
-            MapNameForProvider = "TakistanPlus",
+            MapExtension = ImageExtension.jpg,
+            MapNameForProvider = "takistanplus",
             TypesMap = typesMap,
-            Version = "1.1.0",
-            IsFirstQuadrant = true,
+            Version = "1.041",
         };
     }
 }
