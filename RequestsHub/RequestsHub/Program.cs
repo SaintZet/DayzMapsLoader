@@ -3,6 +3,7 @@ global using RequestsHub.Domain.DataTypes;
 using RequestsHub.Application;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.MapsProviders;
+using RequestsHub.Infrastructure;
 using RequestsHub.Presentation.ConsoleServices;
 
 namespace RequestsHub;
@@ -24,96 +25,11 @@ public static class Program
         {
             Console.WriteLine(Documentation.GetDocAboutCommands());
         }
-        SelectCommand(args[0], ValidateArgs(args));
 
-        stopWatch.Stop();
-        Console.WriteLine($"All time: {stopWatch.Elapsed}");
-    }
+        Args arg = new(args);
 
-    private static ArgsFromConsole ValidateArgs(string[] args)
-    {
-        ArgsFromConsole argsStructure = new ArgsFromConsole();
-
-        if (args.Length == 3)
-        {
-            ValidateRequiredParams(args, ref argsStructure);
-        }
-        else if (args.Length > 3 && args.Length < 7)
-        {
-            ValidateRequiredParams(args, ref argsStructure);
-            ValidateOptionParams(args, ref argsStructure);
-        }
-        else
-        {
-            throw new ArgumentException("Invalid args. Use 'help' or '-h' please.");
-        }
-        return argsStructure;
-    }
-
-    private static void ValidateRequiredParams(string[] args, ref ArgsFromConsole argsStructure)
-    {
-        try
-        {
-            argsStructure.NameProvider = (MapProvider)Enum.Parse(typeof(MapProvider), args[1]);
-            //TODO: need refactoring
-            if (args[0] != "MergePartsAllMap" && args[0] != "GetAllMaps" && args[0] != "GetAllMapsInParts")
-            {
-                argsStructure.NameMap = (MapName)Enum.Parse(typeof(MapName), args[2]);
-            }
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("Invalid args. Use 'help' or '-h' please.");
-        }
-    }
-
-    private static void ValidateOptionParams(string[] args, ref ArgsFromConsole argsStructure)
-    {
-        foreach (string arg in args)
-        {
-            if (arg.Contains("-zoom:"))
-            {
-                string argNew = arg.Replace("-zoom:", "");
-                if (argNew.All(char.IsNumber))
-                {
-                    argsStructure.Zoom = int.Parse(argNew);
-                    continue;
-                }
-            }
-
-            if (Enum.TryParse(arg, out TypeMap _))
-            {
-                argsStructure.TypeMap = (TypeMap)Enum.Parse(typeof(TypeMap), arg);
-                continue;
-            }
-
-            if (Directory.Exists(arg) || File.Exists(arg))
-            {
-                argsStructure.PathToSave = arg;
-            }
-        }
-    }
-
-    private static void SelectCommand(string nameCommand, ArgsFromConsole args)
-    {
-        IMapProvider mapProvider;
-        switch (args.NameProvider)
-        {
-            case MapProvider.xam:
-                mapProvider = new Xam();
-                break;
-
-            case MapProvider.ginfo:
-                mapProvider = new Ginfo();
-                break;
-
-            default:
-                mapProvider = new Xam();
-                break;
-        }
-
-        ImageRetrieve imageRetrieve = new(mapProvider, args.NameMap, args.TypeMap, args.Zoom, args.PathToSave);
-        switch (nameCommand)
+        ImageRetrieve imageRetrieve = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, arg.PathToSave);
+        switch (arg.Command)
         {
             case "GetMap":
                 imageRetrieve.GetMap();
@@ -138,6 +54,13 @@ public static class Program
             case "MergePartsMap":
                 imageRetrieve.MergePartsMap();
                 break;
+
+            default:
+                //TODO: add error message
+                throw new Exception("");
         }
+
+        stopWatch.Stop();
+        Console.WriteLine($"All time: {stopWatch.Elapsed}");
     }
 }
