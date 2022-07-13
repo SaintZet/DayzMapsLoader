@@ -1,21 +1,10 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿namespace RequestsHub.Domain.DataTypes.Maps;
 
-namespace RequestsHub.Domain.DataTypes.Maps;
-
-internal class Chernorus : IMap
+internal class Chernorus : AbstractMap
 {
-#pragma warning disable CS8618
+    public Chernorus(Dictionary<int, MapSize> keyValue, ImageExtension ext, string name, List<TypeMap> types, string ver, bool IQuad = false)
+        : base(keyValue, ext, name, types, ver, IQuad)
+    { }
 
-    public Chernorus()
-    {
-    }
-
-#pragma warning restore CS8618
-    public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
-    public MapName MapName => MapName.chernorus;
-    public List<TypeMap> TypesMap { get; set; }
-    public string Version { get; set; }
-    public string MapNameForProvider { get; set; }
-    public ImageExtension MapExtension { get; set; }
-    public bool IsFirstQuadrant { get; set; }
+    public override MapName MapName => MapName.chernorus;
 }

@@ -22,7 +22,7 @@ internal class Xam : IMapProvider
 
     public List<IMap> Maps { get; }
 
-    public IMapBuilder Builder { get; }
+    public AbstractMapBuilder Builder { get; }
 
     public MapProvider Name { get => MapProvider.xam; }
 }
