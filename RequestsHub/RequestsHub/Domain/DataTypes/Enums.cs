@@ -1,31 +1,37 @@
-﻿namespace RequestsHub.Domain.DataTypes
+﻿namespace RequestsHub.Domain.DataTypes;
+
+public enum Direction
 {
-    public enum Direction
-    {
-        horizontal,
-        vertical,
-    }
+    horizontal,
+    vertical,
+}
 
-    public enum MapsProvider
-    {
-        xam,
-        ginfo,
-    }
+public enum MapProvider
+{
+    xam,
+    ginfo,
+}
 
-    public enum NameMap
-    {
-        chernorus,
-        livonia,
-        namalsk,
-        esseker,
-        takistan,
-        banov
-    }
+public enum MapName
+{
+    chernorus,
+    livonia,
+    namalsk,
+    esseker,
+    takistan,
+    banov
+}
 
-    public enum TypeMap
-    {
-        topographic,
-        satellite,
-        tourist
-    }
+public enum TypeMap
+{
+    topographic,
+    satellite,
+    tourist
+}
+
+public enum ImageExtension
+{
+    png,
+    jpg,
+    webp,
 }

@@ -1,23 +1,10 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿namespace RequestsHub.Domain.DataTypes.Maps;
 
-namespace RequestsHub.Domain.DataTypes.Maps
+internal class Banov : AbstractMap
 {
-    internal class Banov : IMap
-    {
-        public Banov(Dictionary<int, MapSize> keyValuePairsSize, List<TypeMap> typesMap, string version)
-        {
-            KeyValuePairsSize = keyValuePairsSize;
-            TypesMap = typesMap;
-            Version = version;
-        }
+    public Banov(Dictionary<int, MapSize> keyValue, ImageExtension ext, string name, List<TypeMap> types, string ver, bool IQuad = false)
+        : base(keyValue, ext, name, types, ver, IQuad)
+    { }
 
-        public Banov()
-        {
-        }
-
-        public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
-        public NameMap Name => NameMap.banov;
-        public List<TypeMap> TypesMap { get; set; }
-        public string Version { get; set; }
-    }
+    public override MapName MapName => MapName.banov;
 }

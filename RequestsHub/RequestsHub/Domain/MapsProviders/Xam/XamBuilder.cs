@@ -3,9 +3,9 @@ using RequestsHub.Domain.DataTypes.Maps;
 
 namespace RequestsHub.Domain.MapsProviders;
 
-internal class GinfoBuilder : IMapBuilder
+internal class XamBuilder : IMapBuilder
 {
-    //https://maps.izurvive.com/maps/ChernarusPlus-Top/1.0.0/tiles/8/246/255.webp
+    //https://static.xam.nu/dayz/maps/chernarusplus/1.17-1/topographic/0/0/0.jpg
     public override Chernorus InitializeChernorus()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -18,15 +18,14 @@ internal class GinfoBuilder : IMapBuilder
             {5, new MapSize(32, 32)},
             {6, new MapSize(64, 64)},
             {7, new MapSize(128, 128)},
-            {8, new MapSize(256, 256)},
         };
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Chernorus(KeyValuePairsSize, ImageExtension.webp, "ChernarusPlus", typesMap, "1.0.0");
+        return new Chernorus(KeyValuePairsSize, ImageExtension.jpg, "chernarusplus", typesMap, "1.17-1");
     }
 
-    //https://maps.izurvive.com/maps/Livonia-Top/1.17/tiles/7/127/0.png
+    //https://static.xam.nu/dayz/maps/livonia/1.17-1/topographic/7/127/127.jpg
     public override Livonia InitializeLivonia()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -43,10 +42,10 @@ internal class GinfoBuilder : IMapBuilder
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Livonia(KeyValuePairsSize, ImageExtension.png, "Livonia", typesMap, "1.17", true);
+        return new Livonia(KeyValuePairsSize, ImageExtension.jpg, "livonia", typesMap, "1.17-1");
     }
 
-    //https://maps.izurvive.com/maps/Banov-Top/1.4.1/tiles/4/12/11.webp
+    //https://static.xam.nu/dayz/maps/banov/04.04/topographic/7/127/127.jpg
     public override Banov InitializeBanov()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -63,10 +62,10 @@ internal class GinfoBuilder : IMapBuilder
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Banov(KeyValuePairsSize, ImageExtension.webp, "Banov", typesMap, "1.4.1");
+        return new Banov(KeyValuePairsSize, ImageExtension.jpg, "banov", typesMap, "04.04");
     }
 
-    //https://maps.izurvive.com/maps/Esseker-Top/1.1.0/tiles/4/7/7.png
+    //https://static.xam.nu/dayz/maps/esseker/0.58/topographic/0/0/0.jpg
     public override Esseker InitializeEsseker()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -83,10 +82,10 @@ internal class GinfoBuilder : IMapBuilder
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Esseker(KeyValuePairsSize, ImageExtension.png, "Esseker", typesMap, "1.1.0", true);
+        return new Esseker(KeyValuePairsSize, ImageExtension.jpg, "esseker", typesMap, "0.58");
     }
 
-    //https://maps.izurvive.com/maps/Namalsk-Top/0.1.0/tiles/7/0/0.png
+    //https://static.xam.nu/dayz/maps/namalsk/04.19/topographic/7/127/127.jpg
     public override Namalsk InitializeNamalsk()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -103,10 +102,10 @@ internal class GinfoBuilder : IMapBuilder
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Namalsk(KeyValuePairsSize, ImageExtension.png, "Namalsk", typesMap, "0.1.0", true);
+        return new Namalsk(KeyValuePairsSize, ImageExtension.jpg, "namalsk", typesMap, "04.19");
     }
 
-    //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/7/0/0.png
+    //https://static.xam.nu/dayz/maps/takistanplus/1.041/topographic/7/127/127.jpg
     public override Takistan InitializeTakistan()
     {
         Dictionary<int, MapSize> KeyValuePairsSize = new()
@@ -123,6 +122,6 @@ internal class GinfoBuilder : IMapBuilder
 
         List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
 
-        return new Takistan(KeyValuePairsSize, ImageExtension.png, "TakistanPlus", typesMap, "1.1.0", true);
+        return new Takistan(KeyValuePairsSize, ImageExtension.jpg, "takistanplus", typesMap, "1.041");
     }
 }
