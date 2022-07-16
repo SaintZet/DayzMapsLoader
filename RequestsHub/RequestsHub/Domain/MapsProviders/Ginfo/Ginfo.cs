@@ -21,5 +21,5 @@ internal class Ginfo : IMapProvider
 
     public List<IMap> Maps { get; }
     public MapProvider Name { get => MapProvider.ginfo; }
-    public IMapBuilder Builder { get; }
+    public AbstractMapBuilder Builder { get; }
 }

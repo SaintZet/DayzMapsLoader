@@ -1,9 +1,8 @@
-﻿using RequestsHub.Domain.Contracts;
-using RequestsHub.Domain.DataTypes.Maps;
+﻿using RequestsHub.Domain.DataTypes.Maps;
 
 namespace RequestsHub.Domain.MapsProviders;
 
-internal class XamBuilder : IMapBuilder
+internal class XamBuilder : AbstractMapBuilder
 {
     //https://static.xam.nu/dayz/maps/chernarusplus/1.17-1/topographic/0/0/0.jpg
     public override Chernorus InitializeChernorus()

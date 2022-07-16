@@ -1,10 +1,12 @@
-﻿namespace RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Domain.MapsProviders;
+
+namespace RequestsHub.Domain.Contracts;
 
 internal interface IMapProvider
 {
     abstract List<IMap> Maps { get; }
     abstract MapProvider Name { get; }
-    abstract IMapBuilder Builder { get; }
+    abstract AbstractMapBuilder Builder { get; }
 
     //public void GetMap(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImage);
     //public void GetMapInParts(NameMap nameMap, TypeMap typeMap, int zoom, string pathToSaveImages);

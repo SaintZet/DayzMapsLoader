@@ -1,9 +1,8 @@
-﻿using RequestsHub.Domain.Contracts;
-using RequestsHub.Domain.DataTypes.Maps;
+﻿using RequestsHub.Domain.DataTypes.Maps;
 
 namespace RequestsHub.Domain.MapsProviders;
 
-internal class GinfoBuilder : IMapBuilder
+internal class GinfoBuilder : AbstractMapBuilder
 {
     //https://maps.izurvive.com/maps/ChernarusPlus-Top/1.0.0/tiles/8/246/255.webp
     public override Chernorus InitializeChernorus()

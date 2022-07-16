@@ -1,8 +1,8 @@
 ﻿using RequestsHub.Domain.DataTypes.Maps;
 
-namespace RequestsHub.Domain.Contracts;
+namespace RequestsHub.Domain.MapsProviders;
 
-internal abstract class IMapBuilder
+internal abstract class AbstractMapBuilder
 {
     public abstract Chernorus InitializeChernorus();
 
