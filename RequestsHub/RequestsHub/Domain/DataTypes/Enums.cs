@@ -35,3 +35,13 @@ public enum ImageExtension
     jpg,
     webp,
 }
+
+public enum CommandType
+{
+    GetAllMaps,
+    GetAllMapsInParts,
+    GetMap,
+    GetMapInParts,
+    MergePartsMap,
+    MergePartsAllMaps,
+}
