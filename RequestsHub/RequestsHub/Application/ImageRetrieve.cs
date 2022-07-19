@@ -2,9 +2,7 @@
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
 using RequestsHub.Presentation.ConsoleServices;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Linq;
 
 namespace RequestsHub.Application;
 
@@ -46,13 +44,14 @@ public class ImageRetrieve
         Validate.CheckTypeAtMap(map, typeMap);
         Validate.CheckZoomAtMap(map, zoom);
 
+        MergeImages mergeImages = new();
         localSave.FolderMap = map.MapName.ToString();
         string pathSource = $"{localSave.GeneralPath}";
+        var bitmap = mergeImages.MergeAndSave(pathSource);
 
         string pathSave = $@"{localSave.GeneralPath}\{map.MapName}.{map.MapExtension}";
         Directory.CreateDirectory(pathSave);
-
-        new MergeImages().MergeAndSave(pathSource, pathSave);
+        localSave.SaveImagesToHardDisk(bitmap, pathSave);
     }
 
     private void GetAllMapsInParts() => mapProvider.Maps.ForEach(x => GetMapInParts(x));
@@ -63,13 +62,15 @@ public class ImageRetrieve
         Validate.CheckTypeAtMap(map, typeMap);
         Validate.CheckZoomAtMap(map, zoom);
 
+        MergeImages mergeImages = new();
         byte[,][] image = GetImageFromProvider(map);
+        var bitmap = mergeImages.MergeAndSave(image);
 
         localSave.FolderMap = map.MapName.ToString();
         string path = $@"{localSave.GeneralPath}\{map.MapName}.{map.MapExtension}";
         Directory.CreateDirectory(localSave.GeneralPath);
 
-        new MergeImages().MergeAndSave(image, path);
+        localSave.SaveImagesToHardDisk(bitmap, path);
     }
 
     private void GetMapInParts(IMap map)
@@ -80,15 +81,14 @@ public class ImageRetrieve
 
         byte[,][] image = GetImageFromProvider(map);
 
-        localSave.FolderMap = map.MapName.ToString();
-
         Stopwatch stopWatch = new();
         stopWatch.Start();
 
+        localSave.FolderMap = map.MapName.ToString();
         localSave.SaveImagesToHardDisk(image, map.MapExtension);
 
         stopWatch.Stop();
-        Console.WriteLine("time: {0}", stopWatch.Elapsed);
+        Console.WriteLine($"time: {stopWatch.Elapsed}");
     }
 
     private void MergePartsAllMaps() => mapProvider.Maps.ForEach(x => MergePartsMap(x));
@@ -98,13 +98,14 @@ public class ImageRetrieve
         Stopwatch stopWatch = new Stopwatch();
         stopWatch.Start();
 
-        var axis = LookupAxis(map);
-        int axisY = axis.y;
-        int axisX = axis.y;
+        var pair = map.KeyValuePairsSize.SingleOrDefault(x => x.Key == zoom);
+
+        int axisY = pair.Value.Height;
+        int axisX = pair.Value.Width;
 
         byte[,][] verticals = new byte[axisY, axisX][];
 
-        WebClient webClient = new();
+        HttpClient webClient = new();
 
         var queryBuilder = new QueryBuilder(mapProvider, map, typeMap, zoom);
         string query;
@@ -117,10 +118,9 @@ public class ImageRetrieve
                 for (int x = 0; x < axisX; x++)
                 {
                     query = map.IsFirstQuadrant ? query = queryBuilder.GetQuery(x, yReversed) : query = queryBuilder.GetQuery(x, y);
+                    verticals[x, y] = await webClient.GetByteArrayAsync(query);
 
-                    verticals[x, y] = webClient.DownloadData(query);
-
-                    progress.Report((double)(y * axisX + x) / (axisX * axisY));
+                    progress.Report((double)((y * axisX) + x) / (axisX * axisY));
                 }
                 yReversed--;
             }
@@ -130,15 +130,5 @@ public class ImageRetrieve
         Console.Write(" time: {0} ", stopWatch.Elapsed);
 
         return verticals;
-    }
-
-    private (int x, int y) LookupAxis(IMap map)
-    {
-        foreach (var item in map.KeyValuePairsSize.Where(item => item.Key == zoom))
-        {
-            return (x: item.Value.Width, y: item.Value.Height);
-        }
-        //TODO: message.
-        throw new Exception();
     }
 }

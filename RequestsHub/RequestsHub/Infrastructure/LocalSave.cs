@@ -1,5 +1,6 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Presentation.ConsoleServices;
+using System.Drawing;
 
 namespace RequestsHub.Infrastructure
 {
@@ -43,6 +44,11 @@ namespace RequestsHub.Infrastructure
                     }
                 }
             }
+        }
+
+        internal void SaveImagesToHardDisk(Bitmap image, string pathSave)
+        {
+            throw new NotImplementedException();
         }
     }
 }

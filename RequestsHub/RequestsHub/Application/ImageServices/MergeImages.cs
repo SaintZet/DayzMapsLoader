@@ -15,7 +15,7 @@ internal class MergeImages
         this.yLength = yLength;
     }
 
-    public void MergeAndSave(byte[,][] source, string PathSave)
+    public Bitmap MergeAndSave(byte[,][] source)
     {
         Stopwatch stopWatch = new();
         stopWatch.Start();
@@ -51,13 +51,13 @@ internal class MergeImages
             }
             graphic.Save();
         }
-        bitmap.Save(PathSave, ImageFormat.Bmp);
-
         stopWatch.Stop();
         Console.WriteLine("time: {0}", stopWatch.Elapsed);
+
+        return bitmap;
     }
 
-    public void MergeAndSave(string resourcePath, string PathSave)
+    public Bitmap MergeAndSave(string resourcePath)
     {
         Stopwatch stopWatch = new();
         stopWatch.Start();
@@ -99,10 +99,11 @@ internal class MergeImages
             }
             graphic.Save();
         }
-        bitmap.Save(PathSave, ImageFormat.Bmp);
-
         stopWatch.Stop();
         Console.WriteLine("time: {0}", stopWatch.Elapsed);
+
+        return bitmap;
+        //bitmap.Save(PathSave, ImageFormat.Bmp);
     }
 
     private List<string> GetMapPieces(string currentDirectoryName) => new DirectoryInfo(currentDirectoryName).GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
