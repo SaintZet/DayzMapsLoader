@@ -29,8 +29,7 @@ internal class MergeImages
         using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
         using (Graphics graphic = Graphics.FromImage(bitmap))
         {
-            Console.Write("Merge ");
-            using (ProgressBar progress = new())
+            using (ProgressBar progress = new("Merge "))
             {
                 for (int y = 0; y < countVerticals; y++)
                 {
@@ -76,8 +75,7 @@ internal class MergeImages
         {
             int height, width;
 
-            Console.Write("Merge ");
-            using (ProgressBar progress = new())
+            using (ProgressBar progress = new("Merge "))
             {
                 for (int y = 0; y < verticals.Count; y++)
                 {

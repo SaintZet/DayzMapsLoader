@@ -27,6 +27,11 @@ internal class ProgressBar : IDisposable, IProgress<double>
         }
     }
 
+    public ProgressBar(string previousMessage) : this()
+    {
+        Console.Write(previousMessage);
+    }
+
     public void Report(double value)
     {
         // Make sure value is in [0..1] range

@@ -18,13 +18,13 @@ internal static class Validate
         throw new ArgumentException("");
     }
 
-    public static IMap CheckMapAtProvider(IMapProvider mapProvider, MapName nameMap)
+    public static bool CheckMapAtProvider(IMapProvider mapProvider, MapName nameMap)
     {
         foreach (var map in mapProvider.Maps)
         {
             if (map.MapName == nameMap)
             {
-                return map;
+                return true;
             }
         }
         //TODO:Write error message.
