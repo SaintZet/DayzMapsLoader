@@ -7,14 +7,12 @@ internal class Args
 {
     public Args(string[] args)
     {
-        if (args.Length == 2)
-        {
-            Command = args[0]; //TODO: add validation
+        Command = (CommandType)Enum.Parse(typeof(CommandType), args[0]);
 
-            MapProvider nameProvider = (MapProvider)Enum.Parse(typeof(MapProvider), args[1]);
-            Provider = SelectProvider(nameProvider);
-        }
-        else if (args.Length > 2 && args.Length < 7)
+        MapProvider nameProvider = (MapProvider)Enum.Parse(typeof(MapProvider), args[1]);
+        Provider = SelectProvider(nameProvider);
+
+        if (args.Length > 2 && args.Length < 7)
         {
             ValidateOptionParams(args);
         }
@@ -24,11 +22,11 @@ internal class Args
         }
     }
 
-    public string Command { get; internal set; }
+    public CommandType Command { get; internal set; }
     public IMapProvider Provider { get; internal set; }
     public MapName NameMap { get; internal set; } = MapName.chernorus;
     public TypeMap TypeMap { get; internal set; } = TypeMap.topographic;
-    public int Zoom { get; internal set; } = 0;
+    public int Zoom { get; internal set; }
     public string PathToSave { get; internal set; } = string.Empty;
 
     private IMapProvider SelectProvider(MapProvider nameProvider)
@@ -48,7 +46,7 @@ internal class Args
 
     private void ValidateOptionParams(string[] args)
     {
-        if (Command != "MergePartsAllMap" && Command != "GetAllMaps" && Command != "GetAllMapsInParts")
+        if (Command != CommandType.MergePartsAllMaps && Command != CommandType.GetAllMaps && Command != CommandType.GetAllMapsInParts)
         {
             NameMap = (MapName)Enum.Parse(typeof(MapName), args[2]);
         }

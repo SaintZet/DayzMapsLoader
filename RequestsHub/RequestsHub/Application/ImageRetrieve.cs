@@ -13,6 +13,7 @@ public class ImageRetrieve
     private readonly int zoom;
     private readonly TypeMap typeMap;
     private readonly PathService pathsService;
+    private readonly Dictionary<CommandType, Action> commands = new();
 
     [NotNull]
     private IMap currentMap = default!;
@@ -25,19 +26,21 @@ public class ImageRetrieve
 
         pathsService = InitializePathService(pathsToSave, nameMap);
         Console.WriteLine($"Directory to save: {pathsService.GeneralFolder}");
+
+        commands.Add(CommandType.GetAllMaps, new Action(GetAllMaps));
+        commands.Add(CommandType.GetAllMapsInParts, new Action(GetAllMapsInParts));
+        commands.Add(CommandType.GetMap, new Action(GetMap));
+        commands.Add(CommandType.GetMapInParts, new Action(GetMapInParts));
+        commands.Add(CommandType.MergePartsMap, new Action(MergePartsMap));
+        commands.Add(CommandType.MergePartsAllMaps, new Action(MergePartsAllMaps));
     }
 
-    public void MergePartsMap()
+    public void ExecuteCommand(CommandType command)
     {
-        string pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
-
-        Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
-        string pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
-
-        new MergeImages().MergeAndSave(pathSource, pathSave);
+        commands[command]();
     }
 
-    public void GetAllMaps()
+    private void GetAllMaps()
     {
         foreach (IMap map in mapProvider.Maps)
         {
@@ -47,7 +50,17 @@ public class ImageRetrieve
         }
     }
 
-    public void GetAllMapsInParts()
+    private void MergePartsMap()
+    {
+        string pathSource = $"{pathsService.GeneralPathToFolderWithFile}";
+
+        Directory.CreateDirectory(pathsService.GeneralPathToFolderWithFile);
+        string pathSave = $@"{pathsService.GeneralPathToFolderWithFile}\{currentMap.MapName}.{currentMap.MapExtension}";
+
+        new MergeImages().MergeAndSave(pathSource, pathSave);
+    }
+
+    private void GetAllMapsInParts()
     {
         foreach (var map in mapProvider.Maps)
         {
@@ -57,7 +70,7 @@ public class ImageRetrieve
         }
     }
 
-    public void GetMap()
+    private void GetMap()
     {
         byte[,][] source = GetImageFromProvider();
 
@@ -67,13 +80,13 @@ public class ImageRetrieve
         new MergeImages().MergeAndSave(source, path);
     }
 
-    public void GetMapInParts()
+    private void GetMapInParts()
     {
         byte[,][] source = GetImageFromProvider();
         SaveImagesToHardDisk(source);
     }
 
-    public void MergePartsAllMaps()
+    private void MergePartsAllMaps()
     {
         foreach (IMap map in mapProvider.Maps)
         {
@@ -92,6 +105,7 @@ public class ImageRetrieve
         Validate.CheckZoomAtMap(currentMap, zoom);
 
         string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name) ?? default!;
+
         return new PathService(pathsToSave, providerName, currentMap.MapName.ToString(), typeMap.ToString(), zoom.ToString());
     }
 

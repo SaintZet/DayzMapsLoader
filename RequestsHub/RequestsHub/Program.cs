@@ -1,8 +1,6 @@
 ﻿global using System.Diagnostics;
 global using RequestsHub.Domain.DataTypes;
 using RequestsHub.Application;
-using RequestsHub.Domain.Contracts;
-using RequestsHub.Domain.MapsProviders;
 using RequestsHub.Infrastructure;
 using RequestsHub.Presentation.ConsoleServices;
 
@@ -29,38 +27,11 @@ public static class Program
         Args arg = new(args);
 
         ImageRetrieve imageRetrieve = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, arg.PathToSave);
-        switch (arg.Command)
-        {
-            case "GetMap":
-                imageRetrieve.GetMap();
-                break;
-
-            case "GetMapInParts":
-                imageRetrieve.GetMapInParts();
-                break;
-
-            case "GetAllMapsInParts":
-                imageRetrieve.GetAllMapsInParts();
-                break;
-
-            case "GetAllMaps":
-                imageRetrieve.GetAllMaps();
-                break;
-
-            case "MergePartsAllMaps":
-                imageRetrieve.MergePartsAllMaps();
-                break;
-
-            case "MergePartsMap":
-                imageRetrieve.MergePartsMap();
-                break;
-
-            default:
-                //TODO: add error message
-                throw new Exception("");
-        }
+        imageRetrieve.ExecuteCommand(arg.Command);
 
         stopWatch.Stop();
         Console.WriteLine($"All time: {stopWatch.Elapsed}");
+
+        Console.ReadLine();
     }
 }
