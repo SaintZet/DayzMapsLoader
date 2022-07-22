@@ -6,5 +6,5 @@ internal class Chernorus : AbstractMap
         : base(keyValue, ext, name, types, ver, IQuad)
     { }
 
-    public override MapName MapName => MapName.chernorus;
+    public override MapName Name => MapName.chernorus;
 }

@@ -6,5 +6,5 @@ internal class Banov : AbstractMap
         : base(keyValue, ext, name, types, ver, IQuad)
     { }
 
-    public override MapName MapName => MapName.banov;
+    public override MapName Name => MapName.banov;
 }

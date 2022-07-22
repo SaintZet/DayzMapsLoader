@@ -22,7 +22,7 @@ internal static class Validate
     {
         foreach (var map in mapProvider.Maps)
         {
-            if (map.MapName == nameMap)
+            if (map.Name == nameMap)
             {
                 return true;
             }

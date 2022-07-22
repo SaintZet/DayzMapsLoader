@@ -1,18 +1,19 @@
 ﻿using RequestsHub.Application.Services.ImageServices;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
-using RequestsHub.Presentation.ConsoleServices;
 using System.Net;
 
 namespace RequestsHub.Application;
 
 public class ImageRetrieve
 {
+    //TODO: Delete before merge with master.
+    private const double qualityImage = 0.5;
     private readonly IMapProvider mapProvider;
     private readonly int zoom;
     private readonly TypeMap typeMap;
-    private readonly LocalSave localSave;
     private readonly Dictionary<CommandType, Action> commands = new();
+    private LocalSave generalSettings;
 
     internal ImageRetrieve(IMapProvider mapProvider, MapName nameMap, TypeMap typeMap, int zoom, string directory)
     {
@@ -23,8 +24,8 @@ public class ImageRetrieve
         string generalDirectory = Validate.PathToSave(directory);
         string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name) ?? default!;
 
-        localSave = new LocalSave(generalDirectory, providerName, typeMap.ToString(), zoom.ToString());
-        Console.WriteLine($"Directory to save: {localSave.GeneralFolder}");
+        generalSettings = new LocalSave(generalDirectory, providerName, typeMap.ToString(), zoom.ToString());
+        Console.WriteLine($"Directory to save: {generalSettings.GeneralFolder}");
 
         commands.Add(CommandType.GetAllMaps, new Action(GetAllMaps));
         commands.Add(CommandType.GetAllMapsInParts, new Action(GetAllMapsInParts));
@@ -36,68 +37,66 @@ public class ImageRetrieve
 
     public void ExecuteCommand(CommandType command) => commands[command]();
 
-    private void GetAllMaps() => mapProvider.Maps.ForEach(x => GetMap(x));
+    public void GetAllMaps() => Parallel.ForEach(mapProvider.Maps, GetMap);
 
     private void MergePartsMap(IMap map)
     {
-        Validate.CheckMapAtProvider(mapProvider, map.MapName);
+        Validate.CheckMapAtProvider(mapProvider, map.Name);
         Validate.CheckTypeAtMap(map, typeMap);
         Validate.CheckZoomAtMap(map, zoom);
 
-        MergeImages mergeImages = new();
-        localSave.FolderMap = map.MapName.ToString();
-        string pathSource = $"{localSave.GeneralPath}";
-        var bitmap = mergeImages.MergeAndSave(pathSource);
+        MergeSquareImages mergeImages = new(qualityImage);
+        LocalSave save = new(generalSettings);
+        save.FolderMap = map.Name.ToString();
 
-        string pathSave = $@"{localSave.GeneralPath}\{map.MapName}.{map.MapExtension}";
-        Directory.CreateDirectory(pathSave);
-        localSave.SaveImagesToHardDisk(bitmap, pathSave);
+        var image = mergeImages.Merge(save.GeneralPath);
+        string pathSave = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
+
+        save.SaveImageToHardDisk(image, pathSave);
     }
 
-    private void GetAllMapsInParts() => mapProvider.Maps.ForEach(x => GetMapInParts(x));
+    private void GetAllMapsInParts() => Parallel.ForEach(mapProvider.Maps, GetMapInParts);
 
     private void GetMap(IMap map)
     {
-        Validate.CheckMapAtProvider(mapProvider, map.MapName);
+        Validate.CheckMapAtProvider(mapProvider, map.Name);
         Validate.CheckTypeAtMap(map, typeMap);
         Validate.CheckZoomAtMap(map, zoom);
 
-        MergeImages mergeImages = new();
+        LocalSave save = new(generalSettings)
+        {
+            FolderMap = map.Name.ToString()
+        };
+
+        string path = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
+        Directory.CreateDirectory(save.GeneralPath);
+
+        MergeSquareImages mergeImages = new(qualityImage);
         byte[,][] image = GetImageFromProvider(map);
-        var bitmap = mergeImages.MergeAndSave(image);
+        var bitmap = mergeImages.Merge(image);
 
-        localSave.FolderMap = map.MapName.ToString();
-        string path = $@"{localSave.GeneralPath}\{map.MapName}.{map.MapExtension}";
-        Directory.CreateDirectory(localSave.GeneralPath);
-
-        localSave.SaveImagesToHardDisk(bitmap, path);
+        save.SaveImageToHardDisk(bitmap, path);
     }
 
     private void GetMapInParts(IMap map)
     {
-        Validate.CheckMapAtProvider(mapProvider, map.MapName);
+        Validate.CheckMapAtProvider(mapProvider, map.Name);
         Validate.CheckTypeAtMap(map, typeMap);
         Validate.CheckZoomAtMap(map, zoom);
 
         byte[,][] image = GetImageFromProvider(map);
 
-        Stopwatch stopWatch = new();
-        stopWatch.Start();
-
-        localSave.FolderMap = map.MapName.ToString();
-        localSave.SaveImagesToHardDisk(image, map.MapExtension);
-
-        stopWatch.Stop();
-        Console.WriteLine($"time: {stopWatch.Elapsed}");
+        LocalSave save = new(generalSettings)
+        {
+            FolderMap = map.Name.ToString()
+        };
+        save.SaveImageToHardDisk(image, map.MapExtension);
     }
 
-    private void MergePartsAllMaps() => mapProvider.Maps.ForEach(x => MergePartsMap(x));
+    private void MergePartsAllMaps() => Parallel.ForEach(mapProvider.Maps, MergePartsMap);
 
     private byte[,][] GetImageFromProvider(IMap map)
     {
-        Stopwatch stopWatch = new Stopwatch();
-        stopWatch.Start();
-
         var pair = map.KeyValuePairsSize.SingleOrDefault(x => x.Key == zoom);
 
         int axisY = pair.Value.Height;
@@ -105,30 +104,27 @@ public class ImageRetrieve
 
         byte[,][] verticals = new byte[axisY, axisX][];
 
-        HttpClient webClient = new();
+        WebClient webClient = new WebClient();
 
         var queryBuilder = new QueryBuilder(mapProvider, map, typeMap, zoom);
         string query;
 
-        using (ProgressBar progress = new($"Download {map.MapName}".PadRight(20)))
+        int yReversed = axisY - 1;
+        for (int y = 0; y < axisY; y++)
         {
-            int yReversed = axisY - 1;
-            for (int y = 0; y < axisY; y++)
+            for (int x = 0; x < axisX; x++)
             {
-                for (int x = 0; x < axisX; x++)
-                {
-                    query = map.IsFirstQuadrant ? query = queryBuilder.GetQuery(x, yReversed) : query = queryBuilder.GetQuery(x, y);
-                    verticals[x, y] = await webClient.GetByteArrayAsync(query);
-
-                    progress.Report((double)((y * axisX) + x) / (axisX * axisY));
-                }
-                yReversed--;
+                query = map.IsFirstQuadrant ? query = queryBuilder.GetQuery(x, yReversed) : query = queryBuilder.GetQuery(x, y);
+                verticals[x, y] = webClient.DownloadData(query);
             }
+            yReversed--;
         }
-
-        stopWatch.Stop();
-        Console.Write(" time: {0} ", stopWatch.Elapsed);
 
         return verticals;
     }
+
+    //private async Task<byte[]> GetPeaceAsync(int x, int y, string query)
+    //{
+    //    return await webClient.GetByteArrayAsync(query);
+    //}
 }
