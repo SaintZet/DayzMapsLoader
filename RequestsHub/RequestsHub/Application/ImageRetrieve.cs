@@ -38,6 +38,7 @@ public class ImageRetrieve
 
     public void ExecuteCommand(CommandType command) => commands[command]();
 
+
     public void GetAllMaps() => Parallel.ForEach(mapProvider.Maps, GetMap);
 
     private void MergePartsMap(IMap map)
@@ -106,6 +107,7 @@ public class ImageRetrieve
         byte[,][] verticals = new byte[axisY, axisX][];
 
         WebClient webClient = new WebClient();
+        //HttpClient webClient = new();
 
         var queryBuilder = new QueryBuilder(mapProvider, map, typeMap, zoom);
         string query;

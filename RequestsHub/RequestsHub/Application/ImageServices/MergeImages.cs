@@ -55,7 +55,6 @@ internal class MergeSquareImages
             }
             graphic.Save();
         }
-
         return bitmap;
     }
 
@@ -69,7 +68,7 @@ internal class MergeSquareImages
             int height, width;
             List<string> horizontal;
             List<string> verticals = GetMapVericals(resourcePath);
-
+            
             for (int y = 0; y < verticals.Count; y++)
             {
                 horizontal = GetMapHorizontal(verticals[y]);
@@ -90,7 +89,6 @@ internal class MergeSquareImages
             }
             graphic.Save();
         }
-
         return bitmap;
     }
 
