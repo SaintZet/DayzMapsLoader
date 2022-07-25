@@ -1,45 +1,28 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using System.Net;
+using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
-using System.Net;
 
 namespace RequestsHub.Application.ImageServices;
 
 internal static class DownloadImages
 {
-    internal static IMapProvider mapProvider;
+    internal static IMapProvider? mapProvider;
     internal static MapName mapName;
     internal static MapType mapType;
     internal static int mapZoom;
     internal static LocalSave? GeneralSettings;
+
     private const double qualityImage = 0.5;
 
-    public static void GetAllMaps() => Parallel.ForEach(mapProvider.Maps, GetMap);
+    internal static void GetAllMaps() => Parallel.ForEach(mapProvider!.Maps, GetMap);
 
-    public static void MergePartsMap(IMap map)
+    internal static void GetAllMapsInParts() => Parallel.ForEach(mapProvider!.Maps, GetMapInParts);
+
+    internal static void MergeAllMapsInParts() => Parallel.ForEach(mapProvider!.Maps, MergeMapParts);
+
+    internal static void GetMap(IMap map)
     {
-        Validate.CheckMapAtProvider(mapProvider, map.Name);
-        Validate.CheckTypeAtMap(map, mapType);
-        Validate.CheckZoomAtMap(map, mapZoom);
-
-        MergeSquareImages mergeImages = new(qualityImage);
-        LocalSave save = new(GeneralSettings!)
-        {
-            FolderMap = map.Name.ToString()
-        };
-
-        var image = mergeImages.Merge(save.GeneralPath);
-        string pathSave = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
-
-        save.SaveImageToHardDisk(image, pathSave);
-    }
-
-    public static void GetAllMapsInParts() => Parallel.ForEach(mapProvider.Maps, GetMapInParts);
-
-    public static void MergePartsAllMaps() => Parallel.ForEach(mapProvider.Maps, MergePartsMap);
-
-    public static void GetMap(IMap map)
-    {
-        Validate.CheckMapAtProvider(mapProvider, map.Name);
+        Validate.CheckMapAtProvider(mapProvider!, map.Name);
         Validate.CheckTypeAtMap(map, mapType);
         Validate.CheckZoomAtMap(map, mapZoom);
 
@@ -58,9 +41,9 @@ internal static class DownloadImages
         save.SaveImageToHardDisk(bitmap, path);
     }
 
-    public static void GetMapInParts(IMap map)
+    internal static void GetMapInParts(IMap map)
     {
-        Validate.CheckMapAtProvider(mapProvider, map.Name);
+        Validate.CheckMapAtProvider(mapProvider!, map.Name);
         Validate.CheckTypeAtMap(map, mapType);
         Validate.CheckZoomAtMap(map, mapZoom);
 
@@ -71,6 +54,24 @@ internal static class DownloadImages
             FolderMap = map.Name.ToString()
         };
         save.SaveImageToHardDisk(image, map.MapExtension);
+    }
+
+    internal static void MergeMapParts(IMap map)
+    {
+        Validate.CheckMapAtProvider(mapProvider!, map.Name);
+        Validate.CheckTypeAtMap(map, mapType);
+        Validate.CheckZoomAtMap(map, mapZoom);
+
+        MergeSquareImages mergeImages = new(qualityImage);
+        LocalSave save = new(GeneralSettings!)
+        {
+            FolderMap = map.Name.ToString()
+        };
+
+        var image = mergeImages.Merge(save.GeneralPath);
+        string pathSave = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
+
+        save.SaveImageToHardDisk(image, pathSave);
     }
 
     private static byte[,][] GetImageFromProvider(IMap map)
@@ -85,7 +86,7 @@ internal static class DownloadImages
         WebClient webClient = new WebClient();
         //HttpClient webClient = new();
 
-        var queryBuilder = new QueryBuilder(mapProvider, map, mapType, mapZoom);
+        var queryBuilder = new QueryBuilder(mapProvider!, map, mapType, mapZoom);
         string query;
 
         int yReversed = axisY - 1;

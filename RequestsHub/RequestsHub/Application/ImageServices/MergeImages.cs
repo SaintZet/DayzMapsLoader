@@ -11,7 +11,7 @@ internal class MergeSquareImages
     private readonly int factor;
     private readonly int resultSize;
 
-    public MergeSquareImages(double dpiImprovementPercent)
+    internal MergeSquareImages(double dpiImprovementPercent)
     {
         if (dpiImprovementPercent > 1 || dpiImprovementPercent < 0)
         {
@@ -22,7 +22,7 @@ internal class MergeSquareImages
         resultSize = sizeBeforeImprovement * factor;
     }
 
-    public Bitmap Merge(byte[,][] source)
+    internal Bitmap Merge(byte[,][] source)
     {
         Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
 
@@ -58,7 +58,7 @@ internal class MergeSquareImages
         return bitmap;
     }
 
-    public Bitmap Merge(string resourcePath)
+    internal Bitmap Merge(string resourcePath)
     {
         Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
 

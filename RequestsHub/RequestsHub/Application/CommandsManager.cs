@@ -1,5 +1,4 @@
-﻿using RequestsHub.Application.ImageServices;
-using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Domain.Contracts;
 
 namespace RequestsHub.Application;
 
@@ -40,6 +39,7 @@ internal class CommandsManager
             CommandType.GetAllMaps => new Action(ImageRetrieve.GetAllMaps),
             CommandType.GetAllMapsInParts => new Action(ImageRetrieve.GetAllMapsInParts),
             CommandType.MergePartsAllMaps => new Action(ImageRetrieve.MergePartsAllMaps),
+            //TODO: add error message
             _ => throw new NotImplementedException(),
         };
 
@@ -53,11 +53,10 @@ internal class CommandsManager
             CommandType.GetMapInParts => new Action<IMap>(ImageRetrieve.GetMap),
             CommandType.MergePartsMap => new Action<IMap>(ImageRetrieve.GetMapInParts),
             CommandType.MergePartsAllMaps => new Action<IMap>(ImageRetrieve.MergePartsMap),
+            //TODO: add error message
             _ => throw new NotImplementedException(),
         };
 
-        IMap map = imageRetrieve.InitializeMap();
-
-        ExecuteCommand.DynamicInvoke(map);
+        ExecuteCommand.DynamicInvoke(imageRetrieve.Map);
     }
 }

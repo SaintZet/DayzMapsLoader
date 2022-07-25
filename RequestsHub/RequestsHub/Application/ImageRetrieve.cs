@@ -6,24 +6,27 @@ namespace RequestsHub.Application;
 
 internal class ImageRetrieve
 {
+    internal IMap Map;
+
     internal ImageRetrieve(IMapProvider mapProvider, MapName mapName, MapType mapType, int mapZoom, string directory)
     {
-        DownloadImages.mapProvider = mapProvider;
         DownloadImages.mapName = mapName;
+        DownloadImages.mapProvider = mapProvider;
         DownloadImages.mapType = mapType;
         DownloadImages.mapZoom = mapZoom;
-
         DownloadImages.GeneralSettings = new LocalSave(directory, mapProvider.ToString(), mapType.ToString(), mapZoom.ToString());
+
+        Map = InitializeMap(mapProvider, mapName, mapType, mapZoom);
     }
 
-    internal static Action<IMap> GetMapInParts => DownloadImages.GetMapInParts;
     internal static Action GetAllMaps => DownloadImages.GetAllMaps;
     internal static Action GetAllMapsInParts => DownloadImages.GetAllMapsInParts;
-    internal static Action MergePartsAllMaps => DownloadImages.MergePartsAllMaps;
+    internal static Action MergePartsAllMaps => DownloadImages.MergeAllMapsInParts;
     internal static Action<IMap> GetMap => DownloadImages.GetMap;
-    internal static Action<IMap> MergePartsMap => DownloadImages.MergePartsMap;
+    internal static Action<IMap> GetMapInParts => DownloadImages.GetMapInParts;
+    internal static Action<IMap> MergePartsMap => DownloadImages.MergeMapParts;
 
-    internal IMap InitializeMap()
+    private static IMap InitializeMap(IMapProvider mapProvider, MapName mapName, MapType mapType, int mapZoom)
     {
         Validate.CheckMapAtProvider(mapProvider, mapName);
 
