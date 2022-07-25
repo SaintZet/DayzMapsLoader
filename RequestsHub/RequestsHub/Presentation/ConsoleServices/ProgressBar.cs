@@ -27,9 +27,9 @@ internal class ProgressBar : IDisposable, IProgress<double>
         }
     }
 
-    public ProgressBar(string previousMessage) : this()
+    public ProgressBar(string titileMessage) : this()
     {
-        Console.Write(previousMessage);
+        Console.Write(titileMessage);
     }
 
     public void Report(double value)

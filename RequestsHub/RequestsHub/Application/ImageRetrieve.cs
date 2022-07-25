@@ -24,6 +24,7 @@ public class ImageRetrieve
         string generalDirectory = Validate.PathToSave(directory);
         string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name) ?? default!;
 
+        //TODO: remove global variable
         generalSettings = new LocalSave(generalDirectory, providerName, typeMap.ToString(), zoom.ToString());
         Console.WriteLine($"Directory to save: {generalSettings.GeneralFolder}");
 

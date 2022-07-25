@@ -33,15 +33,14 @@ internal class MergeSquareImages
             int countVerticals = source.GetLength(0);
             int countHorizontals = source.GetLength(1);
 
-            MemoryStream ms = new();
+            //MemoryStream ms = new();
 
             for (int y = 0; y < countVerticals; y++)
             {
                 for (int x = 0; x < countHorizontals; x++)
                 {
-                    //TODO: Fix this.
-                    ms.Write(source[x, y], 0, source[x, y].Length);
-                    image = Image.FromStream(ms);
+                    //TODO: try to dont make every time new ms.
+                    image = Image.FromStream(new MemoryStream(source[x, y]));
 
                     height = image.Height * factor / countVerticals;
                     width = image.Width * factor / countHorizontals;
