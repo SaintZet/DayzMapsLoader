@@ -22,7 +22,7 @@ public enum MapName
     banov
 }
 
-public enum TypeMap
+public enum MapType
 {
     topographic,
     satellite,

@@ -12,7 +12,7 @@ internal class QueryBuilder
     private readonly string extension;
     private readonly IMapProvider mapProvider;
 
-    public QueryBuilder(IMapProvider mapProvider, IMap currentMap, TypeMap typeMap, int zoom)
+    public QueryBuilder(IMapProvider mapProvider, IMap currentMap, MapType typeMap, int zoom)
     {
         this.mapProvider = mapProvider;
         this.zoom = zoom.ToString();
@@ -50,7 +50,7 @@ internal class QueryBuilder
         throw new NotImplementedException("RequestsHub.Domain.Services.QueryBuilder.GetQuery: Add new provider in this method!");
     }
 
-    private string? GetTypeMap(TypeMap typeMap)
+    private string? GetTypeMap(MapType typeMap)
     {
         switch (mapProvider.Name)
         {
@@ -60,13 +60,13 @@ internal class QueryBuilder
             case MapProvider.ginfo:
                 switch (typeMap)
                 {
-                    case TypeMap.topographic:
+                    case MapType.topographic:
                         return "Top";
 
-                    case TypeMap.satellite:
+                    case MapType.satellite:
                         return "Sat";
 
-                    case TypeMap.tourist:
+                    case MapType.tourist:
                     default:
                         throw new NotImplementedException("RequestsHub.Domain.Services.QueryBuilder.GetTypeMap: Not support this type!");
                 }

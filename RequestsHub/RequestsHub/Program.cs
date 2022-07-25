@@ -30,8 +30,9 @@ public static class Program
         Console.WriteLine($"Directory to save: {directory}");
 
         ImageRetrieve imageRetrieve = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
+        CommandsManager commandsManager = new(imageRetrieve);
 
-        imageRetrieve.ExecuteCommand(arg.Command);
+        commandsManager.ExecuteCommand(arg.Command);
 
         stopWatch.Stop();
         Console.WriteLine($"All time: {stopWatch.Elapsed}");

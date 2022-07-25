@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace RequestsHub.Application.Services.ImageServices;
+namespace RequestsHub.Application.ImageServices;
 
 internal class MergeSquareImages
 {
@@ -68,7 +68,7 @@ internal class MergeSquareImages
             int height, width;
             List<string> horizontal;
             List<string> verticals = GetMapVericals(resourcePath);
-            
+
             for (int y = 0; y < verticals.Count; y++)
             {
                 horizontal = GetMapHorizontal(verticals[y]);
