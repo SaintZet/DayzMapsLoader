@@ -1,6 +1,7 @@
 ﻿using RequestsHub.Application.Services.ImageServices;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace RequestsHub.Application;
@@ -10,36 +11,83 @@ public class ImageRetrieve
     //TODO: Delete before merge with master.
     private const double qualityImage = 0.5;
     private readonly IMapProvider mapProvider;
-    private readonly int zoom;
+    private readonly MapName nameMap;
     private readonly TypeMap typeMap;
-    private readonly Dictionary<CommandType, Action> commands = new();
+    private readonly int zoom;
     private LocalSave generalSettings;
 
     internal ImageRetrieve(IMapProvider mapProvider, MapName nameMap, TypeMap typeMap, int zoom, string directory)
     {
         this.mapProvider = mapProvider;
+        this.nameMap = nameMap;
         this.typeMap = typeMap;
         this.zoom = zoom;
 
-        string generalDirectory = Validate.PathToSave(directory);
-        string providerName = Enum.GetName(typeof(MapProvider), mapProvider.Name) ?? default!;
-
-        //TODO: remove global variable
-        generalSettings = new LocalSave(generalDirectory, providerName, typeMap.ToString(), zoom.ToString());
-        Console.WriteLine($"Directory to save: {generalSettings.GeneralFolder}");
-
-        commands.Add(CommandType.GetAllMaps, new Action(GetAllMaps));
-        commands.Add(CommandType.GetAllMapsInParts, new Action(GetAllMapsInParts));
-        //commands.Add(CommandType.GetMap, new Action(GetMap));
-        //commands.Add(CommandType.GetMapInParts, new Action(GetMapInParts));
-        //commands.Add(CommandType.MergePartsMap, new Action(MergePartsMap));
-        commands.Add(CommandType.MergePartsAllMaps, new Action(MergePartsAllMaps));
+        generalSettings = new LocalSave(directory, mapProvider.ToString(), typeMap.ToString(), zoom.ToString());
     }
 
-    public void ExecuteCommand(CommandType command) => commands[command]();
+    public void ExecuteCommand(CommandType command)
+    {
+        switch (command)
+        {
+            case CommandType.GetAllMaps:
+            case CommandType.GetAllMapsInParts:
+            case CommandType.MergePartsAllMaps:
+                ExucuteMultipleCommands(command);
+                break;
 
+            case CommandType.GetMap:
+            case CommandType.GetMapInParts:
+            case CommandType.MergePartsMap:
+                ExecuteSingleCommand(command);
+                break;
+
+            default:
+                throw new NotImplementedException();
+        }
+    }
 
     public void GetAllMaps() => Parallel.ForEach(mapProvider.Maps, GetMap);
+
+    private void ExecuteSingleCommand(CommandType command)
+    {
+        Delegate ExecuteCommand = command switch
+        {
+            CommandType.GetMapInParts => new Action<IMap>(GetMap),
+            CommandType.MergePartsMap => new Action<IMap>(GetMapInParts),
+            CommandType.MergePartsAllMaps => new Action<IMap>(MergePartsMap),
+            _ => throw new NotImplementedException(),
+        };
+
+        IMap map = InitializeMap();
+
+        ExecuteCommand.DynamicInvoke(map);
+    }
+
+    private IMap InitializeMap()
+    {
+        Validate.CheckMapAtProvider(mapProvider, nameMap);
+
+        IMap map = mapProvider.Maps.SingleOrDefault(x => x.Name == nameMap)!;
+
+        Validate.CheckTypeAtMap(map, typeMap);
+        Validate.CheckZoomAtMap(map, zoom);
+
+        return map;
+    }
+
+    private void ExucuteMultipleCommands(CommandType command)
+    {
+        Delegate ExecuteCommand = command switch
+        {
+            CommandType.GetAllMaps => new Action(GetAllMaps),
+            CommandType.GetAllMapsInParts => new Action(GetAllMapsInParts),
+            CommandType.MergePartsAllMaps => new Action(MergePartsAllMaps),
+            _ => throw new NotImplementedException(),
+        };
+
+        ExecuteCommand.DynamicInvoke();
+    }
 
     private void MergePartsMap(IMap map)
     {
@@ -48,8 +96,10 @@ public class ImageRetrieve
         Validate.CheckZoomAtMap(map, zoom);
 
         MergeSquareImages mergeImages = new(qualityImage);
-        LocalSave save = new(generalSettings);
-        save.FolderMap = map.Name.ToString();
+        LocalSave save = new(generalSettings)
+        {
+            FolderMap = map.Name.ToString()
+        };
 
         var image = mergeImages.Merge(save.GeneralPath);
         string pathSave = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
