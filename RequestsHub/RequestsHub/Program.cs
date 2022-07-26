@@ -29,10 +29,8 @@ public static class Program
         string directory = Validate.PathToSave(arg.PathToSave);
         Console.WriteLine($"Directory to save: {directory}");
 
-        ImageRetrieve imageRetrieve = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
-        CommandsManager commandsManager = new(imageRetrieve);
-
-        commandsManager.ExecuteCommand(arg.Command);
+        ServiceLocator serviceLocator = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
+        serviceLocator.ExecuteCommand(arg.Command);
 
         stopWatch.Stop();
         Console.WriteLine($"All time: {stopWatch.Elapsed}");
