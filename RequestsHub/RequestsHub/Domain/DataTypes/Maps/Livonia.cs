@@ -6,5 +6,5 @@ internal class Livonia : AbstractMap
         : base(keyValue, ext, name, types, ver, IQuad)
     { }
 
-    public override MapName MapName => MapName.livonia;
+    public override MapName Name => MapName.livonia;
 }

@@ -18,7 +18,7 @@ internal abstract class AbstractMap : IMap
     public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
     public ImageExtension MapExtension { get; set; }
     public List<TypeMap> TypesMap { get; set; }
-    public abstract MapName MapName { get; }
+    public abstract MapName Name { get; }
     public string MapNameForProvider { get; set; }
     public string Version { get; set; }
 }

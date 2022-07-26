@@ -1,110 +1,106 @@
-﻿using RequestsHub.Presentation.ConsoleServices;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace RequestsHub.Application.Services.ImageServices;
 
-internal class MergeImages
+internal class MergeSquareImages
 {
-    private readonly int xLength;
-    private readonly int yLength;
+    private const int sizeBeforeImprovement = 256;
+    private const int improvement = 50;
 
-    public MergeImages(int xLength = 12000, int yLength = 12000)
+    private readonly int factor;
+    private readonly int resultSize;
+
+    public MergeSquareImages(double dpiImprovementPercent)
     {
-        this.xLength = xLength;
-        this.yLength = yLength;
-    }
-
-    public Bitmap MergeAndSave(byte[,][] source)
-    {
-        Stopwatch stopWatch = new();
-        stopWatch.Start();
-
-        int height, width;
-        int countVerticals = source.GetLength(0);
-        int countHorizontals = source.GetLength(1);
-        Image image;
-        ImageResizer resizer = new();
-
-        using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
-        using (Graphics graphic = Graphics.FromImage(bitmap))
+        if (dpiImprovementPercent > 1 || dpiImprovementPercent < 0)
         {
-            using (ProgressBar progress = new("Merge "))
-            {
-                for (int y = 0; y < countVerticals; y++)
-                {
-                    for (int x = 0; x < countHorizontals; x++)
-                    {
-                        height = yLength / countVerticals;
-                        width = xLength / countHorizontals;
-
-                        image = Image.FromStream(new MemoryStream(source[x, y]));
-                        image = resizer.Resize(image, width, height);
-
-                        height = y == 0 ? 0 : y * (yLength / countVerticals);
-                        width = x == 0 ? 0 : x * (xLength / countHorizontals);
-
-                        graphic.DrawImage(image, width, height);
-                        progress.Report((double)(y * countHorizontals + x) / (countHorizontals * countVerticals));
-                    }
-                }
-            }
-            graphic.Save();
+            throw new ArgumentException("Value must be between 0 and 1");
         }
-        stopWatch.Stop();
-        Console.WriteLine("time: {0}", stopWatch.Elapsed);
 
-        return bitmap;
+        factor = Convert.ToInt32(dpiImprovementPercent * improvement);
+        resultSize = sizeBeforeImprovement * factor;
     }
 
-    public Bitmap MergeAndSave(string resourcePath)
+    public Bitmap Merge(byte[,][] source)
     {
-        Stopwatch stopWatch = new();
-        stopWatch.Start();
+        Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
 
-        Image image;
-        List<string> horizontal;
-        List<string> verticals = new DirectoryInfo(resourcePath).GetDirectories()
-                                                        .Select(d => d.FullName)
-                                                        .OrderBy(s => s.Length)
-                                                        .ThenBy(s => s)
-                                                        .ToList();
-
-        using Bitmap bitmap = new(xLength, yLength, PixelFormat.Format24bppRgb);
         using (Graphics graphic = Graphics.FromImage(bitmap))
         {
+            Image image;
             int height, width;
+            int countVerticals = source.GetLength(0);
+            int countHorizontals = source.GetLength(1);
 
-            using (ProgressBar progress = new("Merge "))
+            //MemoryStream ms = new();
+
+            for (int y = 0; y < countVerticals; y++)
             {
-                for (int y = 0; y < verticals.Count; y++)
+                for (int x = 0; x < countHorizontals; x++)
                 {
-                    //resource[y] it's currentDirectoryName
-                    horizontal = GetMapPieces(verticals[y]);
-                    for (int x = 0; x < horizontal.Count; x++)
-                    {
-                        height = yLength / verticals.Count;
-                        width = xLength / horizontal.Count;
+                    //TODO: try to dont make every time new ms.
+                    image = Image.FromStream(new MemoryStream(source[x, y]));
 
-                        //horizontal[x] it's pictureFullName
-                        image = Image.FromFile(horizontal[x]);
-                        image = new ImageResizer().Resize(image, width, height);
+                    height = image.Height * factor / countVerticals;
+                    width = image.Width * factor / countHorizontals;
 
-                        width = x == 0 ? 0 : x * (xLength / horizontal.Count);
-                        height = y == 0 ? 0 : y * (yLength / verticals.Count);
+                    image = ImageResizer.Resize(image, width, height);
 
-                        graphic.DrawImage(image, width, height);
-                    }
+                    height = y == 0 ? 0 : y * height;
+                    width = x == 0 ? 0 : x * width;
+
+                    graphic.DrawImage(image, width, height);
                 }
             }
             graphic.Save();
         }
-        stopWatch.Stop();
-        Console.WriteLine("time: {0}", stopWatch.Elapsed);
-
         return bitmap;
-        //bitmap.Save(PathSave, ImageFormat.Bmp);
     }
 
-    private List<string> GetMapPieces(string currentDirectoryName) => new DirectoryInfo(currentDirectoryName).GetFiles().Select(s => s.FullName).OrderBy(s => s.Length).ThenBy(s => s).ToList();
+    public Bitmap Merge(string resourcePath)
+    {
+        Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
+
+        using (Graphics graphic = Graphics.FromImage(bitmap))
+        {
+            Image image;
+            int height, width;
+            List<string> horizontal;
+            List<string> verticals = GetMapVericals(resourcePath);
+            
+            for (int y = 0; y < verticals.Count; y++)
+            {
+                horizontal = GetMapHorizontal(verticals[y]);
+                for (int x = 0; x < horizontal.Count; x++)
+                {
+                    image = Image.FromFile(horizontal[x]);
+
+                    height = image.Height * factor / verticals.Count;
+                    width = image.Width * factor / horizontal.Count;
+
+                    image = ImageResizer.Resize(image, width, height);
+
+                    width = x == 0 ? 0 : x * width;
+                    height = y == 0 ? 0 : y * height;
+
+                    graphic.DrawImage(image, width, height);
+                }
+            }
+            graphic.Save();
+        }
+        return bitmap;
+    }
+
+    private List<string> GetMapVericals(string resourcePath) => new DirectoryInfo(resourcePath).GetDirectories()
+        .Select(d => d.FullName)
+        .OrderBy(s => s.Length)
+        .ThenBy(s => s)
+        .ToList();
+
+    private List<string> GetMapHorizontal(string currentDirectoryName) => new DirectoryInfo(currentDirectoryName).GetFiles()
+        .Select(s => s.FullName)
+        .OrderBy(s => s.Length)
+        .ThenBy(s => s)
+        .ToList();
 }

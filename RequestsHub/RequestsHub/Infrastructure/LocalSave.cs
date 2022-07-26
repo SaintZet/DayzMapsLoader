@@ -1,11 +1,18 @@
-﻿using RequestsHub.Domain.Contracts;
-using RequestsHub.Presentation.ConsoleServices;
-using System.Drawing;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace RequestsHub.Infrastructure
 {
     internal class LocalSave
     {
+        public LocalSave(LocalSave original)
+        {
+            GeneralFolder = original.GeneralFolder;
+            ProviderName = original.ProviderName;
+            TypeFolder = original.TypeFolder;
+            ZoomFolder = original.ZoomFolder;
+        }
+
         public LocalSave(string generalDirectory, string providerName, string typeMap, string zoom)
         {
             GeneralFolder = generalDirectory;
@@ -21,34 +28,32 @@ namespace RequestsHub.Infrastructure
         private string ZoomFolder { get; }
         private string TypeFolder { get; }
 
-        public void SaveImagesToHardDisk(byte[,][] source, ImageExtension ext)
+        public void SaveImageToHardDisk(byte[,][] source, ImageExtension ext)
         {
             int axisY = source.GetLength(0);
             int axisX = source.GetLength(1);
 
             string nameFile, pathToFile, pathToFolder;
 
-            using (ProgressBar progress = new("Save "))
+            for (int y = 0; y < axisY; y++)
             {
-                for (int y = 0; y < axisY; y++)
+                pathToFolder = $@"{GeneralPath}\Horizontal{y}";
+                Directory.CreateDirectory(pathToFolder);
+
+                for (int x = 0; x < axisX; x++)
                 {
-                    pathToFolder = $@"{GeneralPath}\Horizontal{y}";
-                    Directory.CreateDirectory(pathToFolder);
+                    nameFile = $"({x}.{y}).{ext}";
+                    pathToFile = Path.Combine(pathToFolder, nameFile);
 
-                    for (int x = 0; x < axisX; x++)
-                    {
-                        nameFile = $"({x}.{y}).{ext}";
-                        pathToFile = Path.Combine(pathToFolder, nameFile);
-
-                        File.WriteAllBytes(pathToFile, source[x, y]);
-                    }
+                    File.WriteAllBytes(pathToFile, source[x, y]);
                 }
             }
         }
 
-        internal void SaveImagesToHardDisk(Bitmap image, string pathSave)
+        internal void SaveImageToHardDisk(Bitmap image, string pathSave)
         {
-            throw new NotImplementedException();
+            image.Save(pathSave, ImageFormat.Bmp);
+            image.Dispose();
         }
     }
 }
