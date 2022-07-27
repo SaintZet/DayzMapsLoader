@@ -5,7 +5,7 @@ namespace RequestsHub.Application;
 
 internal static class Validate
 {
-    public static bool CheckTypeAtMap(IMap currentMap, TypeMap typeMap)
+    public static bool CheckTypeAtMap(IMap currentMap, MapType typeMap)
     {
         foreach (var type in currentMap.TypesMap)
         {

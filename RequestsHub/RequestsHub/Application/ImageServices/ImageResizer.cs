@@ -2,11 +2,11 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace RequestsHub.Application.Services.ImageServices;
+namespace RequestsHub.Application.ImageServices;
 
 internal static class ImageResizer
 {
-    public static Bitmap Resize(Image image, int width, int height)
+    internal static Bitmap Resize(Image image, int width, int height)
     {
         Rectangle destRect = new(0, 0, width, height);
         Bitmap resizedPicture = new(width, height);

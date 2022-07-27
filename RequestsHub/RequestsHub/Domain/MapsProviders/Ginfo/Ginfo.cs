@@ -1,5 +1,6 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes.Maps;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RequestsHub.Domain.MapsProviders;
 
@@ -22,4 +23,6 @@ internal class Ginfo : IMapProvider
     public List<IMap> Maps { get; }
     public MapProvider Name { get => MapProvider.ginfo; }
     public AbstractMapBuilder Builder { get; }
+
+    public override string ToString() => Enum.GetName(Name.GetType(), Name)!;
 }

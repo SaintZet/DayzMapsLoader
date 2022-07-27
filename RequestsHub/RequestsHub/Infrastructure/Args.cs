@@ -25,7 +25,7 @@ internal class Args
     public CommandType Command { get; internal set; }
     public IMapProvider Provider { get; internal set; }
     public MapName NameMap { get; internal set; } = MapName.chernorus;
-    public TypeMap TypeMap { get; internal set; } = TypeMap.topographic;
+    public MapType TypeMap { get; internal set; } = MapType.topographic;
     public int Zoom { get; internal set; }
     public string PathToSave { get; internal set; } = string.Empty;
 
@@ -63,9 +63,9 @@ internal class Args
                 }
             }
 
-            if (Enum.TryParse(arg, out TypeMap _))
+            if (Enum.TryParse(arg, out MapType _))
             {
-                TypeMap = (TypeMap)Enum.Parse(typeof(TypeMap), arg);
+                TypeMap = (MapType)Enum.Parse(typeof(MapType), arg);
                 continue;
             }
 

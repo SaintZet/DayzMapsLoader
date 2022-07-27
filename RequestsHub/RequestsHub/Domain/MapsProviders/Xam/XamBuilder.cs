@@ -19,7 +19,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Chernorus(KeyValuePairsSize, ImageExtension.jpg, "chernarusplus", typesMap, "1.17-1");
     }
@@ -39,7 +39,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Livonia(KeyValuePairsSize, ImageExtension.jpg, "livonia", typesMap, "1.17-1");
     }
@@ -59,7 +59,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Banov(KeyValuePairsSize, ImageExtension.jpg, "banov", typesMap, "04.04");
     }
@@ -79,7 +79,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Esseker(KeyValuePairsSize, ImageExtension.jpg, "esseker", typesMap, "0.58");
     }
@@ -99,7 +99,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Namalsk(KeyValuePairsSize, ImageExtension.jpg, "namalsk", typesMap, "04.19");
     }
@@ -119,7 +119,7 @@ internal class XamBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Takistan(KeyValuePairsSize, ImageExtension.jpg, "takistanplus", typesMap, "1.041");
     }

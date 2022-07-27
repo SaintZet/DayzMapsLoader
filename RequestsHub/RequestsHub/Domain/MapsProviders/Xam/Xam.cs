@@ -1,5 +1,6 @@
 ﻿using RequestsHub.Domain.Contracts;
 using RequestsHub.Domain.DataTypes.Maps;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RequestsHub.Domain.MapsProviders;
 
@@ -25,4 +26,6 @@ internal class Xam : IMapProvider
     public AbstractMapBuilder Builder { get; }
 
     public MapProvider Name { get => MapProvider.xam; }
+
+    public override string ToString() => Enum.GetName(Name.GetType(), Name)!;
 }

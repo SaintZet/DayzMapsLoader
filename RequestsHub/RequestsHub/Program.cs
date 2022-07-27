@@ -26,8 +26,11 @@ public static class Program
 
         Args arg = new(args);
 
-        ImageRetrieve imageRetrieve = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, arg.PathToSave);
-        imageRetrieve.ExecuteCommand(arg.Command);
+        string directory = Validate.PathToSave(arg.PathToSave);
+        Console.WriteLine($"Directory to save: {directory}");
+
+        ServiceLocator serviceLocator = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
+        serviceLocator.ExecuteCommand(arg.Command);
 
         stopWatch.Stop();
         Console.WriteLine($"All time: {stopWatch.Elapsed}");

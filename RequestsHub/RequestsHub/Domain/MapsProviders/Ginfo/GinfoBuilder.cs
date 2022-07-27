@@ -20,7 +20,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {8, new MapSize(256, 256)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Chernorus(KeyValuePairsSize, ImageExtension.webp, "ChernarusPlus", typesMap, "1.0.0");
     }
@@ -40,7 +40,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Livonia(KeyValuePairsSize, ImageExtension.png, "Livonia", typesMap, "1.17", true);
     }
@@ -60,7 +60,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Banov(KeyValuePairsSize, ImageExtension.webp, "Banov", typesMap, "1.4.1");
     }
@@ -80,7 +80,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Esseker(KeyValuePairsSize, ImageExtension.png, "Esseker", typesMap, "1.1.0", true);
     }
@@ -100,7 +100,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Namalsk(KeyValuePairsSize, ImageExtension.png, "Namalsk", typesMap, "0.1.0", true);
     }
@@ -120,7 +120,7 @@ internal class GinfoBuilder : AbstractMapBuilder
             {7, new MapSize(128, 128)},
         };
 
-        List<TypeMap> typesMap = new List<TypeMap> { TypeMap.satellite, TypeMap.topographic };
+        List<MapType> typesMap = new List<MapType> { MapType.satellite, MapType.topographic };
 
         return new Takistan(KeyValuePairsSize, ImageExtension.png, "TakistanPlus", typesMap, "1.1.0", true);
     }
