@@ -25,11 +25,12 @@ Get DayZ at https://dayz.com
 </details>
 
 <details><summary><h2>Maps  🗺</h2></summary>
-  We are developing a large variety of maps for the DayZ Standalone. Maps even comes with two different types:
+  We are developing a large variety of maps for the **DayZ Standalone**. Maps even comes with two different types:
 
-A topographic map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.
-A satellite map which allows a focus on the game's terrain.
-We developing the classical Chernarus and Livonia maps as well as additional maps, such as:
+A *topographic* map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.
+A *satellite* map which allows a focus on the game's terrain.
+  
+  We developing the classical [Chernarus](https://dayz.fandom.com/wiki/Chernarus "fandom") and [Livonia](https://dayz.fandom.com/wiki/Livonia "fandom") maps as well as additional maps, such as:
 
 [Namalsk](https://steamcommunity.com/sharedfiles/filedetails/?id=2289461232&searchtext=Namalsk "steamcommunity"): The famous mod featuring a winter setting
   
@@ -46,7 +47,7 @@ This list will certainly grow!
 
 <details><summary><h2>Loot Icons   📌</h2></summary>
   The standalone version of DayZ changed the way mining works to a large extent. Almost every building is now available and has almost the same chance for items of the same type.
-
+  
   But there are special buildings containing war loot, farms and more. We will highlight these special buildings and add many important landmarks to help users find their current location on the map.
 
 These attractions will include lighthouses, water towers, ponds, deer, water pumps, and more.
