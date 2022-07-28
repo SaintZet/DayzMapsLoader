@@ -18,17 +18,17 @@ And also much more will help you at the beginning of your journey, the path that
 
 <details><summary><h2>DayZ  ☣</h2></summary>
   DayZ is an postapocalyptic open world zombie survival game set on the map of Chernarus which is based on a real rural area in the czech republic.
-  
+  <br>
   You are a lonely survivor - hungry, and lost in this huge hostile world. Search through the abandoned remains of civilication for food and weapons, fend of zombies and survive against other human players.
-
+<br>
 Get DayZ at https://dayz.com
 </details>
 
 <details><summary><h2>Maps  🗺</h2></summary>
-  We are developing a large variety of maps for the **DayZ Standalone**. Maps even comes with two different types:
+  We are developing a large variety of maps for the <b>DayZ Standalone</b>. Maps even comes with two different types:
 
-A *topographic* map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.
-A *satellite* map which allows a focus on the game's terrain.
+<li> A *topographic* map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.</li>
+<li> A *satellite* map which allows a focus on the game's terrain.</li><br>
   
   We developing the classical [Chernarus](https://dayz.fandom.com/wiki/Chernarus "fandom") and [Livonia](https://dayz.fandom.com/wiki/Livonia "fandom") maps as well as additional maps, such as:
 
@@ -46,8 +46,7 @@ This list will certainly grow!
 </details>
 
 <details><summary><h2>Loot Icons   📌</h2></summary>
-  The standalone version of DayZ changed the way mining works to a large extent. Almost every building is now available and has almost the same chance for items of the same type.
-  
+  The standalone version of DayZ changed the way mining works to a large extent. Almost every building is now available and has almost the same chance for items of the same type.<br>
   But there are special buildings containing war loot, farms and more. We will highlight these special buildings and add many important landmarks to help users find their current location on the map.
 
 These attractions will include lighthouses, water towers, ponds, deer, water pumps, and more.
