@@ -4,10 +4,10 @@
   <h1> Many ways, but yours is single </h1>
 </div>
 
-  ***SurviveRunner*** will help you find the fastest and safest way from point **A** to point **B** on your favorite map in DayZ Standalone. You can specify which places you want to visit along the way, no matter what happens, you can change the route at any time.
-  
-  Loot points developed by us will help you find everything you need during the route. You can also disable them or any other functionality and leave only what you need.
-  
+  ***SurviveRunner*** will help you find the fastest and safest way from point **A** to point **B** on your favorite map in DayZ Standalone. You can specify which places you want to visit along the way, no matter what happens, you can change the route at any time.<br>
+  <br>
+  Loot points developed by us will help you find everything you need during the route. You can also disable them or any other functionality and leave only what you need.<br>
+  <br>
   The app is tailored to your individual requirements. Time indicators will depend on your stamina. Thirst and hunger indicators help you plan stops ahead of time.
 And also much more will help you at the beginning of your journey, the path that you will go through with the ***SurviveRunner***.
 
@@ -17,9 +17,9 @@ And also much more will help you at the beginning of your journey, the path that
 </div>
 
 <details><summary><h2>DayZ  ☣</h2></summary>
-  DayZ is an postapocalyptic open world zombie survival game set on the map of Chernarus which is based on a real rural area in the czech republic.
+  DayZ is an postapocalyptic open world zombie survival game set on the map of Chernarus which is based on a real rural area in the czech republic.<br>
   <br>
-  You are a lonely survivor - hungry, and lost in this huge hostile world. Search through the abandoned remains of civilication for food and weapons, fend of zombies and survive against other human players.
+  You are a lonely survivor - hungry, and lost in this huge hostile world. Search through the abandoned remains of civilication for food and weapons, fend of zombies and survive against other human players.<br>
 <br>
 Get DayZ at https://dayz.com
 </details>
@@ -27,8 +27,8 @@ Get DayZ at https://dayz.com
 <details><summary><h2>Maps  🗺</h2></summary>
   We are developing a large variety of maps for the <b>DayZ Standalone</b>. Maps even comes with two different types:
 
-<li> A *topographic* map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.</li>
-<li> A *satellite* map which allows a focus on the game's terrain.</li><br>
+<li> A <i>topographic</i> map that is useful for navigating by using contours, highlighted roads, buildings, rail tracks, and much more.</li>
+<li> A <i>satellite</i> map which allows a focus on the game's terrain.</li><br>
   
   We developing the classical [Chernarus](https://dayz.fandom.com/wiki/Chernarus "fandom") and [Livonia](https://dayz.fandom.com/wiki/Livonia "fandom") maps as well as additional maps, such as:
 
@@ -47,9 +47,10 @@ This list will certainly grow!
 
 <details><summary><h2>Loot Icons   📌</h2></summary>
   The standalone version of DayZ changed the way mining works to a large extent. Almost every building is now available and has almost the same chance for items of the same type.<br>
-  But there are special buildings containing war loot, farms and more. We will highlight these special buildings and add many important landmarks to help users find their current location on the map.
-
-These attractions will include lighthouses, water towers, ponds, deer, water pumps, and more.
+  <br>
+  But there are special buildings containing <i>war loot</i>, <i>farms</i> and <i>more</i>. We will highlight these special buildings and add many important landmarks to help users find their current location on the map.<br>
+<br>
+These attractions will include <i>lighthouses</i>, <i>water towers</i>, <i>ponds</i>, <i>deer</i>, <i>water pumps</i>, and <b>more</b>.
 
 </details>
 
