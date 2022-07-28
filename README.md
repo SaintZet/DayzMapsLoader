@@ -1,4 +1,4 @@
-# [![survive_runner](https://raw.githubusercontent.com/SaintZet/SurviveRunner/ReadmeUpdate/Media/gh_banner.png)](https://github.com/SaintZet/SurviveRunner)
+# [![survive_runner](https://raw.githubusercontent.com/SaintZet/SurviveRunner/dev/Media/gh_banner.png)](https://github.com/SaintZet/SurviveRunner)
 
 <div align="center">
   <h1> Many ways, but yours is single </h1>
