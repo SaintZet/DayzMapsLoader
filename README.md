@@ -58,11 +58,25 @@ These attractions will include <i>lighthouses</i>, <i>water towers</i>, <i>ponds
   <h3> About the components </h3>
 </div>
 
-<details><summary><h2>Providers</h2></summary>
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</details>
+<!--
+<details><summary><h2>Data Providers</h2></summary>
+  <li> <a href="https://ginfo.gg/"> GInfo </a></li>
+  <li> <a href="https://xam.nu/"> Xam </a> </li>
+</details> !-->
+
+### Data Providers
+> <a href="https://ginfo.gg/"> <b> GInfo </b> </a> \
+> Have the tools and information you need to get the edge over your opponents.
+Check out the currently supported games! \
+\
+> <a href="https://xam.nu/"> <b> Xam </b> </a> \
+> Provides a data storage for files, map's images in the case
 
 <div align="center">
-  <h3> Developers </h3>
-  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+  <h2> Our team </h2>
+  <img src="https://avatars.githubusercontent.com/u/48261970" width=100 height=100> <span>&emsp;&emsp;</span>
+  <img src="https://avatars.githubusercontent.com/u/74767262" width=100 height=100> <span>&emsp;&emsp;</span>
+  <img src="https://avatars.githubusercontent.com/u/48255662" width=100 height=100> <span>&emsp;&emsp;</span>
+  <img src="https://avatars.githubusercontent.com/u/37346667" width=100 height=100>
+  <p> Chepets Serhii &emsp;&emsp; Chepets Ivan &emsp; Timchenko Yaroslav &emsp; Kasov Viktor</p>
 </div>
