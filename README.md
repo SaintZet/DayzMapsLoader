@@ -5,7 +5,9 @@
 </div>
 
   ***SurviveRunner*** will help you find the fastest and safest way from point **A** to point **B** on your favorite map in DayZ Standalone. You can specify which places you want to visit along the way, no matter what happens, you can change the route at any time.
+  
   Loot points developed by us will help you find everything you need during the route. You can also disable them or any other functionality and leave only what you need.
+  
   The app is tailored to your individual requirements. Time indicators will depend on your stamina. Thirst and hunger indicators help you plan stops ahead of time.
 And also much more will help you at the beginning of your journey, the path that you will go through with the ***SurviveRunner***.
 
@@ -30,8 +32,11 @@ A satellite map which allows a focus on the game's terrain.
 We developing the classical Chernarus and Livonia maps as well as additional maps, such as:
 
 [Namalsk](https://steamcommunity.com/sharedfiles/filedetails/?id=2289461232&searchtext=Namalsk "steamcommunity"): The famous mod featuring a winter setting
+  
 [Banov](https://steamcommunity.com/sharedfiles/filedetails/?id=2415195639&searchtext=Banov "steamcommunity"): First map inspired by the diverse Slovak landscape. Its size is 256 km2.
+  
 [Esseker](https://steamcommunity.com/sharedfiles/filedetails/?id=2462896799&searchtext=Esseker "steamcommunity"): Is a 12km2 post-apocalyptic map originally made for Arma 3 which is still playable.
+  
 [Takistan](https://steamcommunity.com/sharedfiles/filedetails/?id=2563233742 "steamcommunity"): A mountainous and relatively undeveloped region,
 Central Takistan is one of the largest provinces in the country.
 
