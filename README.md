@@ -70,7 +70,7 @@ These attractions will include <i>lighthouses</i>, <i>water towers</i>, <i>ponds
 Check out the currently supported games! \
 \
 > <a href="https://xam.nu/"> <b> Xam </b> </a> \
-> Provides a data storage for files, map's images in the case
+> Provides a data storage for files, map's images in the case.
 
 <div align="center">
   <h2> Our team </h2>
