@@ -78,5 +78,5 @@ Check out the currently supported games! \
   <img src="https://avatars.githubusercontent.com/u/74767262" width=100 height=100> <span>&emsp;&emsp;</span>
   <img src="https://avatars.githubusercontent.com/u/48255662" width=100 height=100> <span>&emsp;&emsp;</span>
   <img src="https://avatars.githubusercontent.com/u/37346667" width=100 height=100>
-  <p> Chepets Serhii &emsp;&emsp; Chepets Ivan &emsp; Timchenko Yaroslav &emsp; Kasov Viktor</p>
+  <p> Chepets Serhii &emsp;&emsp; Chepets Ivan &emsp; Timchenko Yaroslav &emsp; Kassov Viktor</p>
 </div>
