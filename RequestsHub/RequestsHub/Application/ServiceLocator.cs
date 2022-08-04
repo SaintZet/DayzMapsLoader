@@ -7,11 +7,11 @@ namespace RequestsHub.Application;
 internal class ServiceLocator
 {
     private readonly IMap map;
-    private readonly ImageRetrive imageRetrive;
+    private readonly DownloadImages imageRetrive;
 
     internal ServiceLocator(IMapProvider mapProvider, MapName mapName, MapType mapType, int mapZoom, string directory)
     {
-        imageRetrive = new ImageRetrive
+        imageRetrive = new DownloadImages
         {
             MapName = mapName,
             MapProvider = mapProvider,
