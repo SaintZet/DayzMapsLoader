@@ -27,7 +27,7 @@ internal class Args
     public MapName NameMap { get; internal set; } = MapName.chernorus;
     public MapType TypeMap { get; internal set; } = MapType.topographic;
     public int Zoom { get; internal set; }
-    public string PathToSave { get; internal set; } = string.Empty;
+    public string PathToSave { get; internal set; } = @"D:\Projects\SurviveRunner";
 
     private IMapProvider SelectProvider(MapProvider nameProvider)
     {
@@ -69,10 +69,10 @@ internal class Args
                 continue;
             }
 
-            if (Directory.Exists(arg) || File.Exists(arg))
-            {
-                PathToSave = arg;
-            }
+            //if (Directory.Exists(arg) || File.Exists(arg))
+            //{
+            //    PathToSave = arg;
+            //}
         }
     }
 }

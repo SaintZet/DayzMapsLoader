@@ -10,7 +10,7 @@
     },
     "GetMap": {
       "commandName": "Project",
-      "commandLineArgs": "GetMap xam chernorus -zoom:4 topographic D:\\Projects\\SurviveRunner"
+      "commandLineArgs": "GetMap xam chernorus -zoom:0 topographic D:\\Projects\\SurviveRunner"
     },
     "GetMapInParts ": {
       "commandName": "Project",

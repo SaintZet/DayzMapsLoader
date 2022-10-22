@@ -1,4 +1,5 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Domain;
+using RequestsHub.Domain.Contracts;
 
 namespace RequestsHub.Infrastructure;
 

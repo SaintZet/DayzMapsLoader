@@ -1,4 +1,5 @@
 ﻿using RequestsHub.Application.ImageServices;
+using RequestsHub.Domain;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
 
@@ -7,77 +8,32 @@ namespace RequestsHub.Application;
 internal class ServiceLocator
 {
     private readonly IMap map;
-    private readonly DownloadImages imageRetrive;
+    private readonly ImageDownloader imagesDownloader;
 
-    internal ServiceLocator(IMapProvider mapProvider, MapName mapName, MapType mapType, int mapZoom, string directory)
+    public ServiceLocator(IMapProvider mapProvider, MapName mapName, MapType mapType, int mapZoom, string directory)
     {
-        imageRetrive = new DownloadImages
-        {
-            MapName = mapName,
-            MapProvider = mapProvider,
-            MapType = mapType,
-            MapZoom = mapZoom,
-            GeneralSaveSettings = new LocalSave(directory, mapProvider.ToString(), mapType.ToString(), mapZoom.ToString())
-        };
+        var saveSettings = new LocalSaver(directory, mapProvider.ToString(), mapType.ToString(), mapZoom.ToString());
+
+        imagesDownloader = new ImageDownloader(mapProvider, mapType, mapZoom, saveSettings);
 
         map = InitializeMap(mapProvider, mapName);
     }
 
-    internal void ExecuteCommand(CommandType command)
+    public void ExecuteCommand(CommandType command) => (command switch
     {
-        switch (command)
-        {
-            case CommandType.GetAllMaps:
-            case CommandType.GetAllMapsInParts:
-            case CommandType.MergePartsAllMaps:
-                ExucuteMultipleCommands(command);
-                break;
-
-            case CommandType.GetMap:
-            case CommandType.GetMapInParts:
-            case CommandType.MergePartsMap:
-                ExecuteSingleCommand(command);
-                break;
-
-            default:
-                throw new NotImplementedException();
-        }
-    }
-
-    internal void ExucuteMultipleCommands(CommandType command)
-    {
-        Delegate ExecuteCommand = command switch
-        {
-            CommandType.GetAllMaps => new Action(imageRetrive.GetAllMaps),
-            CommandType.GetAllMapsInParts => new Action(imageRetrive.GetAllMapsInParts),
-            CommandType.MergePartsAllMaps => new Action(imageRetrive.MergePartsAllMaps),
-            //TODO: add error message
-            _ => throw new NotImplementedException(),
-        };
-
-        ExecuteCommand.DynamicInvoke();
-    }
-
-    internal void ExecuteSingleCommand(CommandType command)
-    {
-        Delegate ExecuteCommand = command switch
-        {
-            CommandType.GetMap => new Action<IMap>(imageRetrive.DownloadMap),
-            CommandType.GetMapInParts => new Action<IMap>(imageRetrive.DownloadMapInParts),
-            CommandType.MergePartsMap => new Action<IMap>(imageRetrive.MergePartsMap),
-            //TODO: add error message
-            _ => throw new NotImplementedException(),
-        };
-
-        ExecuteCommand.DynamicInvoke(map);
-    }
+        CommandType.GetAllMaps => new Action<IMap>(_ => imagesDownloader.GetAllMaps()),
+        CommandType.GetAllMapsInParts => _ => imagesDownloader.GetAllMapsInParts(),
+        CommandType.MergePartsAllMaps => _ => imagesDownloader.MergePartsAllMaps(),
+        CommandType.GetMap => imagesDownloader.DownloadMap,
+        CommandType.GetMapInParts => imagesDownloader.DownloadMapInParts,
+        CommandType.MergePartsMap => imagesDownloader.MergePartsMap,
+        _ => throw new NotImplementedException()
+    })(map);
 
     private static IMap InitializeMap(IMapProvider mapProvider, MapName mapName)
     {
         Validate.CheckMapAtProvider(mapProvider, mapName);
 
-        IMap map = mapProvider.Maps.SingleOrDefault(x => x.Name == mapName)!;
-
-        return map;
+        return mapProvider.Maps.SingleOrDefault(x => x.Name == mapName)!;
     }
 }

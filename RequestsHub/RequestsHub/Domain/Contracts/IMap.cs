@@ -2,7 +2,7 @@
 
 internal interface IMap
 {
-    Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
+    Dictionary<int, MapSize> ZoomLevelRatioToSize { get; set; }
     ImageExtension MapExtension { get; set; }
     List<MapType> TypesMap { get; }
     MapName Name { get; }

@@ -1,4 +1,5 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using RequestsHub.Domain;
+using RequestsHub.Domain.Contracts;
 using System.Reflection;
 
 namespace RequestsHub.Application;
@@ -33,7 +34,7 @@ internal static class Validate
 
     internal static bool CheckZoomAtMap(IMap currentMap, int zoom)
     {
-        foreach (var item in currentMap.KeyValuePairsSize)
+        foreach (var item in currentMap.ZoomLevelRatioToSize)
         {
             if (item.Key == zoom)
             {

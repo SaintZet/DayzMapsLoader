@@ -1,12 +1,13 @@
 ﻿using RequestsHub.Domain.Contracts;
 
-namespace RequestsHub.Domain.DataTypes.Maps;
+namespace RequestsHub.Domain.DataTypes;
 
-internal abstract class AbstractMap : IMap
+internal class Map : IMap
 {
-    public AbstractMap(Dictionary<int, MapSize> keyValuePairsSize, ImageExtension mapExtension, string mapNameForProvider, List<MapType> typesMap, string version, bool isFirstQuadrant = false)
+    public Map(MapName name, Dictionary<int, MapSize> keyValuePairsSize, ImageExtension mapExtension, string mapNameForProvider, List<MapType> typesMap, string version, bool isFirstQuadrant = false)
     {
-        KeyValuePairsSize = keyValuePairsSize;
+        Name = name;
+        ZoomLevelRatioToSize = keyValuePairsSize;
         MapExtension = mapExtension;
         MapNameForProvider = mapNameForProvider;
         TypesMap = typesMap;
@@ -15,10 +16,10 @@ internal abstract class AbstractMap : IMap
     }
 
     public bool IsFirstQuadrant { get; set; }
-    public Dictionary<int, MapSize> KeyValuePairsSize { get; set; }
+    public Dictionary<int, MapSize> ZoomLevelRatioToSize { get; set; }
     public ImageExtension MapExtension { get; set; }
     public List<MapType> TypesMap { get; set; }
-    public abstract MapName Name { get; }
+    public MapName Name { get; }
     public string MapNameForProvider { get; set; }
     public string Version { get; set; }
 }

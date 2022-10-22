@@ -6,7 +6,6 @@ internal interface IMapProvider
 {
     abstract List<IMap> Maps { get; }
     abstract MapProvider Name { get; }
-    abstract AbstractMapBuilder Builder { get; }
 
     string ToString();
 }

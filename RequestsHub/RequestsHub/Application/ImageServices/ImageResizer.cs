@@ -6,7 +6,7 @@ namespace RequestsHub.Application.ImageServices;
 
 internal static class ImageResizer
 {
-    internal static Bitmap Resize(Image image, int width, int height)
+    public static Bitmap Resize(Image image, int width, int height)
     {
         Rectangle destRect = new(0, 0, width, height);
         Bitmap resizedPicture = new(width, height);

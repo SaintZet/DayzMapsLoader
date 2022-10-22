@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using RequestsHub.Domain;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace RequestsHub.Infrastructure
 {
-    internal class LocalSave
+    internal class LocalSaver
     {
-        public LocalSave(LocalSave original)
+        public LocalSaver(LocalSaver original)
         {
             GeneralFolder = original.GeneralFolder;
             ProviderName = original.ProviderName;
@@ -13,7 +14,7 @@ namespace RequestsHub.Infrastructure
             ZoomFolder = original.ZoomFolder;
         }
 
-        public LocalSave(string generalDirectory, string providerName, string typeMap, string zoom)
+        public LocalSaver(string generalDirectory, string providerName, string typeMap, string zoom)
         {
             GeneralFolder = generalDirectory;
             ProviderName = providerName;
@@ -28,10 +29,10 @@ namespace RequestsHub.Infrastructure
         private string ZoomFolder { get; }
         private string TypeFolder { get; }
 
-        public void SaveImageToHardDisk(byte[,][] source, ImageExtension ext)
+        public void SaveImageToHardDisk(ImageSet source, ImageExtension ext)
         {
-            int axisY = source.GetLength(0);
-            int axisX = source.GetLength(1);
+            int axisY = source.Weight;
+            int axisX = source.Height;
 
             string nameFile, pathToFile, pathToFolder;
 
@@ -45,7 +46,7 @@ namespace RequestsHub.Infrastructure
                     nameFile = $"({x}.{y}).{ext}";
                     pathToFile = Path.Combine(pathToFolder, nameFile);
 
-                    File.WriteAllBytes(pathToFile, source[x, y]);
+                    source.GetImage(x, y).Save(pathToFile);
                 }
             }
         }
