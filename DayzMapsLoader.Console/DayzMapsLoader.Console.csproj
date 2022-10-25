@@ -5,8 +5,16 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CA1416</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\DayzMapsLoader\DayzMapsLoader.Core.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader\DayzMapsLoader.csproj" />
   </ItemGroup>
 
 </Project>

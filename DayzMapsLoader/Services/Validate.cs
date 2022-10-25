@@ -1,12 +1,12 @@
-﻿using DayzMapsLoader.Contracts;
-using DayzMapsLoader.DataTypes;
+﻿using DayzMapsLoader.Map;
+using DayzMapsLoader.MapProviders;
 using System.Reflection;
 
 namespace DayzMapsLoader.Services;
 
 internal static class Validate
 {
-    public static bool CheckTypeAtMap(IMap currentMap, MapType typeMap)
+    public static bool CheckTypeAtMap(MapInfo currentMap, MapType typeMap)
     {
         foreach (var type in currentMap.TypesMap)
         {
@@ -32,7 +32,7 @@ internal static class Validate
         throw new ArgumentException("");
     }
 
-    internal static bool CheckZoomAtMap(IMap currentMap, int zoom)
+    internal static bool CheckZoomAtMap(MapInfo currentMap, int zoom)
     {
         foreach (var item in currentMap.ZoomLevelRatioToSize)
         {

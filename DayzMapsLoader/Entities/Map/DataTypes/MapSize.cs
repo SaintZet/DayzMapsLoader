@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.DataTypes;
+﻿namespace DayzMapsLoader.Map;
 
 internal class MapSize
 {

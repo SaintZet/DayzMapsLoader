@@ -1,4 +1,8 @@
-﻿using System;
+﻿using DayzMapsLoader.MapProviders;
+using DayzMapsLoader.Map;
+using DayzMapsLoader.Services;
+using System;
+using System.Drawing;
 
 namespace DayzMapsLoader.ConsoleApp
 {
@@ -6,24 +10,10 @@ namespace DayzMapsLoader.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            //if (args.Length < 3 && args.Length != 1)
-            //{
-            //    Console.WriteLine("Invalid args. Use 'help' or '-h' please.");
-            //    return;
-            //}
+            ImageDownloader imageDownloader = new(MapProviderName.xam);
 
-            //if (args.Length == 1 && string.Equals(args[0], "help", StringComparison.OrdinalIgnoreCase) || string.Equals(args[0], "-h", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    Console.WriteLine(Documentation.GetDocAboutCommands());
-            //}
-
-            //Args arg = new(args);
-
-            //string directory = Validate.PathToSave(arg.PathToSave);
-            //Console.WriteLine($"Directory to save: {directory}");
-
-            //ServiceLocator serviceLocator = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
-            //serviceLocator.ExecuteCommand(arg.Command);
+            Bitmap chernorus = imageDownloader.DownloadMap(MapName.chernorus, MapType.topographic, 7);
+            Bitmap livonia = imageDownloader.DownloadMap(MapName.livonia, MapType.topographic, 7);
 
             Console.ReadLine();
         }
