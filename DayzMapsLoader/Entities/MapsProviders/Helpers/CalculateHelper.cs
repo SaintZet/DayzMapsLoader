@@ -1,4 +1,6 @@
-﻿namespace RequestsHub.Domain.MapsProviders.Helpers
+﻿using DayzMapsLoader.DataTypes;
+
+namespace DayzMapsLoader.Entities.MapsProviders.Helpers
 {
     internal static class CalculateHelper
     {

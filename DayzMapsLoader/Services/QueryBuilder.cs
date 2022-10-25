@@ -1,33 +1,33 @@
-﻿using RequestsHub.Domain;
-using RequestsHub.Domain.Contracts;
+﻿using DayzMapsLoader.Contracts;
+using DayzMapsLoader.DataTypes;
 
-namespace RequestsHub.Infrastructure;
+namespace DayzMapsLoader.Services;
 
 internal class QueryBuilder
 {
-    private readonly string queryTemplate;
-    private readonly string mapName;
-    private readonly string version;
-    private readonly string type;
-    private readonly string zoom;
-    private readonly string extension;
-    private readonly IMapProvider mapProvider;
+    private readonly string _queryTemplate;
+    private readonly string _mapName;
+    private readonly string _version;
+    private readonly string _type;
+    private readonly string _zoom;
+    private readonly string _extension;
+    private readonly IMapProvider _mapProvider;
 
     public QueryBuilder(IMapProvider mapProvider, IMap currentMap, MapType typeMap, int zoom)
     {
-        this.mapProvider = mapProvider;
-        this.zoom = zoom.ToString();
+        _mapProvider = mapProvider;
+        _zoom = zoom.ToString();
 
-        mapName = currentMap.MapNameForProvider;
-        version = currentMap.Version;
-        extension = currentMap.MapExtension.ToString();
-        type = GetTypeMap(typeMap)!;
-        queryTemplate = BuildQueryTemplate();
+        _mapName = currentMap.MapNameForProvider;
+        _version = currentMap.Version;
+        _extension = currentMap.MapExtension.ToString();
+        _type = GetTypeMap(typeMap)!;
+        _queryTemplate = BuildQueryTemplate();
     }
 
     public string BuildQueryTemplate()
     {
-        switch (mapProvider.Name)
+        switch (_mapProvider.Name)
         {
             case MapProvider.xam:
                 return @"https://static.xam.nu/dayz/maps/{0}/{1}/{2}/{3}/{4}/{5}.{6}";
@@ -40,20 +40,20 @@ internal class QueryBuilder
 
     internal string GetQuery(int i, int j)
     {
-        switch (mapProvider.Name)
+        switch (_mapProvider.Name)
         {
             case MapProvider.xam:
-                return string.Format(queryTemplate, mapName, version, type, zoom, i.ToString(), j.ToString(), extension);
+                return string.Format(_queryTemplate, _mapName, _version, _type, _zoom, i.ToString(), j.ToString(), _extension);
 
             case MapProvider.ginfo:
-                return string.Format(queryTemplate, mapName, type, version, zoom, i.ToString(), j.ToString(), extension);
+                return string.Format(_queryTemplate, _mapName, _type, _version, _zoom, i.ToString(), j.ToString(), _extension);
         }
         throw new NotImplementedException("RequestsHub.Domain.Services.QueryBuilder.GetQuery: Add new provider in this method!");
     }
 
     private string? GetTypeMap(MapType typeMap)
     {
-        switch (mapProvider.Name)
+        switch (_mapProvider.Name)
         {
             case MapProvider.xam:
                 return typeMap.ToString(); ;

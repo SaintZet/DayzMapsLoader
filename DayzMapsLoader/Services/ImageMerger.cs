@@ -1,15 +1,19 @@
-﻿using System.Drawing;
+﻿using DayzMapsLoader.DataTypes;
+using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Runtime.Versioning;
 
-namespace RequestsHub.Application.ImageServices;
+namespace DayzMapsLoader.Services;
 
+[SupportedOSPlatform("windows")]
 internal class MergerSquareImages
 {
-    private const int sizeBeforeImprovement = 256;
-    private const int improvement = 50;
+    private const int _sizeBeforeImprovement = 256;
+    private const int _improvement = 50;
 
-    private readonly int factor;
-    private readonly int resultSize;
+    private readonly int _factor;
+    private readonly int _resultSize;
 
     public MergerSquareImages(double dpiImprovementPercent)
     {
@@ -18,8 +22,8 @@ internal class MergerSquareImages
             throw new ArgumentException("Value must be between 0 and 1");
         }
 
-        factor = Convert.ToInt32(dpiImprovementPercent * improvement);
-        resultSize = sizeBeforeImprovement * factor;
+        _factor = Convert.ToInt32(dpiImprovementPercent * _improvement);
+        _resultSize = _sizeBeforeImprovement * _factor;
     }
 
     public Bitmap Merge(ImageSet source)
@@ -27,7 +31,7 @@ internal class MergerSquareImages
         Stopwatch stopWatch = new Stopwatch();
         Console.WriteLine("Start merge!");
 
-        Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
+        Bitmap bitmap = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
 
         using (Graphics graphic = Graphics.FromImage(bitmap))
         {
@@ -41,8 +45,8 @@ internal class MergerSquareImages
                     //TODO: try to dont make every time new ms.
                     using var image = Image.FromStream(source.GetImage(x, y).AsStream());
 
-                    var height = image.Height * factor / countVerticals;
-                    var width = image.Width * factor / countHorizontals;
+                    var height = image.Height * _factor / countVerticals;
+                    var width = image.Width * _factor / countHorizontals;
 
                     using var resizedImage = ImageResizer.Resize(image, width, height);
 
@@ -60,12 +64,13 @@ internal class MergerSquareImages
         return bitmap;
     }
 
+    //TODO: Delete code duplicate.
     public Bitmap Merge(string resourcePath)
     {
         Stopwatch stopWatch = new Stopwatch();
         Console.WriteLine("Start merge!");
 
-        Bitmap bitmap = new(resultSize, resultSize, PixelFormat.Format24bppRgb);
+        Bitmap bitmap = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
 
         using (Graphics graphic = Graphics.FromImage(bitmap))
         {
@@ -81,8 +86,8 @@ internal class MergerSquareImages
                 {
                     image = Image.FromFile(horizontal[x]);
 
-                    height = image.Height * factor / verticals.Count;
-                    width = image.Width * factor / horizontal.Count;
+                    height = image.Height * _factor / verticals.Count;
+                    width = image.Width * _factor / horizontal.Count;
 
                     image = ImageResizer.Resize(image, width, height);
 

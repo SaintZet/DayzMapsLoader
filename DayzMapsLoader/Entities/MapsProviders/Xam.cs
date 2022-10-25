@@ -1,5 +1,7 @@
-﻿using RequestsHub.Domain.Contracts;
-using RequestsHub.Domain.MapsProviders.Helpers;
+﻿using DayzMapsLoader.Contracts;
+using DayzMapsLoader.DataTypes;
+using DayzMapsLoader.Entities;
+using DayzMapsLoader.Entities.MapsProviders.Helpers;
 
 namespace RequestsHub.Domain.MapsProviders;
 

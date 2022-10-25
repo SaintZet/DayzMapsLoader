@@ -1,8 +1,8 @@
-﻿using RequestsHub.Domain;
-using RequestsHub.Domain.Contracts;
+﻿using DayzMapsLoader.Contracts;
+using DayzMapsLoader.DataTypes;
 using System.Reflection;
 
-namespace RequestsHub.Application;
+namespace DayzMapsLoader.Services;
 
 internal static class Validate
 {

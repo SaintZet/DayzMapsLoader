@@ -1,4 +1,6 @@
-﻿namespace RequestsHub.Domain.Contracts;
+﻿using DayzMapsLoader.DataTypes;
+
+namespace DayzMapsLoader.Contracts;
 
 internal interface IMap
 {

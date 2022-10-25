@@ -1,9 +1,11 @@
-﻿using System.Net;
-using RequestsHub.Domain.Contracts;
-using RequestsHub.Infrastructure;
+﻿using DayzMapsLoader.Contracts;
+using DayzMapsLoader.DataTypes;
+using System.Net;
+using System.Runtime.Versioning;
 
-namespace RequestsHub.Application.ImageServices;
+namespace DayzMapsLoader.Services;
 
+[SupportedOSPlatform("windows")]
 internal class ImageDownloader
 {
     private const double _qualityImage = 0.5;
@@ -11,9 +13,9 @@ internal class ImageDownloader
     private readonly IMapProvider? _mapProvider;
     private readonly MapType _mapType;
     private readonly int _mapZoom;
-    private readonly LocalSaver? _generalSaveSettings;
+    private readonly ImageSaver? _generalSaveSettings;
 
-    public ImageDownloader(IMapProvider? mapProvider, MapType mapType, int mapZoom, LocalSaver? generalSaveSettings)
+    public ImageDownloader(IMapProvider? mapProvider, MapType mapType, int mapZoom, ImageSaver? generalSaveSettings)
     {
         _mapProvider = mapProvider;
         _mapType = mapType;
@@ -33,7 +35,7 @@ internal class ImageDownloader
         Validate.CheckTypeAtMap(map, _mapType);
         Validate.CheckZoomAtMap(map, _mapZoom);
 
-        LocalSaver save = new(_generalSaveSettings!)
+        ImageSaver save = new(_generalSaveSettings!)
         {
             FolderMap = map.Name.ToString()
         };
@@ -58,7 +60,7 @@ internal class ImageDownloader
 
         var image = GetImageFromProvider(map);
 
-        LocalSaver save = new(_generalSaveSettings!)
+        ImageSaver save = new(_generalSaveSettings!)
         {
             FolderMap = map.Name.ToString()
         };
@@ -69,7 +71,7 @@ internal class ImageDownloader
     {
         MergerSquareImages mergeImages = new(_qualityImage);
 
-        LocalSaver save = new(_generalSaveSettings!)
+        ImageSaver save = new(_generalSaveSettings!)
         {
             FolderMap = map.Name.ToString()
         };

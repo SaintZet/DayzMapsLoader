@@ -1,6 +1,6 @@
-﻿using RequestsHub.Domain.MapsProviders;
+﻿using DayzMapsLoader.DataTypes;
 
-namespace RequestsHub.Domain.Contracts;
+namespace DayzMapsLoader.Contracts;
 
 internal interface IMapProvider
 {

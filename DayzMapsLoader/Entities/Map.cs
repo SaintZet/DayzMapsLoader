@@ -1,6 +1,7 @@
-﻿using RequestsHub.Domain.Contracts;
+﻿using DayzMapsLoader.Contracts;
+using DayzMapsLoader.DataTypes;
 
-namespace RequestsHub.Domain.DataTypes;
+namespace DayzMapsLoader.Entities;
 
 internal class Map : IMap
 {

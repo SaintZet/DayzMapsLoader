@@ -1,4 +1,4 @@
-﻿namespace RequestsHub.Domain.DataTypes;
+﻿namespace DayzMapsLoader.DataTypes;
 
 public enum Direction
 {

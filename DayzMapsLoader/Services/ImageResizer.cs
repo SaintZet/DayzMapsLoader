@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Runtime.Versioning;
 
-namespace RequestsHub.Application.ImageServices;
+namespace DayzMapsLoader.Services;
 
+[SupportedOSPlatform("windows")]
 internal static class ImageResizer
 {
     public static Bitmap Resize(Image image, int width, int height)
