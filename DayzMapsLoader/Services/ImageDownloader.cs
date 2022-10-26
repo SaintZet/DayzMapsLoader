@@ -1,9 +1,7 @@
-﻿using DayzMapsLoader.DataTypes;
-using DayzMapsLoader.Map;
+﻿using DayzMapsLoader.Map;
 using DayzMapsLoader.MapProviders;
 using DayzMapsLoader.MapProviders.Helpers;
 using System.Drawing;
-using System.Net;
 using System.Runtime.Versioning;
 
 namespace DayzMapsLoader.Services;
@@ -11,7 +9,7 @@ namespace DayzMapsLoader.Services;
 [SupportedOSPlatform("windows")]
 public class ImageDownloader
 {
-    private readonly IMapProvider _mapProvider;
+    private readonly BaseMapProvider _mapProvider;
     private readonly MergerSquareImages _mergerSquareImages;
 
     public ImageDownloader(MapProviderName mapProviderName, double qualityImage = 0.5)
@@ -20,47 +18,63 @@ public class ImageDownloader
         _mergerSquareImages = new(qualityImage);
     }
 
+    public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom)
+    {
+        MapInfo map = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
+
+        MapParts mapParts = _mapProvider.GetMapParts(map, mapType, mapZoom);
+
+        return _mergerSquareImages.Merge(mapParts);
+    }
+
+    public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
+    {
+        List<Bitmap> result = new();
+
+        Parallel.ForEach(_mapProvider.Maps, mapInfo =>
+            {
+                var image = DownloadMap(mapInfo.Name, mapType, mapZoom);
+
+                result.Add(image);
+            }
+        );
+
+        return result;
+    }
+
+    public string SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom)
+    {
+        MapInfo mapInfo = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
+
+        MapParts mapParts = _mapProvider.GetMapParts(mapInfo, mapType, mapZoom);
+
+        Bitmap image = _mergerSquareImages.Merge(mapParts);
+
+        ImageSaver saver = new(pathToSave, _mapProvider, mapName, mapType, mapZoom);
+
+        return saver.SaveImageToHardDisk(image, mapInfo); ;
+    }
+
+    public List<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom)
+    {
+        List<string> result = new();
+
+        Parallel.ForEach(_mapProvider.Maps, mapInfo =>
+            {
+                var path = SaveMap(pathToSave, mapInfo.Name, mapType, mapZoom);
+
+                result.Add(path);
+            }
+        );
+
+        return result;
+    }
+
     //public void GetAllMaps() => Parallel.ForEach(_mapProvider!.Maps, DownloadMap);
 
     //public void GetAllMapsInParts() => Parallel.ForEach(_mapProvider!.Maps, DownloadMapInParts);
 
     //public void MergePartsAllMaps() => Parallel.ForEach(_mapProvider!.Maps, MergePartsMap);
-
-    public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom)
-    {
-        MapInfo map = InitializeMap(mapName, mapType, mapZoom);
-
-        ImageSet image = GetImageFromProvider(map, mapType, mapZoom);
-
-        return _mergerSquareImages.Merge(image);
-    }
-
-    public void SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom)
-    {
-        MapInfo map = InitializeMap(mapName, mapType, mapZoom);
-
-        ImageSet image = DownloadMap(mapName, mapType, mapZoom);
-
-        ImageSaver save = new(pathToSave, _mapProvider, mapName, mapType, mapZoom);
-
-        Directory.CreateDirectory(save.GeneralPath);
-        string path = $@"{save.GeneralPath}\{map.Name}.{map.MapExtension}";
-
-        image.Save(pathSave, ImageFormat.Bmp);
-        image.Dispose();
-    }
-
-    private MapInfo InitializeMap(MapName mapName, MapType mapType, int mapZoom)
-    {
-        Validate.CheckMapAtProvider(_mapProvider, mapName);
-
-        var map = _mapProvider.Maps.SingleOrDefault(x => x.Name == mapName);
-
-        Validate.CheckTypeAtMap(map, mapType);
-        Validate.CheckZoomAtMap(map, mapZoom);
-
-        return map;
-    }
 
     //public void DownloadMapInParts(MapInfo map)
     //{
@@ -89,33 +103,4 @@ public class ImageDownloader
 
     //    save.SaveImageToHardDisk(image, pathSave);
     //}
-
-    private ImageSet GetImageFromProvider(MapInfo map, MapType mapType, int mapZoom)
-    {
-        var pair = map.ZoomLevelRatioToSize.SingleOrDefault(x => x.Key == mapZoom);
-
-        int axisY = pair.Value.Height;
-        int axisX = pair.Value.Width;
-
-        ImageSet verticals = new ImageSet(axisY, axisX);
-
-        WebClient webClient = new();
-        //HttpClient webClient = new();
-
-        var queryBuilder = new QueryBuilder(_mapProvider!, map, mapType, mapZoom);
-        string query;
-
-        int yReversed = axisY - 1;
-        for (int y = 0; y < axisY; y++)
-        {
-            for (int x = 0; x < axisX; x++)
-            {
-                query = map.IsFirstQuadrant ? queryBuilder.GetQuery(x, yReversed) : queryBuilder.GetQuery(x, y);
-                verticals.SetImage(x, y, new ProviderImage(webClient.DownloadData(query)));
-            }
-            yReversed--;
-        }
-
-        return verticals;
-    }
 }

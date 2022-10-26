@@ -19,7 +19,7 @@ internal static class Validate
         throw new ArgumentException("");
     }
 
-    public static bool CheckMapAtProvider(IMapProvider mapProvider, MapName nameMap)
+    public static bool CheckMapAtProvider(BaseMapProvider mapProvider, MapName nameMap)
     {
         foreach (var map in mapProvider.Maps)
         {

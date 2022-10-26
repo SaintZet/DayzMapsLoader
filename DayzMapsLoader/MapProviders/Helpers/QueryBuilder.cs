@@ -1,7 +1,6 @@
 ﻿using DayzMapsLoader.Map;
-using DayzMapsLoader.MapProviders;
 
-namespace DayzMapsLoader.Services;
+namespace DayzMapsLoader.MapProviders;
 
 internal class QueryBuilder
 {
@@ -11,11 +10,11 @@ internal class QueryBuilder
     private readonly string _type;
     private readonly string _zoom;
     private readonly string _extension;
-    private readonly IMapProvider _mapProvider;
+    private readonly MapProviderName _mapProviderName;
 
-    public QueryBuilder(IMapProvider mapProvider, MapInfo currentMap, MapType typeMap, int zoom)
+    public QueryBuilder(MapProviderName mapProvider, MapInfo currentMap, MapType typeMap, int zoom)
     {
-        _mapProvider = mapProvider;
+        _mapProviderName = mapProvider;
         _zoom = zoom.ToString();
 
         _mapName = currentMap.NameForProvider;
@@ -27,7 +26,7 @@ internal class QueryBuilder
 
     public string BuildQueryTemplate()
     {
-        switch (_mapProvider.Name)
+        switch (_mapProviderName)
         {
             case MapProviderName.xam:
                 return @"https://static.xam.nu/dayz/maps/{0}/{1}/{2}/{3}/{4}/{5}.{6}";
@@ -40,7 +39,7 @@ internal class QueryBuilder
 
     internal string GetQuery(int i, int j)
     {
-        switch (_mapProvider.Name)
+        switch (_mapProviderName)
         {
             case MapProviderName.xam:
                 return string.Format(_queryTemplate, _mapName, _version, _type, _zoom, i.ToString(), j.ToString(), _extension);
@@ -53,7 +52,7 @@ internal class QueryBuilder
 
     private string? GetTypeMap(MapType typeMap)
     {
-        switch (_mapProvider.Name)
+        switch (_mapProviderName)
         {
             case MapProviderName.xam:
                 return typeMap.ToString(); ;

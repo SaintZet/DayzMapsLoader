@@ -1,5 +1,4 @@
-﻿using DayzMapsLoader.DataTypes;
-using System.Diagnostics;
+﻿using DayzMapsLoader.Map;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -26,11 +25,8 @@ internal class MergerSquareImages
         _resultSize = _sizeBeforeImprovement * _factor;
     }
 
-    public Bitmap Merge(ImageSet source)
+    public Bitmap Merge(MapParts source)
     {
-        Stopwatch stopWatch = new Stopwatch();
-        Console.WriteLine("Start merge!");
-
         Bitmap bitmap = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
 
         using (Graphics graphic = Graphics.FromImage(bitmap))
@@ -43,23 +39,21 @@ internal class MergerSquareImages
                 for (int x = 0; x < countHorizontals; x++)
                 {
                     //TODO: try to dont make every time new ms.
-                    using var image = Image.FromStream(source.GetImage(x, y).AsStream());
+                    using var image = Image.FromStream(source.GetPartOfMap(x, y).AsStream());
 
                     var height = image.Height * _factor / countVerticals;
                     var width = image.Width * _factor / countHorizontals;
 
                     using var resizedImage = ImageResizer.Resize(image, width, height);
 
-                    height = y == 0 ? 0 : y * height;
-                    width = x == 0 ? 0 : x * width;
+                    height = y * height;
+                    width = x * width;
 
                     graphic.DrawImage(resizedImage, width, height);
                 }
             }
             graphic.Save();
         }
-        stopWatch.Stop();
-        Console.WriteLine($"Merge time: {stopWatch.Elapsed}");
 
         return bitmap;
     }
@@ -67,15 +61,10 @@ internal class MergerSquareImages
     //TODO: Delete code duplicate.
     public Bitmap Merge(string resourcePath)
     {
-        Stopwatch stopWatch = new Stopwatch();
-        Console.WriteLine("Start merge!");
-
         Bitmap bitmap = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
 
         using (Graphics graphic = Graphics.FromImage(bitmap))
         {
-            Image image;
-            int height, width;
             List<string> horizontal;
             List<string> verticals = GetMapVericals(resourcePath);
 
@@ -84,23 +73,22 @@ internal class MergerSquareImages
                 horizontal = GetMapHorizontal(verticals[y]);
                 for (int x = 0; x < horizontal.Count; x++)
                 {
-                    image = Image.FromFile(horizontal[x]);
+                    using var image = Image.FromFile(horizontal[x]);
 
-                    height = image.Height * _factor / verticals.Count;
-                    width = image.Width * _factor / horizontal.Count;
+                    var height = image.Height * _factor / verticals.Count;
+                    var width = image.Width * _factor / horizontal.Count;
 
-                    image = ImageResizer.Resize(image, width, height);
+                    using var resizedImage = ImageResizer.Resize(image, width, height);
 
-                    width = x == 0 ? 0 : x * width;
-                    height = y == 0 ? 0 : y * height;
+                    width = x * width;
+                    height = y * height;
 
-                    graphic.DrawImage(image, width, height);
+                    graphic.DrawImage(resizedImage, width, height);
                 }
             }
             graphic.Save();
         }
-        stopWatch.Stop();
-        Console.WriteLine($"Merge time: {stopWatch.Elapsed}");
+
         return bitmap;
     }
 

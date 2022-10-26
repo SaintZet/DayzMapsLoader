@@ -1,5 +1,4 @@
-﻿using DayzMapsLoader.DataTypes;
-using DayzMapsLoader.Map;
+﻿using DayzMapsLoader.Map;
 using DayzMapsLoader.MapProviders;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -10,24 +9,14 @@ namespace DayzMapsLoader.Services;
 [SupportedOSPlatform("windows")]
 internal class ImageSaver
 {
-    private string _folderMap;
-    private string _generalFolder;
-    private string _zoomFolder;
-    private string _typeFolder;
-    private string _providerName;
+    private readonly string _generalPath;
 
-    public ImageSaver(string generalDirectory, IMapProvider provider, MapName mapName, MapType typeMap, int zoom)
+    public ImageSaver(string generalDirectory, BaseMapProvider provider, MapName mapName, MapType typeMap, int zoom)
     {
-        _folderMap = mapName.ToString();
-        _generalFolder = generalDirectory;
-        _providerName = provider.ToString();
-        _typeFolder = typeMap.ToString();
-        _zoomFolder = zoom.ToString();
+        _generalPath = $@"{generalDirectory}\{provider}\{mapName}\{typeMap}\{zoom}";
     }
 
-    public string GeneralPath => $@"{_generalFolder}\{_providerName}\{_folderMap}\{_typeFolder}\{_zoomFolder}";
-
-    public void SaveImageToHardDisk(ImageSet source, ImageExtension ext)
+    public void SaveImageToHardDisk(MapParts source, MapExtension ext)
     {
         int axisY = source.Weight;
         int axisX = source.Height;
@@ -36,7 +25,7 @@ internal class ImageSaver
 
         for (int y = 0; y < axisY; y++)
         {
-            pathToFolder = $@"{GeneralPath}\Horizontal{y}";
+            pathToFolder = $@"{_generalPath}\Horizontal{y}";
             Directory.CreateDirectory(pathToFolder);
 
             for (int x = 0; x < axisX; x++)
@@ -44,14 +33,20 @@ internal class ImageSaver
                 nameFile = $"({x}.{y}).{ext}";
                 pathToFile = Path.Combine(pathToFolder, nameFile);
 
-                source.GetImage(x, y).Save(pathToFile);
+                source.GetPartOfMap(x, y).Save(pathToFile);
             }
         }
     }
 
-    internal void SaveImageToHardDisk(Bitmap image, string pathSave)
+    internal string SaveImageToHardDisk(Bitmap image, MapInfo map)
     {
-        image.Save(pathSave, ImageFormat.Bmp);
+        Directory.CreateDirectory(_generalPath);
+
+        string path = $@"{_generalPath}\{map.Name}.{map.MapExtension}";
+
+        image.Save(path, ImageFormat.Bmp);
         image.Dispose();
+
+        return path;
     }
 }

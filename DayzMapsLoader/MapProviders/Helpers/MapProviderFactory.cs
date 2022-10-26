@@ -2,7 +2,7 @@
 
 internal static class MapProviderFactory
 {
-    public static IMapProvider Create(MapProviderName mapProviderName)
+    public static BaseMapProvider Create(MapProviderName mapProviderName)
     {
         switch (mapProviderName)
         {
