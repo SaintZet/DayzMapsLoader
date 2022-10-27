@@ -1,7 +1,7 @@
 ﻿namespace DayzMapsLoader.Map;
 
-internal record MapPart(byte[] data)
+internal record MapPart(byte[] Data)
 {
-    public void Save(string pathToFile) => File.WriteAllBytes(pathToFile, data);
-    public Stream AsStream() => new MemoryStream(data);
+    public void Save(string pathToFile) => File.WriteAllBytes(pathToFile, Data);
+    public Stream AsStream() => new MemoryStream(Data);
 }

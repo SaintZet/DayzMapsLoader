@@ -1,4 +1,5 @@
-﻿using DayzMapsLoader.Map;
+﻿using DayzMapsLoader.Helpers.WebpDecoder;
+using DayzMapsLoader.Map;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -25,11 +26,11 @@ internal class MergerSquareImages
         _resultSize = _sizeBeforeImprovement * _factor;
     }
 
-    public Bitmap Merge(MapParts source)
+    public Bitmap Merge(MapInfo mapInfo, MapParts source)
     {
-        Bitmap bitmap = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
+        Bitmap result = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
 
-        using (Graphics graphic = Graphics.FromImage(bitmap))
+        using (Graphics graphic = Graphics.FromImage(result))
         {
             int countVerticals = source.Weight;
             int countHorizontals = source.Height;
@@ -38,13 +39,12 @@ internal class MergerSquareImages
             {
                 for (int x = 0; x < countHorizontals; x++)
                 {
-                    //TODO: try to dont make every time new ms.
-                    using var image = Image.FromStream(source.GetPartOfMap(x, y).AsStream());
+                    using Bitmap image = GetCorrectBitmap(mapInfo, source.GetPartOfMap(x, y));
 
                     var height = image.Height * _factor / countVerticals;
                     var width = image.Width * _factor / countHorizontals;
 
-                    using var resizedImage = ImageResizer.Resize(image, width, height);
+                    using Bitmap resizedImage = ImageResizer.Resize(image, width, height);
 
                     height = y * height;
                     width = x * width;
@@ -55,7 +55,7 @@ internal class MergerSquareImages
             graphic.Save();
         }
 
-        return bitmap;
+        return result;
     }
 
     //TODO: Delete code duplicate.
@@ -73,7 +73,7 @@ internal class MergerSquareImages
                 horizontal = GetMapHorizontal(verticals[y]);
                 for (int x = 0; x < horizontal.Count; x++)
                 {
-                    using var image = Image.FromFile(horizontal[x]);
+                    Bitmap image = new(horizontal[x]);
 
                     var height = image.Height * _factor / verticals.Count;
                     var width = image.Width * _factor / horizontal.Count;
@@ -90,6 +90,24 @@ internal class MergerSquareImages
         }
 
         return bitmap;
+    }
+
+    private Bitmap GetCorrectBitmap(MapInfo mapInfo, MapPart mapPart)
+    {
+        switch (mapInfo.MapExtension)
+        {
+            case MapExtension.png:
+            case MapExtension.jpg:
+                return new Bitmap(mapPart.AsStream());
+
+            case MapExtension.webp:
+                return WebPFormat
+                //using (WebP webp = new())
+                //    return webp.Decode(mapPart.Data);
+
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     private List<string> GetMapVericals(string resourcePath) => new DirectoryInfo(resourcePath).GetDirectories()

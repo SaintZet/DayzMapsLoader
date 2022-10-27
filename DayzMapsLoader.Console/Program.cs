@@ -12,9 +12,9 @@ namespace DayzMapsLoader.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            ImageDownloader imageDownloader = new(MapProviderName.xam);
-            Test5(imageDownloader);
-
+            ImageDownloader imageDownloader = new(MapProviderName.ginfo);
+            string path = imageDownloader.SaveMap(@"D:\", MapName.livonia, MapType.topographic, 0);
+            Console.WriteLine(path);
             Console.ReadLine();
         }
 

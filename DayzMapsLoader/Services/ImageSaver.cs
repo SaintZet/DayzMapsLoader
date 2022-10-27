@@ -10,13 +10,15 @@ namespace DayzMapsLoader.Services;
 internal class ImageSaver
 {
     private readonly string _generalPath;
+    private readonly MapExtension _mapExtension;
 
-    public ImageSaver(string generalDirectory, BaseMapProvider provider, MapName mapName, MapType typeMap, int zoom)
+    public ImageSaver(string generalDirectory, BaseMapProvider provider, MapInfo mapInfo, MapType typeMap, int zoom)
     {
-        _generalPath = $@"{generalDirectory}\{provider}\{mapName}\{typeMap}\{zoom}";
+        _generalPath = $@"{generalDirectory}\{provider}\{mapInfo.Name}\{typeMap}\{mapInfo.Version}\{zoom}";
+        _mapExtension = mapInfo.MapExtension;
     }
 
-    public void SaveImageToHardDisk(MapParts source, MapExtension ext)
+    public void SaveImageToHardDisk(MapParts source)
     {
         int axisY = source.Weight;
         int axisX = source.Height;
@@ -30,7 +32,7 @@ internal class ImageSaver
 
             for (int x = 0; x < axisX; x++)
             {
-                nameFile = $"({x}.{y}).{ext}";
+                nameFile = $"({x}.{y}).{_mapExtension}";
                 pathToFile = Path.Combine(pathToFolder, nameFile);
 
                 source.GetPartOfMap(x, y).Save(pathToFile);

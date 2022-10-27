@@ -20,11 +20,11 @@ public class ImageDownloader
 
     public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom)
     {
-        MapInfo map = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
+        MapInfo mapInfo = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
 
-        MapParts mapParts = _mapProvider.GetMapParts(map, mapType, mapZoom);
+        MapParts mapParts = _mapProvider.GetMapParts(mapInfo, mapType, mapZoom);
 
-        return _mergerSquareImages.Merge(mapParts);
+        return _mergerSquareImages.Merge(mapInfo, mapParts);
     }
 
     public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
@@ -42,15 +42,39 @@ public class ImageDownloader
         return result;
     }
 
+    public byte[,][] DownloadMapInParts(MapName mapName, MapType mapType, int mapZoom)
+    {
+        MapInfo mapInfo = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
+
+        MapParts mapParts = _mapProvider.GetMapParts(mapInfo, mapType, mapZoom);
+
+        return mapParts.GetRawMapParts();
+    }
+
+    public List<byte[,][]> DownloadAllMapsInParts(MapType mapType, int mapZoom)
+    {
+        List<byte[,][]> result = new();
+
+        //Parallel.ForEach(_mapProvider.Maps, mapInfo =>
+        //{
+        //    var mapInParts = DownloadMapInParts(mapInfo.Name, mapType, mapZoom);
+
+        //    result.Add(mapInParts);
+        //}
+        //);
+
+        return result;
+    }
+
     public string SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom)
     {
         MapInfo mapInfo = _mapProvider.GetMapInfo(mapName, mapType, mapZoom);
 
         MapParts mapParts = _mapProvider.GetMapParts(mapInfo, mapType, mapZoom);
 
-        Bitmap image = _mergerSquareImages.Merge(mapParts);
+        Bitmap image = _mergerSquareImages.Merge(mapInfo, mapParts);
 
-        ImageSaver saver = new(pathToSave, _mapProvider, mapName, mapType, mapZoom);
+        ImageSaver saver = new(pathToSave, _mapProvider, mapInfo, mapType, mapZoom);
 
         return saver.SaveImageToHardDisk(image, mapInfo); ;
     }

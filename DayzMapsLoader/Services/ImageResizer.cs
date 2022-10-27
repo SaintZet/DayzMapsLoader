@@ -8,7 +8,7 @@ namespace DayzMapsLoader.Services;
 [SupportedOSPlatform("windows")]
 internal static class ImageResizer
 {
-    public static Bitmap Resize(Image image, int width, int height)
+    public static Bitmap Resize(Bitmap image, int width, int height)
     {
         Rectangle destRect = new(0, 0, width, height);
         Bitmap resizedPicture = new(width, height);
@@ -21,6 +21,7 @@ internal static class ImageResizer
 
             using ImageAttributes wrapMode = new();
             wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+
             graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
         }
 
