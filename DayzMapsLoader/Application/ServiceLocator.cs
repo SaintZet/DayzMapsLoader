@@ -1,5 +1,4 @@
 ﻿using RequestsHub.Application.ImageServices;
-using RequestsHub.Domain;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
 
@@ -32,8 +31,6 @@ internal class ServiceLocator
 
     private static IMap InitializeMap(IMapProvider mapProvider, MapName mapName)
     {
-        Validate.CheckMapAtProvider(mapProvider, mapName);
-
         return mapProvider.Maps.SingleOrDefault(x => x.Name == mapName)!;
     }
 }
