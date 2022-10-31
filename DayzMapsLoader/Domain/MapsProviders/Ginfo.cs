@@ -28,10 +28,10 @@ internal class Ginfo : IMapProvider
         //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/7/0/0.png
         Map takistan = new(MapName.takistan, _defaultZoomRatioToSize, ImageExtension.png, "TakistanPlus", _defaultTypesMap, "1.1.0", true);
 
-        Maps = new List<IMap> { livonia, esseker, namalsk, takistan };
+        Maps = new HashSet<IMap>() { livonia, esseker, namalsk, takistan };
     }
 
-    public List<IMap> Maps { get; }
+    public ISet<IMap> Maps { get; }
     public MapProvider Name { get => MapProvider.ginfo; }
 
     public override string ToString() => Enum.GetName(Name.GetType(), Name)!;

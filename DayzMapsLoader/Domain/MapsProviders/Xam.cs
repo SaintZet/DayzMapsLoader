@@ -28,10 +28,10 @@ internal class Xam : IMapProvider
         //https://static.xam.nu/dayz/maps/takistanplus/1.041/topographic/7/127/127.jpg
         Map takistan = new(MapName.takistan, _defaultZoomRatioToSize, ImageExtension.jpg, "takistanplus", _defaultTypesMap, "1.041");
 
-        Maps = new List<IMap> { chernorus, livonia, banov, esseker, namalsk, takistan };
+        Maps = new HashSet<IMap>() { chernorus, livonia, banov, esseker, namalsk, takistan };
     }
 
-    public List<IMap> Maps { get; }
+    public ISet<IMap> Maps { get; }
 
     public MapProvider Name { get => MapProvider.xam; }
 
