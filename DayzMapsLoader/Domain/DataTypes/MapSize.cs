@@ -1,6 +1,6 @@
 ﻿namespace RequestsHub.Domain.DataTypes;
 
-internal class MapSize
+public class MapSize
 {
     public MapSize(int height, int width)
     {
