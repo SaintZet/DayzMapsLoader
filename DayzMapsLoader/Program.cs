@@ -1,5 +1,6 @@
 ﻿global using System.Diagnostics;
 global using RequestsHub.Domain.DataTypes;
+using System.Reflection;
 using RequestsHub.Application;
 using RequestsHub.Infrastructure;
 using RequestsHub.Presentation.ConsoleServices;
@@ -26,7 +27,13 @@ public static class Program
 
         Args arg = new(args);
 
-        string directory = Validate.PathToSave(arg.PathToSave);
+        if (!Directory.Exists(arg.PathToSave))
+        {
+            arg.PathToSave = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                             ?? throw new ArgumentNullException("Can't get a path to save.");
+        }
+        
+        string directory = arg.PathToSave;
         Console.WriteLine($"Directory to save: {directory}");
 
         ServiceLocator serviceLocator = new(arg.Provider, arg.NameMap, arg.TypeMap, arg.Zoom, directory);
