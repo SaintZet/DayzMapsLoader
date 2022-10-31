@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FluentValidation;
 using RequestsHub.Domain.Contracts;
 using RequestsHub.Infrastructure;
 
@@ -29,9 +30,11 @@ internal class ImageDownloader
 
     public void DownloadMap(IMap map)
     {
-        Validate.CheckMapAtProvider(_mapProvider!, map.Name);
-        Validate.CheckTypeAtMap(map, _mapType);
-        Validate.CheckZoomAtMap(map, _mapZoom);
+        MapValidation mapValidation = new(_mapType, _mapZoom);
+        mapValidation.ValidateAndThrow(map);
+
+        MapProviderValidation mapProviderValidation = new(map);
+        mapProviderValidation!.ValidateAndThrow(_mapProvider);
 
         LocalSaver save = new(_generalSaveSettings!)
         {
@@ -52,9 +55,11 @@ internal class ImageDownloader
 
     public void DownloadMapInParts(IMap map)
     {
-        Validate.CheckMapAtProvider(_mapProvider!, map.Name);
-        Validate.CheckTypeAtMap(map, _mapType);
-        Validate.CheckZoomAtMap(map, _mapZoom);
+        MapValidation mapValidation = new(_mapType, _mapZoom);
+        mapValidation.ValidateAndThrow(map);
+
+        MapProviderValidation mapProviderValidation = new(map);
+        mapProviderValidation!.ValidateAndThrow(_mapProvider);
 
         var image = GetImageFromProvider(map);
 
