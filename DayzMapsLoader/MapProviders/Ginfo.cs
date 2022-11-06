@@ -14,7 +14,7 @@ internal class Ginfo : BaseMapProvider
         MapInfo chernorus = new(MapName.chernorus, "ChernarusPlus", CalculateHelper.ZoomLevelRatioToSize(8), MapExtension.webp, _defaultTypesMap, "1.0.0");
 
         //https://maps.izurvive.com/maps/Livonia-Top/1.17/tiles/7/127/0.png
-        MapInfo livonia = new(MapName.livonia, "Livonia", _defaultZoomRatioToSize, MapExtension.webp, _defaultTypesMap, "1.19.0", true);
+        MapInfo livonia = new(MapName.livonia, "Livonia", _defaultZoomRatioToSize, MapExtension.webp, _defaultTypesMap, "1.19.0");
 
         //https://maps.izurvive.com/maps/Banov-Top/1.4.1/tiles/4/12/11.webp
         MapInfo banov = new(MapName.banov, "Banov", _defaultZoomRatioToSize, MapExtension.webp, _defaultTypesMap, "1.4.1");
@@ -28,7 +28,7 @@ internal class Ginfo : BaseMapProvider
         //https://maps.izurvive.com/maps/TakistanPlus-Top/1.1.0/tiles/7/0/0.png
         MapInfo takistan = new(MapName.takistan, "TakistanPlus", _defaultZoomRatioToSize, MapExtension.png, _defaultTypesMap, "1.1.0", true);
 
-        Maps = new List<MapInfo> { livonia, esseker, namalsk, takistan };
+        Maps = new List<MapInfo> { chernorus, livonia, banov, esseker, namalsk, takistan };
     }
 
     public override List<MapInfo> Maps { get; }

@@ -13,7 +13,7 @@ namespace DayzMapsLoader.ConsoleApp
         private static void Main(string[] args)
         {
             ImageDownloader imageDownloader = new(MapProviderName.ginfo);
-            string path = imageDownloader.SaveMap(@"D:\", MapName.livonia, MapType.topographic, 0);
+            string path = imageDownloader.SaveMap(@"D:\", MapName.banov, MapType.topographic, 2);
             Console.WriteLine(path);
             Console.ReadLine();
         }

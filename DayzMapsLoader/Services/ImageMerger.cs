@@ -41,13 +41,13 @@ internal class MergerSquareImages
                 {
                     using Bitmap image = GetCorrectBitmap(mapInfo, source.GetPartOfMap(x, y));
 
-                    var height = image.Height * _factor / countVerticals;
-                    var width = image.Width * _factor / countHorizontals;
+                    var width = image.Width * _factor / countVerticals;
+                    var height = image.Height * _factor / countHorizontals;
 
                     using Bitmap resizedImage = ImageResizer.Resize(image, width, height);
 
-                    height = y * height;
                     width = x * width;
+                    height = y * height;
 
                     graphic.DrawImage(resizedImage, width, height);
                 }
@@ -101,9 +101,8 @@ internal class MergerSquareImages
                 return new Bitmap(mapPart.AsStream());
 
             case MapExtension.webp:
-                return WebPFormat
-                //using (WebP webp = new())
-                //    return webp.Decode(mapPart.Data);
+                using (WebP webp = new())
+                    return webp.Decode(mapPart.Data);
 
             default:
                 throw new NotImplementedException();

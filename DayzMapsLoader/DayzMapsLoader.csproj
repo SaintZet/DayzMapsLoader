@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Helpers\WebpDecoder\Libwebp\libwebp_x64.dll" />
+    <None Remove="Helpers\WebpDecoder\Libwebp\libwebp_x86.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Helpers\WebpDecoder\Libwebp\libwebp_x64.dll" />
+    <EmbeddedResource Include="Helpers\WebpDecoder\Libwebp\libwebp_x86.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>

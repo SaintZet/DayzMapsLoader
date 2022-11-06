@@ -1,7 +1,6 @@
 ﻿using DayzMapsLoader.Map;
 using DayzMapsLoader.MapProviders;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.Versioning;
 
 namespace DayzMapsLoader.Services;
@@ -44,9 +43,10 @@ internal class ImageSaver
     {
         Directory.CreateDirectory(_generalPath);
 
-        string path = $@"{_generalPath}\{map.Name}.{map.MapExtension}";
+        //TODO: Change .jpg  to variable.
+        string path = $@"{_generalPath}\{map.Name}.jpg";
 
-        image.Save(path, ImageFormat.Bmp);
+        image.Save(path);
         image.Dispose();
 
         return path;

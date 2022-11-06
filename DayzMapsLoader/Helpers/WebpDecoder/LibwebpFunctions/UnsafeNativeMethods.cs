@@ -29,7 +29,7 @@ using System.Security;
 namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
 {
     [SuppressUnmanagedCodeSecurity]
-    internal sealed partial class UnsafeNativeMethods
+    internal sealed class UnsafeNativeMethods
     {
         internal static WebPMemoryWrite OnCallback;
 
@@ -97,9 +97,7 @@ namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
         /// Activate the lossless compression mode with the desired efficiency
         /// </summary>
         /// <param name="config"> The WebPConfig struct </param>
-        /// <param name="level">
-        /// between 0 (fastest, lowest compression) and 9 (slower, best compression)
-        /// </param>
+        /// <param name="level"> between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
         /// <returns> 0 in case of parameter error </returns>
         internal static int WebPConfigLosslessPreset(ref WebPConfig config, int level)
         {
@@ -763,5 +761,4 @@ namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
         [DllImport("libwebp_x64.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPPictureDistortion")]
         private static extern int WebPPictureDistortion_x64(ref WebPPicture srcPicture, ref WebPPicture refPicture, int metric_type, IntPtr pResult);
     }
-
 }

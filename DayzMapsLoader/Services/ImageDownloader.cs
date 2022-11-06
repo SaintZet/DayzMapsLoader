@@ -76,7 +76,7 @@ public class ImageDownloader
 
         ImageSaver saver = new(pathToSave, _mapProvider, mapInfo, mapType, mapZoom);
 
-        return saver.SaveImageToHardDisk(image, mapInfo); ;
+        return saver.SaveImageToHardDisk(image, mapInfo);
     }
 
     public List<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom)

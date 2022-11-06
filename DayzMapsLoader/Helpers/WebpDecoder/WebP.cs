@@ -59,8 +59,8 @@ namespace DayzMapsLoader.Helpers.WebpDecoder
         /// <returns> Bitmap with the WebP image </returns>
         public Bitmap Decode(byte[] rawWebP)
         {
-            Bitmap bmp = null;
-            BitmapData bmpData = null;
+            Bitmap? bmp = null;
+            BitmapData? bmpData = null;
             GCHandle pinnedWebP = GCHandle.Alloc(rawWebP, GCHandleType.Pinned);
 
             try
