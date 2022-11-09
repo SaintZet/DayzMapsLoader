@@ -25,6 +25,7 @@ using DayzMapsLoader.Helpers.WebpDecoder.LibwebpStructs;
 using DayzMapsLoader.Helpers.WebpDecoder.Predefined;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 
 namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
 {
@@ -44,6 +45,15 @@ namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> </returns>
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate int WebPMemoryWrite([In()] IntPtr data, UIntPtr data_size, ref WebPPicture wpic);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetDllDirectory(string lpPathName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern int GetDllDirectory(int bufsize, StringBuilder buf);
+
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr LoadLibrary(string librayName);
 
         [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
         internal static extern void CopyMemory(IntPtr dest, IntPtr src, uint count);
@@ -97,7 +107,9 @@ namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
         /// Activate the lossless compression mode with the desired efficiency
         /// </summary>
         /// <param name="config"> The WebPConfig struct </param>
-        /// <param name="level"> between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
+        /// <param name="level">
+        /// between 0 (fastest, lowest compression) and 9 (slower, best compression)
+        /// </param>
         /// <returns> 0 in case of parameter error </returns>
         internal static int WebPConfigLosslessPreset(ref WebPConfig config, int level)
         {
@@ -604,17 +616,12 @@ namespace DayzMapsLoader.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> False in case of error (the two pictures don't have same dimension, ...) </returns>
         internal static int WebPPictureDistortion(ref WebPPicture srcPicture, ref WebPPicture refPicture, int metric_type, IntPtr pResult)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPPictureDistortion_x86(ref srcPicture, ref refPicture, metric_type, pResult);
-
-                case 8:
-                    return WebPPictureDistortion_x64(ref srcPicture, ref refPicture, metric_type, pResult);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPPictureDistortion_x86(ref srcPicture, ref refPicture, metric_type, pResult),
+                8 => WebPPictureDistortion_x64(ref srcPicture, ref refPicture, metric_type, pResult),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         [DllImport("libwebp_x86.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "WebPConfigInitInternal")]

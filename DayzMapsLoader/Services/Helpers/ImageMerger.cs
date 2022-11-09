@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Services;
+namespace DayzMapsLoader.Services.Helpers;
 
 [SupportedOSPlatform("windows")]
 internal class MergerSquareImages

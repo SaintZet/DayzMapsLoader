@@ -1,10 +1,10 @@
 ﻿using DayzMapsLoader.MapProviders;
 using DayzMapsLoader.Map;
-using DayzMapsLoader.Services;
 using System;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Diagnostics;
+using DayzMapsLoader.Services.ImageDownloader;
 
 namespace DayzMapsLoader.ConsoleApp
 {

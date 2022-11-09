@@ -1,6 +1,7 @@
 ﻿using DayzMapsLoader.Map;
 using DayzMapsLoader.MapProviders;
 using DayzMapsLoader.MapProviders.Helpers;
+using DayzMapsLoader.Services.Helpers;
 using System.Drawing;
 using System.Runtime.Versioning;
 

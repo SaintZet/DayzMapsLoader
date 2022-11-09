@@ -26,13 +26,46 @@ using DayzMapsLoader.Helpers.WebpDecoder.LibwebpStructs;
 using DayzMapsLoader.Helpers.WebpDecoder.Predefined;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DayzMapsLoader.Helpers.WebpDecoder
 {
     internal sealed class WebP : IDisposable
     {
         private const int WEBP_MAX_DIMENSION = 16383;
+
+        private static bool _wasDllInstance;
+
+        public WebP()
+        {
+            if (_wasDllInstance == true)
+            {
+                return;
+            }
+
+            string direcotory = Assembly.GetExecutingAssembly().Location;
+            direcotory = Path.GetDirectoryName(direcotory)!;
+
+            LoadDllFile(direcotory, "libwebp_x64.dll");
+            LoadDllFile(direcotory, "libwebp_x86.dll");
+
+            _wasDllInstance = true;
+        }
+
+        private void LoadDllFile(string dllfolder, string libname)
+        {
+            var currentpath = new StringBuilder(255);
+
+            UnsafeNativeMethods.GetDllDirectory(currentpath.Length, currentpath);
+
+            UnsafeNativeMethods.SetDllDirectory(dllfolder);
+
+            UnsafeNativeMethods.LoadLibrary(libname);
+
+            UnsafeNativeMethods.SetDllDirectory(currentpath.ToString());
+        }
 
         #region | Public Decode Functions |
 
@@ -428,9 +461,7 @@ namespace DayzMapsLoader.Helpers.WebpDecoder
         /// <param name="quality">
         /// Between 0 (lower quality, lowest file size) and 100 (highest quality, higher file size)
         /// </param>
-        /// <param name="speed">
-        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
-        /// </param>
+        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
         /// <returns> Compressed data </returns>
         public byte[] EncodeLossy(Bitmap bmp, int quality, int speed, bool info = false)
         {
@@ -518,9 +549,7 @@ namespace DayzMapsLoader.Helpers.WebpDecoder
         /// Lossless encoding image in bitmap (Advanced encoding API)
         /// </summary>
         /// <param name="bmp"> Bitmap with the image </param>
-        /// <param name="speed">
-        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
-        /// </param>
+        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
         /// <returns> Compressed data </returns>
         public byte[] EncodeLossless(Bitmap bmp, int speed)
         {
@@ -561,9 +590,7 @@ namespace DayzMapsLoader.Helpers.WebpDecoder
         /// <param name="quality">
         /// Between 0 (lower quality, lowest file size) and 100 (highest quality, higher file size)
         /// </param>
-        /// <param name="speed">
-        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
-        /// </param>
+        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
         /// <returns> Compress data </returns>
         public byte[] EncodeNearLossless(Bitmap bmp, int quality, int speed = 9)
         {
