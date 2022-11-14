@@ -1,0 +1,58 @@
+{
+  "ginfo": [
+    {
+      "name": 0,
+      "nameForProvider": "ChernarusPlus",
+      "zoomLevelRatioToSize": 8,
+      "mapExt": 2,
+      "typesMap": [ 1, 0 ],
+      "version": "1.0.0",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 1,
+      "nameForProvider": "Livonia",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 2,
+      "typesMap": [ 1, 0 ],
+      "version": "1.19.0",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 2,
+      "nameForProvider": "Namalsk",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 0,
+      "typesMap": [ 1, 0 ],
+      "version": "0.1.0",
+      "isFirstQuadrant": true
+    },
+    {
+      "name": 3,
+      "nameForProvider": "Esseker",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 0,
+      "typesMap": [ 1, 0 ],
+      "version": "1.1.0",
+      "isFirstQuadrant": true
+    },
+    {
+      "name": 4,
+      "nameForProvider": "TakistanPlus",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 0,
+      "typesMap": [ 1, 0 ],
+      "version": "1.1.0",
+      "isFirstQuadrant": true
+    },
+    {
+      "name": 5,
+      "nameForProvider": "Banov",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 2,
+      "typesMap": [ 1, 0 ],
+      "version": "1.4.1",
+      "isFirstQuadrant": false
+    }
+  ]
+}

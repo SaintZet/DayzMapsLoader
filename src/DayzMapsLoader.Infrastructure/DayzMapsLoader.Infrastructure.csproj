@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

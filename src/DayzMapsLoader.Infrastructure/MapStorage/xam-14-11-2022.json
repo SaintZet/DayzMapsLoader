@@ -1,0 +1,58 @@
+{
+  "xam": [
+    {
+      "name": 0,
+      "nameForProvider": "chernarusplus",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "1.17-1",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 1,
+      "nameForProvider": "livonia",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "1.17-1",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 2,
+      "nameForProvider": "namalsk",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "04.19",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 3,
+      "nameForProvider": "esseker",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "0.58",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 4,
+      "nameForProvider": "takistanplus",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "1.041",
+      "isFirstQuadrant": false
+    },
+    {
+      "name": 5,
+      "nameForProvider": "banov",
+      "zoomLevelRatioToSize": 7,
+      "mapExt": 1,
+      "typesMap": [ 1, 0 ],
+      "version": "04.04",
+      "isFirstQuadrant": false
+    }
+  ]
+}
