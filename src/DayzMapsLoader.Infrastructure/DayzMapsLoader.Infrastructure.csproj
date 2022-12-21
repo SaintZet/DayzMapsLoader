@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="MapStorage\14-11-2022.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="MapStorage\14-11-2022.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
-    <ProjectReference Include="..\DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj" />
   </ItemGroup>
 
 </Project>

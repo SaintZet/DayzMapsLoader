@@ -1,23 +1,29 @@
 ﻿using DayzMapsLoader.Application.Abstractions;
-using DayzMapsLoader.Application.MapProviders;
-using DayzMapsLoader.Domain.Map;
+using DayzMapsLoader.Domain.Entities.MapProvider;
+using DayzMapsLoader.Infrastructure.Constants;
+using DayzMapsLoader.Infrastructure.Converters;
+using DayzMapsLoader.Infrastructure.DTO;
+using Newtonsoft.Json;
 using System.Reflection;
 
-namespace DayzMapsLoader.Infrastructure.DbContexts
+namespace DayzMapsLoader.Infrastructure.DbContexts;
+
+public class JsonMapsDbContext : IMapsDbContext
 {
-    public class JsonMapsDbContext : IMapsDbContext
+    public MapProvider GetMapProvider(MapProviderName providerName)
     {
-        public List<MapInfo> GetMap(MapProviderName providerName)
+        string result;
+
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(JsonContextConstants.LastVersion)!)
+        using (StreamReader reader = new(stream))
         {
-            string resourceName = "DayzMapsLoader.Infrastructure\\MapStorage\\ginfo-14-11-2022.json";
-
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)!)
-            using (StreamReader reader = new(stream!))
-            {
-                string result = reader.ReadToEnd();
-            }
-
-            return new List<MapInfo>();
+            result = reader.ReadToEnd();
         }
+
+        var providersDTO = JsonConvert.DeserializeObject<List<ProviderDTO>>(result);
+
+        var providerDTO = providersDTO!.Single(dto => dto.Name == (int)providerName);
+
+        return ConvertDTO.ToProviderEntity(providerDTO);
     }
 }
