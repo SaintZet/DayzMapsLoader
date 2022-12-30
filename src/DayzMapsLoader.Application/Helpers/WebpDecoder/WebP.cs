@@ -21,16 +21,16 @@
 /// GetInfo(byte[] rawWebP, out int width, out int height, out bool has_alpha, out bool has_animation, out string format) - Get information of WEBP data
 /// float[] PictureDistortion(Bitmap source, Bitmap reference, int metric_type) - Get PSNR, SSIM or LSIM distortion metric between two pictures
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.LibwebpFunctions;
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.LibwebpStructs;
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.Predefined;
+using DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions;
+using DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpStructs;
+using DayzMapsLoader.Application.Helpers.WebpDecoder.Predefined;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder
+namespace DayzMapsLoader.Application.Helpers.WebpDecoder
 {
     internal sealed class WebP : IDisposable
     {
@@ -66,8 +66,6 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
 
             UnsafeNativeMethods.SetDllDirectory(currentpath.ToString());
         }
-
-        #region | Public Decode Functions |
 
         /// <summary>
         /// Read a WebP file
@@ -372,10 +370,6 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
             }
         }
 
-        #endregion | Public Decode Functions |
-
-        #region | Public Encode Functions |
-
         /// <summary>
         /// Save bitmap to file in WebP format
         /// </summary>
@@ -461,7 +455,9 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
         /// <param name="quality">
         /// Between 0 (lower quality, lowest file size) and 100 (highest quality, higher file size)
         /// </param>
-        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
+        /// <param name="speed">
+        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
+        /// </param>
         /// <returns> Compressed data </returns>
         public byte[] EncodeLossy(Bitmap bmp, int quality, int speed, bool info = false)
         {
@@ -549,7 +545,9 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
         /// Lossless encoding image in bitmap (Advanced encoding API)
         /// </summary>
         /// <param name="bmp"> Bitmap with the image </param>
-        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
+        /// <param name="speed">
+        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
+        /// </param>
         /// <returns> Compressed data </returns>
         public byte[] EncodeLossless(Bitmap bmp, int speed)
         {
@@ -590,7 +588,9 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
         /// <param name="quality">
         /// Between 0 (lower quality, lowest file size) and 100 (highest quality, higher file size)
         /// </param>
-        /// <param name="speed"> Between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
+        /// <param name="speed">
+        /// Between 0 (fastest, lowest compression) and 9 (slower, best compression)
+        /// </param>
         /// <returns> Compress data </returns>
         public byte[] EncodeNearLossless(Bitmap bmp, int quality, int speed = 9)
         {
@@ -615,10 +615,6 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
 
             return AdvancedEncode(bmp, config, false);
         }
-
-        #endregion | Public Encode Functions |
-
-        #region | Another Public Functions |
 
         /// <summary>
         /// Get the libwebp version
@@ -788,10 +784,6 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
             }
         }
 
-        #endregion | Another Public Functions |
-
-        #region | Private Methods |
-
         private delegate int MyWriterDelegate([In()] IntPtr data, UIntPtr data_size, ref WebPPicture picture);
 
         /// <summary>
@@ -932,10 +924,6 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
             return 1;
         }
 
-        #endregion | Private Methods |
-
-        #region | Destruction |
-
         /// <summary>
         /// Free memory
         /// </summary>
@@ -943,7 +931,5 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
         {
             GC.SuppressFinalize(this);
         }
-
-        #endregion | Destruction |
     }
 }

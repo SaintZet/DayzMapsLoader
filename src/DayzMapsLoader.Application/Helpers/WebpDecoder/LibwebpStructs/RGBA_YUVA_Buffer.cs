@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.LibwebpStructs;
+namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpStructs;
 
 /// <summary>
 /// Union of buffer parameters

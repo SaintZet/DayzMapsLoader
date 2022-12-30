@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers;
+namespace DayzMapsLoader.Application.Helpers;
 
 [SupportedOSPlatform("windows")]
 internal static class ImageResizer

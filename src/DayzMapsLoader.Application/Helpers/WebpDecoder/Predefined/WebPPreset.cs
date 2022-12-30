@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.Predefined;
+﻿namespace DayzMapsLoader.Application.Helpers.WebpDecoder.Predefined;
 
 /// <summary>
 /// Enumerate some predefined settings for WebPConfig, depending on the type of source picture.

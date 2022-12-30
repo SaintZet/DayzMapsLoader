@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Application.Abstractions;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Services;
 using DayzMapsLoader.Infrastructure.DbContexts;

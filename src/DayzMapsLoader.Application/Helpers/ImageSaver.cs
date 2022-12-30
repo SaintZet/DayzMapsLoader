@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Application.Managers;
+namespace DayzMapsLoader.Application.Helpers;
 
 [SupportedOSPlatform("windows")]
 internal static class ImageSaver

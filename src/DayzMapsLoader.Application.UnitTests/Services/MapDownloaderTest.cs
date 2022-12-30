@@ -10,7 +10,7 @@ namespace DayzMapsLoader.Application.UnitTests.Services
     [SupportedOSPlatform("windows")]
     public class MapDownloaderTest
     {
-        private const int _maxZoomLevelForTest = 2;
+        private const int _maxZoomLevelForTest = 1;
         private const double _imageRate = 0.5;
 
         public static IEnumerable<object[]> GetTestData()
@@ -62,7 +62,7 @@ namespace DayzMapsLoader.Application.UnitTests.Services
         {
             return new MapDownloader(new JsonMapsDbContext())
             {
-                QualityImage = _imageRate
+                QualityImage = _imageRate,
             };
         }
 

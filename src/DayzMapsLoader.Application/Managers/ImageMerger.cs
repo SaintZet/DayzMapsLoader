@@ -1,14 +1,14 @@
-﻿using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers;
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder;
+﻿using DayzMapsLoader.Application.Helpers;
+using DayzMapsLoader.Application.Helpers.WebpDecoder;
 using DayzMapsLoader.Domain.Entities.Map;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Application.Managers.MergerSquareImages;
+namespace DayzMapsLoader.Application.Managers;
 
 [SupportedOSPlatform("windows")]
-public class MergerSquareImages
+public class ImageMerger
 {
     private const int _sizeBeforeImprovement = 256;
     private const int _improvement = 50;
@@ -18,7 +18,7 @@ public class MergerSquareImages
 
     private double _dpiImprovementPercent;
 
-    public MergerSquareImages(double dpiImprovementPercent)
+    public ImageMerger(double dpiImprovementPercent)
     {
         DpiImprovementPercent = dpiImprovementPercent;
     }

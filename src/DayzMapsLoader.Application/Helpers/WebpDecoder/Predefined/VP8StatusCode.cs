@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.Predefined;
+﻿namespace DayzMapsLoader.Application.Helpers.WebpDecoder.Predefined;
 
 /// <summary>
 /// Enumeration of the status codes

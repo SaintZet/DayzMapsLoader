@@ -21,13 +21,13 @@
 /// GetInfo(byte[] rawWebP, out int width, out int height, out bool has_alpha, out bool has_animation, out string format) - Get information of WEBP data
 /// float[] PictureDistortion(Bitmap source, Bitmap reference, int metric_type) - Get PSNR, SSIM or LSIM distortion metric between two pictures
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.LibwebpStructs;
-using DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.Predefined;
+using DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpStructs;
+using DayzMapsLoader.Application.Helpers.WebpDecoder.Predefined;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
-namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.LibwebpFunctions
+namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
 {
     [SuppressUnmanagedCodeSecurity]
     internal sealed class UnsafeNativeMethods
@@ -107,9 +107,7 @@ namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDec
         /// Activate the lossless compression mode with the desired efficiency
         /// </summary>
         /// <param name="config"> The WebPConfig struct </param>
-        /// <param name="level">
-        /// between 0 (fastest, lowest compression) and 9 (slower, best compression)
-        /// </param>
+        /// <param name="level"> between 0 (fastest, lowest compression) and 9 (slower, best compression) </param>
         /// <returns> 0 in case of parameter error </returns>
         internal static int WebPConfigLosslessPreset(ref WebPConfig config, int level)
         {

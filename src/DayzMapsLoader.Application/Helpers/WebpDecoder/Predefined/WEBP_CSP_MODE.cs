@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Application.Managers.MergerSquareImages.Helpers.WebpDecoder.Predefined;
+﻿namespace DayzMapsLoader.Application.Helpers.WebpDecoder.Predefined;
 
 /// <summary>
 /// Describes the byte-ordering of packed samples in memory
