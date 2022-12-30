@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
