@@ -26,7 +26,7 @@ internal static class ConvertDTO
             result.Add(new MapInfo
             {
                 IsFirstQuadrant = mapDto.IsFirstQuadrant,
-                MapExtension = (MapExtension)mapDto.MapExtension,
+                MapExtension = (ImageExtension)mapDto.MapExtension,
                 Name = (MapName)mapDto.Name,
                 NameForProvider = mapDto.NameForProvider!,
                 TypesMap = ConvertMapTypes(mapDto.TypesMap),
