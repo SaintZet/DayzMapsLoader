@@ -1,6 +1,6 @@
 ﻿namespace DayzMapsLoader.Domain.Entities.Map;
 
-public enum MapExtension
+public enum ImageExtension
 {
     png,
     jpg,

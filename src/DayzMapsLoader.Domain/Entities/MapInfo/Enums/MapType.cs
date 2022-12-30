@@ -4,5 +4,6 @@ public enum MapType
 {
     topographic,
     satellite,
-    tourist
+    // in the future
+    // tourist,
 }

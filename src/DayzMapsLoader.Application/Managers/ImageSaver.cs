@@ -5,46 +5,39 @@ using System.Runtime.Versioning;
 namespace DayzMapsLoader.Application.Managers;
 
 [SupportedOSPlatform("windows")]
-internal class ImageSaver
+internal static class ImageSaver
 {
-    private readonly string _generalPath;
-    private readonly MapExtension _mapExtension;
+    private const string _mapName = "!Full_map";
 
-    public ImageSaver(string generalDirectory, ProviderManager provider, MapInfo mapInfo, MapType typeMap, int zoom)
-    {
-        //TODO: Check end string with \ in general directory.
-        _generalPath = $@"{generalDirectory}\{provider}\{mapInfo.Name}\{typeMap}\{mapInfo.Version}\{zoom}";
-        _mapExtension = mapInfo.MapExtension;
-    }
-
-    public void SaveImageToHardDisk(MapParts source)
+    public static string SaveImageToHardDisk(MapParts source, string pathToFolder, ImageExtension extension)
     {
         int axisY = source.Weight;
         int axisX = source.Height;
 
-        string nameFile, pathToFile, pathToFolder;
+        string nameFile, pathToFile;
 
         for (int y = 0; y < axisY; y++)
         {
-            pathToFolder = $@"{_generalPath}\Horizontal{y}";
+            pathToFolder = $@"{pathToFolder}\Horizontal{y}";
             Directory.CreateDirectory(pathToFolder);
 
             for (int x = 0; x < axisX; x++)
             {
-                nameFile = $"({x}.{y}).{_mapExtension}";
+                nameFile = $"({x}.{y}).{extension}";
                 pathToFile = Path.Combine(pathToFolder, nameFile);
 
                 source.GetPartOfMap(x, y).Save(pathToFile);
             }
         }
+
+        return pathToFolder;
     }
 
-    internal string SaveImageToHardDisk(Bitmap image, MapInfo map)
+    internal static string SaveImageToHardDisk(Bitmap image, string pathToFolder, ImageExtension extension)
     {
-        Directory.CreateDirectory(_generalPath);
+        Directory.CreateDirectory(pathToFolder);
 
-        //TODO: Change .jpg  to variable.
-        string path = $@"{_generalPath}\{map.Name}.jpg";
+        string path = $@"{pathToFolder}\{_mapName}.{extension}";
 
         image.Save(path);
         image.Dispose();
