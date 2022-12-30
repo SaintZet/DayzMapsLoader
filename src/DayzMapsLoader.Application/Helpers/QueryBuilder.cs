@@ -23,7 +23,7 @@ internal class QueryBuilder
         {
             MapProviderName.xam => $"https://static.xam.nu/dayz/maps/{currentMap.NameForProvider}/{currentMap.Version}/{typeMap}/{zoom}/{{0}}/{{1}}.{currentMap.MapExtension}",
             MapProviderName.ginfo => $"https://maps.izurvive.com/maps/{currentMap.NameForProvider}-{GetTypeMap(typeMap)}/{currentMap.Version}/tiles/{zoom}/{{0}}/{{1}}.{currentMap.MapExtension}",
-            _ => throw new NotImplementedException("RequestsHub.Domain.Services.QueryBuilder.BuildQueryBase: Add new provider in this method!"),
+            _ => throw new NotImplementedException("Add new provider in this method!"),
         };
     }
 
@@ -33,7 +33,7 @@ internal class QueryBuilder
         {
             MapType.topographic => "Top",
             MapType.satellite => "Sat",
-            _ => throw new NotImplementedException("RequestsHub.Domain.Services.QueryBuilder.GetTypeMap: Not support this type!"),
+            _ => throw new NotImplementedException("Not support this type!"),
         };
     }
 }
