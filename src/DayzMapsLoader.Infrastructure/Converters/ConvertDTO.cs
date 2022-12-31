@@ -8,13 +8,11 @@ internal static class ConvertDTO
 {
     public static MapProvider ToProviderEntity(ProviderDTO providerDTO)
     {
-        MapProvider mapProviderEntity = new()
+        return new()
         {
             Name = (MapProviderName)providerDTO.Name,
             Maps = ConvertMaps(providerDTO.Maps),
         };
-
-        return mapProviderEntity;
     }
 
     private static List<MapInfo> ConvertMaps(List<MapInfoDto>? mapInfo)

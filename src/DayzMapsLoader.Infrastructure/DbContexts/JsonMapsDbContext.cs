@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Application.Abstractions;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
 using DayzMapsLoader.Domain.Entities.MapProvider;
 using DayzMapsLoader.Infrastructure.Constants;
 using DayzMapsLoader.Infrastructure.Converters;
@@ -20,9 +20,9 @@ public class JsonMapsDbContext : IMapsDbContext
             result = reader.ReadToEnd();
         }
 
-        var providersDTO = JsonConvert.DeserializeObject<List<ProviderDTO>>(result);
+        var providers = JsonConvert.DeserializeObject<List<ProviderDTO>>(result);
 
-        var providerDTO = providersDTO!.Single(dto => dto.Name == (int)providerName);
+        var providerDTO = providers!.Single(dto => dto.Name == (int)providerName);
 
         return ConvertDTO.ToProviderEntity(providerDTO);
     }

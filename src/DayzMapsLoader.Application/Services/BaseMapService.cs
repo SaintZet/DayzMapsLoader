@@ -1,37 +1,39 @@
-﻿using DayzMapsLoader.Application.Abstractions;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
 using DayzMapsLoader.Application.Managers;
-using DayzMapsLoader.Application.Managers.MergerSquareImages;
 using DayzMapsLoader.Domain.Entities.MapProvider;
 
-namespace DayzMapsLoader.Application.Services
+namespace DayzMapsLoader.Application.Services;
+
+public class BaseMapService
 {
-    public class BaseMapService
+    protected readonly ProviderManager _providerManager = new();
+    protected readonly ImageMerger _imageMerger = new(0.5);
+
+    private readonly IMapsDbContext _mapsDbContext;
+
+    private MapProviderName _mapProviderName;
+
+    internal BaseMapService(IMapsDbContext mapsDbContext)
     {
-        protected readonly ProviderManager _providerManager = new();
-        protected readonly MergerSquareImages _mergerSquareImages = new(0.5);
+        _mapsDbContext = mapsDbContext;
+        _providerManager.MapProvider = _mapsDbContext.GetMapProvider(_mapProviderName);
+    }
 
-        private MapProviderName _mapProviderName;
-
-        private readonly IMapsDbContext _mapsDbContext;
-
-        internal BaseMapService(IMapsDbContext mapsDbContext)
+    public MapProviderName MapProviderName
+    {
+        get => _mapProviderName;
+        set
         {
-            _mapsDbContext = mapsDbContext;
-        }
+            if (_mapProviderName == value)
+                return;
 
-        public MapProviderName MapProviderName
-        {
-            get => _mapProviderName;
-            set
-            {
-                _providerManager.MapProviderEntity = _mapsDbContext.GetMapProvider(value);
-                _mapProviderName = value;
-            }
+            _mapProviderName = value;
+            _providerManager.MapProvider = _mapsDbContext.GetMapProvider(value);
         }
-        public double QualityImage
-        {
-            get => _mergerSquareImages.DpiImprovementPercent;
-            set => _mergerSquareImages.DpiImprovementPercent = value;
-        }
+    }
+    public double QualityImage
+    {
+        get => _imageMerger.DpiImprovementPercent;
+        set => _imageMerger.DpiImprovementPercent = value;
     }
 }

@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Application.Abstractions;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Domain.Entities.Map;
 using System.Drawing;
@@ -15,21 +15,19 @@ public class MapDownloader : BaseMapService, IMapDownloader
 
     public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom)
     {
-        MapInfo mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
+        var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
+        var mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
 
-        MapParts mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
-
-        return _mergerSquareImages.Merge(mapParts, mapInfo.MapExtension);
+        return _imageMerger.Merge(mapParts, mapInfo.MapExtension);
     }
 
     public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
     {
         List<Bitmap> result = new();
 
-        Parallel.ForEach(_providerManager.MapProviderEntity.Maps, mapInfo =>
+        Parallel.ForEach(_providerManager.MapProvider.Maps, mapInfo =>
             {
                 var image = DownloadMap(mapInfo.Name, mapType, mapZoom);
-
                 result.Add(image);
             }
         );
@@ -39,22 +37,19 @@ public class MapDownloader : BaseMapService, IMapDownloader
 
     public MapParts DownloadMapInParts(MapName mapName, MapType mapType, int mapZoom)
     {
-        MapInfo mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
+        var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
 
-        MapParts mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
-
-        return mapParts;
+        return _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
     }
 
     public List<MapParts> DownloadAllMapsInParts(MapType mapType, int mapZoom)
     {
         List<MapParts> result = new();
 
-        Parallel.ForEach(_providerManager.MapProviderEntity.Maps, mapInfo =>
+        Parallel.ForEach(_providerManager.MapProvider.Maps, mapInfo =>
         {
-            var mapInParts = DownloadMapInParts(mapInfo.Name, mapType, mapZoom);
-
-            result.Add(mapInParts);
+            var mapParts = DownloadMapInParts(mapInfo.Name, mapType, mapZoom);
+            result.Add(mapParts);
         });
 
         return result;

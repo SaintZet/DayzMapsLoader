@@ -5,15 +5,13 @@ VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application", "DayzMapsLoader.Application\DayzMapsLoader.Application.csproj", "{685C713D-4333-4286-9FB3-9D28DF97CA41}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D7A1EEF8-AC68-4C58-8E62-793A2E6F125A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.ConsoleApp", "DayzMapsLoader.Presentation.Console\DayzMapsLoader.Presentation.ConsoleApp.csproj", "{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Domain", "DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj", "{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.Infrastructure", "DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj", "{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Infrastructure", "DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj", "{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.Application.UnitTests", "DayzMapsLoader.Application.UnitTests\DayzMapsLoader.Application.UnitTests.csproj", "{307C23A6-D5EF-4DA0-8273-7340F1D60655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.UnitTests", "DayzMapsLoader.Application.UnitTests\DayzMapsLoader.Application.UnitTests.csproj", "{307C23A6-D5EF-4DA0-8273-7340F1D60655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

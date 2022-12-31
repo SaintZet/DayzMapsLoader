@@ -2,23 +2,23 @@
 using System.Drawing;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Application.Managers;
+namespace DayzMapsLoader.Application.Helpers;
 
 [SupportedOSPlatform("windows")]
 internal static class ImageSaver
 {
     private const string _mapName = "!Full_map";
 
-    public static string SaveImageToHardDisk(MapParts source, string pathToFolder, ImageExtension extension)
+    public static string SaveImageToHardDisk(MapParts source, string pathToGeneralFolder, ImageExtension extension)
     {
         int axisY = source.Weight;
         int axisX = source.Height;
 
-        string nameFile, pathToFile;
+        string nameFile, pathToFile, pathToFolder;
 
         for (int y = 0; y < axisY; y++)
         {
-            pathToFolder = $@"{pathToFolder}\Horizontal{y}";
+            pathToFolder = $@"{pathToGeneralFolder}\Horizontal_{y}";
             Directory.CreateDirectory(pathToFolder);
 
             for (int x = 0; x < axisX; x++)
@@ -30,7 +30,7 @@ internal static class ImageSaver
             }
         }
 
-        return pathToFolder;
+        return pathToGeneralFolder;
     }
 
     internal static string SaveImageToHardDisk(Bitmap image, string pathToFolder, ImageExtension extension)
