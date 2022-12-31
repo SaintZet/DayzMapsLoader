@@ -17,7 +17,7 @@ public class MapSaver : BaseMapService, IMapSaver
     {
         var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
         var mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
-        var image = _mergerSquareImages.Merge(mapParts, mapInfo.MapExtension);
+        var image = _imageMerger.Merge(mapParts, mapInfo.MapExtension);
         string path = $@"{pathToSave}\{_providerManager}\{mapInfo.Name}\{mapType}\{mapInfo.Version}\{mapZoom}";
 
         return ImageSaver.SaveImageToHardDisk(image, path, ImageExtansionForSave);

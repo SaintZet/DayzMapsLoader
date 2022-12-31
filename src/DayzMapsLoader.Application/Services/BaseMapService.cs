@@ -7,7 +7,7 @@ namespace DayzMapsLoader.Application.Services;
 public class BaseMapService
 {
     protected readonly ProviderManager _providerManager = new();
-    protected readonly ImageMerger _mergerSquareImages = new(0.5);
+    protected readonly ImageMerger _imageMerger = new(0.5);
 
     private readonly IMapsDbContext _mapsDbContext;
 
@@ -33,7 +33,7 @@ public class BaseMapService
     }
     public double QualityImage
     {
-        get => _mergerSquareImages.DpiImprovementPercent;
-        set => _mergerSquareImages.DpiImprovementPercent = value;
+        get => _imageMerger.DpiImprovementPercent;
+        set => _imageMerger.DpiImprovementPercent = value;
     }
 }

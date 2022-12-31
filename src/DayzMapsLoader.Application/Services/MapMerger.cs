@@ -14,7 +14,7 @@ public class MapMerger : BaseMapService, IMapMerger
     public string MergeMapParts(string pathToFolder, ImageExtension extension)
     {
         var mapParts = GetMapPartsFromIO(pathToFolder);
-        var image = _mergerSquareImages.Merge(mapParts, extension);
+        var image = _imageMerger.Merge(mapParts, extension);
 
         return ImageSaver.SaveImageToHardDisk(image, pathToFolder, extension);
     }

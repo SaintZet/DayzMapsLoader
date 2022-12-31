@@ -18,7 +18,7 @@ public class MapDownloader : BaseMapService, IMapDownloader
         var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
         var mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
 
-        return _mergerSquareImages.Merge(mapParts, mapInfo.MapExtension);
+        return _imageMerger.Merge(mapParts, mapInfo.MapExtension);
     }
 
     public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
@@ -48,8 +48,8 @@ public class MapDownloader : BaseMapService, IMapDownloader
 
         Parallel.ForEach(_providerManager.MapProvider.Maps, mapInfo =>
         {
-            var mapInParts = DownloadMapInParts(mapInfo.Name, mapType, mapZoom);
-            result.Add(mapInParts);
+            var mapParts = DownloadMapInParts(mapInfo.Name, mapType, mapZoom);
+            result.Add(mapParts);
         });
 
         return result;
