@@ -32,9 +32,9 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
     [SuppressUnmanagedCodeSecurity]
     internal sealed class UnsafeNativeMethods
     {
-        internal static WebPMemoryWrite OnCallback;
+        internal static WebPMemoryWrite? _onCallback;
 
-        private static readonly int WEBP_DECODER_ABI_VERSION = 0x0208;
+        private const int WebpDecoderAbiVersion = 0x0208;
 
         /// <summary>
         /// The writer type for output compress data
@@ -46,10 +46,10 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate int WebPMemoryWrite([In()] IntPtr data, UIntPtr data_size, ref WebPPicture wpic);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool SetDllDirectory(string lpPathName);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetDllDirectory(int bufsize, StringBuilder buf);
 
         [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -68,17 +68,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> 0 if error </returns>
         internal static int WebPConfigInit(ref WebPConfig config, WebPPreset preset, float quality)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPConfigInitInternal_x86(ref config, preset, quality, WEBP_DECODER_ABI_VERSION);
-
-                case 8:
-                    return WebPConfigInitInternal_x64(ref config, preset, quality, WEBP_DECODER_ABI_VERSION);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPConfigInitInternal_x86(ref config, preset, quality, WebpDecoderAbiVersion),
+                8 => WebPConfigInitInternal_x64(ref config, preset, quality, WebpDecoderAbiVersion),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -90,17 +85,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> VP8StatusCode </returns>
         internal static VP8StatusCode WebPGetFeatures(IntPtr rawWebP, int data_size, ref WebPBitstreamFeatures features)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPGetFeaturesInternal_x86(rawWebP, (UIntPtr)data_size, ref features, WEBP_DECODER_ABI_VERSION);
-
-                case 8:
-                    return WebPGetFeaturesInternal_x64(rawWebP, (UIntPtr)data_size, ref features, WEBP_DECODER_ABI_VERSION);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPGetFeaturesInternal_x86(rawWebP, (UIntPtr)data_size, ref features, WebpDecoderAbiVersion),
+                8 => WebPGetFeaturesInternal_x64(rawWebP, (UIntPtr)data_size, ref features, WebpDecoderAbiVersion),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -111,17 +101,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> 0 in case of parameter error </returns>
         internal static int WebPConfigLosslessPreset(ref WebPConfig config, int level)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPConfigLosslessPreset_x86(ref config, level);
-
-                case 8:
-                    return WebPConfigLosslessPreset_x64(ref config, level);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPConfigLosslessPreset_x86(ref config, level),
+                8 => WebPConfigLosslessPreset_x64(ref config, level),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -132,17 +117,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> 1 if configuration is OK </returns>
         internal static int WebPValidateConfig(ref WebPConfig config)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPValidateConfig_x86(ref config);
-
-                case 8:
-                    return WebPValidateConfig_x64(ref config);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPValidateConfig_x86(ref config),
+                8 => WebPValidateConfig_x64(ref config),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -152,17 +132,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> 1 if not error </returns>
         internal static int WebPPictureInitInternal(ref WebPPicture wpic)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPPictureInitInternal_x86(ref wpic, WEBP_DECODER_ABI_VERSION);
-
-                case 8:
-                    return WebPPictureInitInternal_x64(ref wpic, WEBP_DECODER_ABI_VERSION);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPPictureInitInternal_x86(ref wpic, WebpDecoderAbiVersion),
+                8 => WebPPictureInitInternal_x64(ref wpic, WebpDecoderAbiVersion),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -174,17 +149,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Returns 0 in case of memory error. </returns>
         internal static int WebPPictureImportBGR(ref WebPPicture wpic, IntPtr bgr, int stride)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPPictureImportBGR_x86(ref wpic, bgr, stride);
-
-                case 8:
-                    return WebPPictureImportBGR_x64(ref wpic, bgr, stride);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPPictureImportBGR_x86(ref wpic, bgr, stride),
+                8 => WebPPictureImportBGR_x64(ref wpic, bgr, stride),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -196,17 +166,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Returns 0 in case of memory error. </returns>
         internal static int WebPPictureImportBGRA(ref WebPPicture wpic, IntPtr bgra, int stride)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPPictureImportBGRA_x86(ref wpic, bgra, stride);
-
-                case 8:
-                    return WebPPictureImportBGRA_x64(ref wpic, bgra, stride);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPPictureImportBGRA_x86(ref wpic, bgra, stride),
+                8 => WebPPictureImportBGRA_x64(ref wpic, bgra, stride),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -218,17 +183,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Returns 0 in case of memory error. </returns>
         internal static int WebPPictureImportBGRX(ref WebPPicture wpic, IntPtr bgr, int stride)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPPictureImportBGRX_x86(ref wpic, bgr, stride);
-
-                case 8:
-                    return WebPPictureImportBGRX_x64(ref wpic, bgr, stride);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPPictureImportBGRX_x86(ref wpic, bgr, stride),
+                8 => WebPPictureImportBGRX_x64(ref wpic, bgr, stride),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -242,17 +202,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// </returns>
         internal static int WebPEncode(ref WebPConfig config, ref WebPPicture picture)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPEncode_x86(ref config, ref picture);
-
-                case 8:
-                    return WebPEncode_x64(ref config, ref picture);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPEncode_x86(ref config, ref picture),
+                8 => WebPEncode_x64(ref config, ref picture),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -293,17 +248,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// </returns>
         internal static int WebPGetInfo(IntPtr data, int data_size, out int width, out int height)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPGetInfo_x86(data, (UIntPtr)data_size, out width, out height);
-
-                case 8:
-                    return WebPGetInfo_x64(data, (UIntPtr)data_size, out width, out height);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPGetInfo_x86(data, (UIntPtr)data_size, out width, out height),
+                8 => WebPGetInfo_x64(data, (UIntPtr)data_size, out width, out height),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -321,13 +271,13 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
             switch (IntPtr.Size)
             {
                 case 4:
-                    if (WebPDecodeBGRInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeBGRInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 case 8:
-                    if (WebPDecodeBGRInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeBGRInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 default:
@@ -350,13 +300,13 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
             switch (IntPtr.Size)
             {
                 case 4:
-                    if (WebPDecodeBGRAInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeBGRAInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 case 8:
-                    if (WebPDecodeBGRAInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeBGRAInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 default:
@@ -379,13 +329,13 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
             switch (IntPtr.Size)
             {
                 case 4:
-                    if (WebPDecodeARGBInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeARGBInto_x86(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 case 8:
-                    if (WebPDecodeARGBInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == null)
-                        throw new InvalidOperationException("Can not decode WebP");
+                    if (WebPDecodeARGBInto_x64(data, (UIntPtr)data_size, output_buffer, output_buffer_size, output_stride) == default)
+                        throw new InvalidOperationException("Can't decode WebP");
                     break;
 
                 default:
@@ -401,17 +351,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> False in case of mismatched version. </returns>
         internal static int WebPInitDecoderConfig(ref WebPDecoderConfig webPDecoderConfig)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPInitDecoderConfigInternal_x86(ref webPDecoderConfig, WEBP_DECODER_ABI_VERSION);
-
-                case 8:
-                    return WebPInitDecoderConfigInternal_x64(ref webPDecoderConfig, WEBP_DECODER_ABI_VERSION);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPInitDecoderConfigInternal_x86(ref webPDecoderConfig, WebpDecoderAbiVersion),
+                8 => WebPInitDecoderConfigInternal_x64(ref webPDecoderConfig, WebpDecoderAbiVersion),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -423,17 +368,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> VP8_STATUS_OK if the decoding was successful </returns>
         internal static VP8StatusCode WebPDecode(IntPtr data, int data_size, ref WebPDecoderConfig webPDecoderConfig)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPDecode_x86(data, (UIntPtr)data_size, ref webPDecoderConfig);
-
-                case 8:
-                    return WebPDecode_x64(data, (UIntPtr)data_size, ref webPDecoderConfig);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPDecode_x86(data, (UIntPtr)data_size, ref webPDecoderConfig),
+                8 => WebPDecode_x64(data, (UIntPtr)data_size, ref webPDecoderConfig),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -473,17 +413,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Size of WebP Image or 0 if an error occurred </returns>
         internal static int WebPEncodeBGR(IntPtr bgr, int width, int height, int stride, float quality_factor, out IntPtr output)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPEncodeBGR_x86(bgr, width, height, stride, quality_factor, out output);
-
-                case 8:
-                    return WebPEncodeBGR_x64(bgr, width, height, stride, quality_factor, out output);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPEncodeBGR_x86(bgr, width, height, stride, quality_factor, out output),
+                8 => WebPEncodeBGR_x64(bgr, width, height, stride, quality_factor, out output),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -501,17 +436,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Size of WebP Image or 0 if an error occurred </returns>
         internal static int WebPEncodeBGRA(IntPtr bgra, int width, int height, int stride, float quality_factor, out IntPtr output)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPEncodeBGRA_x86(bgra, width, height, stride, quality_factor, out output);
-
-                case 8:
-                    return WebPEncodeBGRA_x64(bgra, width, height, stride, quality_factor, out output);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPEncodeBGRA_x86(bgra, width, height, stride, quality_factor, out output),
+                8 => WebPEncodeBGRA_x64(bgra, width, height, stride, quality_factor, out output),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -525,17 +455,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Size of WebP Image or 0 if an error occurred </returns>
         internal static int WebPEncodeLosslessBGR(IntPtr bgr, int width, int height, int stride, out IntPtr output)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPEncodeLosslessBGR_x86(bgr, width, height, stride, out output);
-
-                case 8:
-                    return WebPEncodeLosslessBGR_x64(bgr, width, height, stride, out output);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPEncodeLosslessBGR_x86(bgr, width, height, stride, out output),
+                8 => WebPEncodeLosslessBGR_x64(bgr, width, height, stride, out output),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -549,17 +474,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// <returns> Size of WebP Image or 0 if an error occurred </returns>
         internal static int WebPEncodeLosslessBGRA(IntPtr bgra, int width, int height, int stride, out IntPtr output)
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPEncodeLosslessBGRA_x86(bgra, width, height, stride, out output);
-
-                case 8:
-                    return WebPEncodeLosslessBGRA_x64(bgra, width, height, stride, out output);
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPEncodeLosslessBGRA_x86(bgra, width, height, stride, out output),
+                8 => WebPEncodeLosslessBGRA_x64(bgra, width, height, stride, out output),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
@@ -591,17 +511,12 @@ namespace DayzMapsLoader.Application.Helpers.WebpDecoder.LibwebpFunctions
         /// </returns>
         internal static int WebPGetDecoderVersion()
         {
-            switch (IntPtr.Size)
+            return IntPtr.Size switch
             {
-                case 4:
-                    return WebPGetDecoderVersion_x86();
-
-                case 8:
-                    return WebPGetDecoderVersion_x64();
-
-                default:
-                    throw new InvalidOperationException("Invalid platform. Can not find proper function");
-            }
+                4 => WebPGetDecoderVersion_x86(),
+                8 => WebPGetDecoderVersion_x64(),
+                _ => throw new InvalidOperationException("Invalid platform. Can not find proper function"),
+            };
         }
 
         /// <summary>
