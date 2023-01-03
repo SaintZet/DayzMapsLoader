@@ -10,20 +10,28 @@ namespace DayzMapsLoader.Infrastructure.DbContexts;
 
 public class JsonMapsDbContext : IMapsDbContext
 {
-    public MapProvider GetMapProvider(MapProviderName providerName)
-    {
-        string result;
+    private readonly string readerResult;
+    private List<ProviderDTO> providersDto;
 
-        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(JsonContextConstants.LastVersion)!)
+    public JsonMapsDbContext()
+    {
+        using (Stream stream =
+               Assembly.GetExecutingAssembly().GetManifestResourceStream(JsonContextConstants.LastVersion)!)
         using (StreamReader reader = new(stream))
         {
-            result = reader.ReadToEnd();
+            readerResult = reader.ReadToEnd();
         }
 
-        var providers = JsonConvert.DeserializeObject<List<ProviderDTO>>(result);
+        providersDto = JsonConvert.DeserializeObject<List<ProviderDTO>>(readerResult);
+    }
 
-        var providerDTO = providers!.Single(dto => dto.Name == (int)providerName);
+    public MapProvider GetMapProvider(MapProviderName providerName)
+    {
+        var providerDTO = providersDto!.Single(dto => dto.Name == (int)providerName);
 
         return ConvertDTO.ToProviderEntity(providerDTO);
     }
+
+    public IList<MapProvider> GetMapProviders()
+        => providersDto.Select(providerDto => ConvertDTO.ToProviderEntity(providerDto)).ToList();
 }
