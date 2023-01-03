@@ -12,6 +12,6 @@ namespace DayzMapsLoader.Application.Abstractions.Services
 
         public string SaveMapInParts(string pathToSave, MapName mapName, MapType mapType, int mapZoom);
 
-        public List<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom);
+        public IEnumerable<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom);
     }
 }

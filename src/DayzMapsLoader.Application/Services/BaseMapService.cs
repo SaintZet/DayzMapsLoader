@@ -8,7 +8,7 @@ namespace DayzMapsLoader.Application.Services;
 public class BaseMapService
 {
     protected readonly ProviderManager _providerManager = new();
-    protected readonly ImageMerger _imageMerger = new(new MapSize(256), 25);
+    protected readonly ImageMerger _imageMerger = new(new Size(256), 25);
 
     private readonly IMapsDbContext _mapsDbContext;
 

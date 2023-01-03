@@ -21,7 +21,7 @@ public class MapDownloader : BaseMapService, IMapDownloader
         return _imageMerger.Merge(mapParts, mapInfo.MapExtension);
     }
 
-    public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
+    public IEnumerable<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom)
     {
         List<Bitmap> result = new();
 
@@ -42,7 +42,7 @@ public class MapDownloader : BaseMapService, IMapDownloader
         return _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
     }
 
-    public List<MapParts> DownloadAllMapsInParts(MapType mapType, int mapZoom)
+    public IEnumerable<MapParts> DownloadAllMapsInParts(MapType mapType, int mapZoom)
     {
         List<MapParts> result = new();
 

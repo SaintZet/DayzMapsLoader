@@ -11,10 +11,10 @@ namespace DayzMapsLoader.Application.Abstractions.Services
 
         public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom);
 
-        public List<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom);
+        public IEnumerable<Bitmap> DownloadAllMaps(MapType mapType, int mapZoom);
 
         public MapParts DownloadMapInParts(MapName mapName, MapType mapType, int mapZoom);
 
-        public List<MapParts> DownloadAllMapsInParts(MapType mapType, int mapZoom);
+        public IEnumerable<MapParts> DownloadAllMapsInParts(MapType mapType, int mapZoom);
     }
 }

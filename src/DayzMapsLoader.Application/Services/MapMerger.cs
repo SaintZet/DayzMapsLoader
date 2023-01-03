@@ -23,7 +23,7 @@ public class MapMerger : BaseMapService, IMapMerger
     {
         List<string> verticals = GetMapPathOnVericals(pathToFolder);
 
-        var mapSize = new MapSize(verticals.Count);
+        var mapSize = new Size(verticals.Count);
         var mapParts = new MapParts(mapSize);
 
         for (int y = 0; y < verticals.Count; y++)
