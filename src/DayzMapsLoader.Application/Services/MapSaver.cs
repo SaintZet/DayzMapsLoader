@@ -32,7 +32,7 @@ public class MapSaver : BaseMapService, IMapSaver
         return ImageSaver.SaveImageToHardDisk(mapParts, path, ImageExtansionForSave);
     }
 
-    public List<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom)
+    public IEnumerable<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom)
     {
         List<string> result = new();
 

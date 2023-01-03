@@ -6,7 +6,7 @@ public class MapInfoDto
     public string? NameForProvider { get; set; }
     public int ZoomLevelRatioToSize { get; set; }
     public int MapExtension { get; set; }
-    public List<int>? TypesMap { get; set; }
+    public IEnumerable<int>? TypesMap { get; set; }
     public string? Version { get; set; }
     public bool IsFirstQuadrant { get; set; }
 }

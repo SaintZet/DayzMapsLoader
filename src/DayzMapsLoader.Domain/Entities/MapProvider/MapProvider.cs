@@ -2,4 +2,4 @@
 
 namespace DayzMapsLoader.Domain.Entities.MapProvider;
 
-public record struct MapProvider(MapProviderName Name, List<MapInfo> Maps);
+public record struct MapProvider(MapProviderName Name, IEnumerable<MapInfo> Maps);

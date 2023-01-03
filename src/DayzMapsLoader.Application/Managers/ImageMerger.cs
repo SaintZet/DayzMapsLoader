@@ -10,39 +10,48 @@ namespace DayzMapsLoader.Application.Managers;
 [SupportedOSPlatform("windows")]
 public class ImageMerger
 {
-    private const int _sizeBeforeImprovement = 256;
-    private const int _improvement = 50;
+    private int _dpiImprovementPercent;
 
-    private int _factor;
-    private int _resultSize;
-
-    private double _dpiImprovementPercent;
-
-    public ImageMerger(double dpiImprovementPercent)
+    public ImageMerger(MapSize mapSize, int dpiImprovementPercent)
     {
+        MapSize = mapSize;
         DpiImprovementPercent = dpiImprovementPercent;
     }
 
-    public double DpiImprovementPercent
+    public MapSize MapSize { get; set; }
+
+    public int DpiImprovementPercent
     {
         get => _dpiImprovementPercent;
         set
         {
-            if (value > 1 || value < 0)
+            if (value > 100 || value < 0)
             {
-                throw new ArgumentException("Value must be between 0 and 1");
+                throw new ArgumentException("Value must be between 0 and 100");
             }
-
-            _factor = Convert.ToInt32(value * _improvement);
-            _resultSize = _sizeBeforeImprovement * _factor;
 
             _dpiImprovementPercent = value;
         }
     }
 
+    public static Bitmap WebpToBitmap(byte[] bytes)
+    {
+        using WebP webp = new();
+
+        return webp.Decode(bytes);
+    }
+
     public Bitmap Merge(MapParts source, ImageExtension extension)
     {
-        Bitmap result = new(_resultSize, _resultSize, PixelFormat.Format24bppRgb);
+        var mapSize = MapSize;
+
+        if (_dpiImprovementPercent != 0)
+        {
+            mapSize.Width *= _dpiImprovementPercent;
+            mapSize.Height *= _dpiImprovementPercent;
+        }
+
+        Bitmap result = new(mapSize.Width, mapSize.Height, PixelFormat.Format32bppArgb);
 
         using (Graphics graphic = Graphics.FromImage(result))
         {
@@ -53,10 +62,20 @@ public class ImageMerger
             {
                 for (int x = 0; x < countHorizontals; x++)
                 {
-                    using Bitmap image = GetCorrectBitmap(extension, source.GetPartOfMap(x, y));
+                    using Bitmap image = GetCorrectBitmap(source.GetPartOfMap(x, y), extension);
 
-                    var width = image.Width * _factor / countVerticals;
-                    var height = image.Height * _factor / countHorizontals;
+                    int width, height;
+
+                    if (_dpiImprovementPercent != 0)
+                    {
+                        width = image.Width * _dpiImprovementPercent / countVerticals;
+                        height = image.Height * _dpiImprovementPercent / countHorizontals;
+                    }
+                    else
+                    {
+                        width = image.Width;
+                        height = image.Height;
+                    }
 
                     using Bitmap resizedImage = ImageResizer.Resize(image, width, height);
 
@@ -72,7 +91,7 @@ public class ImageMerger
         return result;
     }
 
-    private static Bitmap GetCorrectBitmap(ImageExtension extension, MapPart mapPart)
+    private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension)
     {
         switch (extension)
         {
@@ -81,8 +100,7 @@ public class ImageMerger
                 return new Bitmap(mapPart.AsStream());
 
             case ImageExtension.webp:
-                using (WebP webp = new())
-                    return webp.Decode(mapPart.Data);
+                return WebpToBitmap(mapPart.Data);
 
             default:
                 throw new NotImplementedException();
