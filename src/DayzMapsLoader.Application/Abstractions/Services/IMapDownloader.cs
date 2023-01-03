@@ -7,7 +7,7 @@ namespace DayzMapsLoader.Application.Abstractions.Services
     public interface IMapDownloader
     {
         public MapProviderName MapProviderName { get; set; }
-        public double QualityImage { get; set; }
+        public int QualityMultiplier { get; set; }
 
         public Bitmap DownloadMap(MapName mapName, MapType mapType, int mapZoom);
 
