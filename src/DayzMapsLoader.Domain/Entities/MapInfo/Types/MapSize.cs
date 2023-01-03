@@ -1,14 +1,14 @@
 ﻿namespace DayzMapsLoader.Domain.Entities.Map;
 
-public class Size
+public class MapSize
 {
-    public Size(int side)
+    public MapSize(int side)
     {
         Height = side;
         Width = side;
     }
 
-    public Size(int height, int width)
+    public MapSize(int height, int width)
     {
         Height = height;
         Width = width;

@@ -30,10 +30,10 @@ public class ImageMergerTest
     {
         Bitmap originalImage = GetOriginalImage(extension);
 
-        var mapSize = new Domain.Entities.Map.Size(originalImage.Height, originalImage.Width);
+        var mapSize = new Domain.Entities.Map.MapSize(originalImage.Height, originalImage.Width);
         var imageMerger = new ImageMerger(mapSize, 0);
 
-        var imageParts = new MapParts(new Domain.Entities.Map.Size(2));
+        var imageParts = new MapParts(new Domain.Entities.Map.MapSize(2));
 
         for (int y = 0; y < ImageCountVertical; y++)
         {

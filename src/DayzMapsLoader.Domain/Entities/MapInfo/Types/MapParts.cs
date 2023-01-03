@@ -5,7 +5,7 @@ public class MapParts
     private readonly MapPart[,] _images;
     private readonly byte[,][] _rawImages;
 
-    public MapParts(Size size)
+    public MapParts(MapSize size)
     {
         _images = new MapPart[size.Width, size.Height];
         _rawImages = new byte[size.Width, size.Height][];

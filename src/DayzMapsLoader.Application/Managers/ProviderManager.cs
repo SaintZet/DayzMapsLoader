@@ -19,7 +19,7 @@ public class ProviderManager
 
     public MapParts GetMapParts(MapInfo map, MapType mapType, int mapZoom)
     {
-        Size mapSize = map.ZoomLevelRatioSize.SingleOrDefault(x => x.Key == mapZoom).Value;
+        MapSize mapSize = map.ZoomLevelRatioSize.SingleOrDefault(x => x.Key == mapZoom).Value;
 
         MapParts mapParts = new(mapSize);
 

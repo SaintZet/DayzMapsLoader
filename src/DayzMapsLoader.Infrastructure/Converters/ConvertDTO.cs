@@ -45,20 +45,20 @@ internal static class ConvertDTO
         return result;
     }
 
-    private static IDictionary<int, Size> ConvertZoomLevelRatioSize(int zoomLevelRatioToSize)
+    private static IDictionary<int, MapSize> ConvertZoomLevelRatioSize(int zoomLevelRatioToSize)
     {
         int height = 1, weight = 1;
 
-        var zoomLevels = new Dictionary<int, Size>()
+        var zoomLevels = new Dictionary<int, MapSize>()
         {
-            { 0, new Size(height, weight) }
+            { 0, new MapSize(height, weight) }
         };
 
         for (int i = 1; i < zoomLevelRatioToSize; i++)
         {
             height *= 2;
             weight *= 2;
-            zoomLevels.Add(i, new Size(height, weight));
+            zoomLevels.Add(i, new MapSize(height, weight));
         }
 
         return zoomLevels;
