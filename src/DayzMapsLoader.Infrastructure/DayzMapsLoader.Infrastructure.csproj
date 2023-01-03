@@ -18,4 +18,8 @@
     <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
 </Project>
