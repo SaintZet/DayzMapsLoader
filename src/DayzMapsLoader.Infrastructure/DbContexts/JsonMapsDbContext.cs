@@ -11,18 +11,18 @@ namespace DayzMapsLoader.Infrastructure.DbContexts;
 public class JsonMapsDbContext : IMapsDbContext
 {
     private readonly string readerResult;
-    private List<ProviderDTO> providersDto;
+    private IEnumerable<ProviderDTO> providersDto;
 
     public JsonMapsDbContext()
     {
-        using (Stream stream =
-               Assembly.GetExecutingAssembly().GetManifestResourceStream(JsonContextConstants.LastVersion)!)
+        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(JsonContextConstants.LastVersion)!)
         using (StreamReader reader = new(stream))
         {
             readerResult = reader.ReadToEnd();
         }
 
-        var providers = JsonConvert.DeserializeObject<IEnumerable<ProviderDTO>>(result);
+        providersDto = JsonConvert.DeserializeObject<IEnumerable<ProviderDTO>>(readerResult);
+    }
 
     public MapProvider GetMapProvider(MapProviderName providerName)
     {
