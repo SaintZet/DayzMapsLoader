@@ -1,5 +1,6 @@
 ﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
 using DayzMapsLoader.Application.Managers;
+using DayzMapsLoader.Domain.Entities.Map;
 using DayzMapsLoader.Domain.Entities.MapProvider;
 
 namespace DayzMapsLoader.Application.Services;
@@ -7,7 +8,7 @@ namespace DayzMapsLoader.Application.Services;
 public class BaseMapService
 {
     protected readonly ProviderManager _providerManager = new();
-    protected readonly ImageMerger _imageMerger = new(0.5);
+    protected readonly ImageMerger _imageMerger = new(new MapSize(256), 25);
 
     private readonly IMapsDbContext _mapsDbContext;
 
@@ -31,7 +32,7 @@ public class BaseMapService
             _providerManager.MapProvider = _mapsDbContext.GetMapProvider(value);
         }
     }
-    public double QualityImage
+    public int QualityMultiplier
     {
         get => _imageMerger.DpiImprovementPercent;
         set => _imageMerger.DpiImprovementPercent = value;

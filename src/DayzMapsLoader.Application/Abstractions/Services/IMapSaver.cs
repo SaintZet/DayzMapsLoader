@@ -6,7 +6,7 @@ namespace DayzMapsLoader.Application.Abstractions.Services
     public interface IMapSaver
     {
         public MapProviderName MapProviderName { get; set; }
-        public double QualityImage { get; set; }
+        public int QualityMultiplier { get; set; }
 
         public string SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom);
 

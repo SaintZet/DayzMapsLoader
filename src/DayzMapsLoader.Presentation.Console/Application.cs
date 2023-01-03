@@ -14,7 +14,7 @@ namespace DayzMapsLoader.Presentation.ConsoleApp
         {
             _mapSaver = mapSaver;
             _mapSaver.MapProviderName = MapProviderName.xam;
-            _mapSaver.QualityImage = 0.5;
+            _mapSaver.QualityMultiplier = 25;
         }
 
         public void StartDoWork()
