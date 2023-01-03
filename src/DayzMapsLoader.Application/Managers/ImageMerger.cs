@@ -12,13 +12,13 @@ public class ImageMerger
 {
     private int _dpiImprovementPercent;
 
-    public ImageMerger(MapSize mapSize, int dpiImprovementPercent)
+    public ImageMerger(Domain.Entities.Map.MapSize mapSize, int dpiImprovementPercent)
     {
         MapSize = mapSize;
         DpiImprovementPercent = dpiImprovementPercent;
     }
 
-    public MapSize MapSize { get; set; }
+    public Domain.Entities.Map.MapSize MapSize { get; set; }
 
     public int DpiImprovementPercent
     {

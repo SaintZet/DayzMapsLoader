@@ -20,7 +20,7 @@ public class JsonMapsDbContext : IMapsDbContext
             result = reader.ReadToEnd();
         }
 
-        var providers = JsonConvert.DeserializeObject<List<ProviderDTO>>(result);
+        var providers = JsonConvert.DeserializeObject<IEnumerable<ProviderDTO>>(result);
 
         var providerDTO = providers!.Single(dto => dto.Name == (int)providerName);
 
