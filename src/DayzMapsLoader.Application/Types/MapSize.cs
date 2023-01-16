@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Domain.Entities.Map;
+﻿namespace DayzMapsLoader.Application.Types;
 
 public class MapSize
 {

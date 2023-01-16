@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DayzMapsLoader.Infrastructure.Migrations
 {
     [DbContext(typeof(DayzMapLoaderContext))]
-    [Migration("20230114153814_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230116201723_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DayzMapsLoader.Infrastructure.Entities.DayzMap", b =>
+            modelBuilder.Entity("DayzMapsLoader.Domain.Entities.Map", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,10 +50,10 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DayzMaps");
+                    b.ToTable("Maps");
                 });
 
-            modelBuilder.Entity("DayzMapsLoader.Infrastructure.Entities.MapProvider", b =>
+            modelBuilder.Entity("DayzMapsLoader.Domain.Entities.MapProvider", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,15 +64,16 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                     b.Property<string>("Link")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("MapProviders");
                 });
 
-            modelBuilder.Entity("DayzMapsLoader.Infrastructure.Entities.ProvidersMapAsset", b =>
+            modelBuilder.Entity("DayzMapsLoader.Domain.Entities.MapType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,55 +81,90 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DayzMapId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MapExtension")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MapName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MapTypes");
+                });
+
+            modelBuilder.Entity("DayzMapsLoader.Domain.Entities.ProvidedMap", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFirstQuadrant")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MapId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MapProviderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MapType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MapVersion")
+                    b.Property<string>("MapTypeForProvider")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MapTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MaxMapLevel")
                         .HasColumnType("int");
 
+                    b.Property<string>("NameForProvider")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DayzMapId");
+                    b.HasIndex("MapId");
 
                     b.HasIndex("MapProviderId");
 
-                    b.ToTable("ProvidersMapAssets");
+                    b.HasIndex("MapTypeId");
+
+                    b.ToTable("ProvidedMaps");
                 });
 
-            modelBuilder.Entity("DayzMapsLoader.Infrastructure.Entities.ProvidersMapAsset", b =>
+            modelBuilder.Entity("DayzMapsLoader.Domain.Entities.ProvidedMap", b =>
                 {
-                    b.HasOne("DayzMapsLoader.Infrastructure.Entities.DayzMap", "DayzMap")
+                    b.HasOne("DayzMapsLoader.Domain.Entities.Map", "Map")
                         .WithMany()
-                        .HasForeignKey("DayzMapId")
+                        .HasForeignKey("MapId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DayzMapsLoader.Infrastructure.Entities.MapProvider", "MapProvider")
+                    b.HasOne("DayzMapsLoader.Domain.Entities.MapProvider", "MapProvider")
                         .WithMany()
                         .HasForeignKey("MapProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DayzMap");
+                    b.HasOne("DayzMapsLoader.Domain.Entities.MapType", "MapType")
+                        .WithMany()
+                        .HasForeignKey("MapTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Map");
 
                     b.Navigation("MapProvider");
+
+                    b.Navigation("MapType");
                 });
 #pragma warning restore 612, 618
         }

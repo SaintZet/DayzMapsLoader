@@ -6,11 +6,11 @@ namespace DayzMapsLoader.Presentation.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            var serviceProvider = new Startup().ConfigureServices();
+            //var serviceProvider = new Startup().ConfigureServices();
 
-            var app = serviceProvider.GetRequiredService<Application>();
+            //var app = serviceProvider.GetRequiredService<Application>();
 
-            app.StartDoWork();
+            //app.StartDoWork();
         }
     }
 }

@@ -1,4 +1,8 @@
+using DayzMapsLoader.Application.Abstractions.Infrastructure;
+using DayzMapsLoader.Application.Abstractions.Services;
+using DayzMapsLoader.Application.Services;
 using DayzMapsLoader.Infrastructure.Contexts;
+using DayzMapsLoader.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.WebApi
@@ -18,6 +22,13 @@ namespace DayzMapsLoader.WebApi
             builder.Services.AddDbContext<DayzMapLoaderContext>(options => options
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(@"Server =.; DataBase=DayzMapLoader; User id=sa; password=Micr0!nvest; Integrated Security=True; TrustServerCertificate=True;"));
+
+            builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddTransient<IMapProvidersRepository, MapProvidersRepository>();
+            builder.Services.AddTransient<IMapsRepository, MapsRepository>();
+            builder.Services.AddTransient<IProvidedMapsRepository, ProvidedMapsRepository>();
+
+            builder.Services.AddTransient<IMapDownloader, MapDownloader>();
 
             var app = builder.Build();
 

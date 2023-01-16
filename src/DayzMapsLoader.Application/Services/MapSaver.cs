@@ -1,47 +1,61 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
-using DayzMapsLoader.Application.Abstractions.Services;
-using DayzMapsLoader.Application.Helpers;
-using DayzMapsLoader.Domain.Entities.Map;
+﻿//using DayzMapsLoader.Application.Abstractions.Infrastructure;
+//using DayzMapsLoader.Application.Abstractions.Services;
+//using DayzMapsLoader.Application.Enums;
+//using DayzMapsLoader.Application.Helpers;
+//using DayzMapsLoader.Domain.Entities;
+//using System;
 
-namespace DayzMapsLoader.Application.Services;
+//namespace DayzMapsLoader.Application.Services;
 
-public class MapSaver : BaseMapService, IMapSaver
-{
-    public MapSaver(IMapsDbContext mapsDbContext) : base(mapsDbContext)
-    {
-    }
+//public class MapSaver : BaseMapService, IMapSaver
+//{
+//    public MapSaver(IMapsDbContext mapsDbContext) : base(mapsDbContext)
+//    {
+//    }
 
-    public ImageExtension ImageExtansionForSave { get; set; } = ImageExtension.jpg;
+//    public ImageExtension ImageExtansionForSave { get; set; } = ImageExtension.jpg;
 
-    public string SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom)
-    {
-        var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
-        var mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
-        var image = _imageMerger.Merge(mapParts, mapInfo.MapExtension);
-        string path = $@"{pathToSave}\{_providerManager}\{mapInfo.Name}\{mapType}\{mapInfo.Version}\{mapZoom}";
+//    public string SaveMap(string pathToSave, int providerId, int mapID, int typeId, int zoom)
+//    {
+//        ProvidedMap map = _mapsDbContext.GetProvidedMap(providerId, mapID, typeId);
 
-        return ImageSaver.SaveImageToHardDisk(image, path, ImageExtansionForSave);
-    }
+//        var mapParts = _providerManager.GetMapParts(map, zoom);
 
-    public string SaveMapInParts(string pathToSave, MapName mapName, MapType mapType, int mapZoom)
-    {
-        var mapInfo = _providerManager.GetMapInfo(mapName, mapType, mapZoom);
-        var mapParts = _providerManager.GetMapParts(mapInfo, mapType, mapZoom);
-        string path = $@"{pathToSave}\{_providerManager}\{mapInfo.Name}\{mapType}\{mapInfo.Version}\{mapZoom}";
+//        Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 
-        return ImageSaver.SaveImageToHardDisk(mapParts, path, ImageExtansionForSave);
-    }
+//        var image = _imageMerger.Merge(mapParts, extension);
 
-    public IEnumerable<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom)
-    {
-        List<string> result = new();
+//        string path = $@"{pathToSave}\{_providerManager}\{map.Map.Name}\{map.Type.Name}\{map.Version}\{zoom}";
 
-        Parallel.ForEach(_providerManager.MapProvider.Maps, mapInfo =>
-        {
-            var path = SaveMap(pathToSave, mapInfo.Name, mapType, mapZoom);
-            result.Add(path);
-        });
+//        return ImageSaver.SaveImageToHardDisk(image, path, ImageExtansionForSave);
+//    }
 
-        return result;
-    }
-}
+//    public string SaveMapInParts(string pathToSave, int providerId, int mapID, int typeId, int zoom)
+//    {
+//        MapProvider provider = _mapsDbContext.GetMapProviderById(providerId);
+
+//        ProvidedMap map = _mapsDbContext.GetProvidedMap(provider.Id, mapID, typeId);
+
+//        var mapParts = _providerManager.GetMapParts(map, zoom);
+
+//        string path = $@"{pathToSave}\{provider.Name}\{map.Map.Name}\{map.Type.Name}\{map.Version}\{zoom}";
+
+//        return ImageSaver.SaveImageToHardDisk(mapParts, path, ImageExtansionForSave);
+//    }
+
+//    public IEnumerable<string> SaveAllMaps(string pathToSave, int providerId, int typeId, int zoom)
+//    {
+//        List<string> result = new();
+
+//        MapProvider provider = _mapsDbContext.GetMapProviderById(providerId);
+
+//        Parallel.ForEach(_mapsDbContext.GetProvidedMapsByProviderId(provider.Id), map =>
+//        {
+//            var path = SaveMap(pathToSave, provider.Id, map.Id, typeId, zoom);
+
+//            result.Add(path);
+//        });
+
+//        return result;
+//    }
+//}

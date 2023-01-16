@@ -1,17 +1,13 @@
-﻿using DayzMapsLoader.Domain.Entities.Map;
-using DayzMapsLoader.Domain.Entities.MapProvider;
-
-namespace DayzMapsLoader.Application.Abstractions.Services
+﻿namespace DayzMapsLoader.Application.Abstractions.Services
 {
     public interface IMapSaver
     {
-        public MapProviderName MapProviderName { get; set; }
         public int QualityMultiplier { get; set; }
 
-        public string SaveMap(string pathToSave, MapName mapName, MapType mapType, int mapZoom);
+        public string SaveMap(string pathToSave, int providerId, int mapID, int typeId, int zoom);
 
-        public string SaveMapInParts(string pathToSave, MapName mapName, MapType mapType, int mapZoom);
+        public string SaveMapInParts(string pathToSave, int providerId, int mapID, int typeId, int zoom);
 
-        public IEnumerable<string> SaveAllMaps(string pathToSave, MapType mapType, int mapZoom);
+        public IEnumerable<string> SaveAllMaps(string pathToSave, int providerId, int typeId, int zoom);
     }
 }

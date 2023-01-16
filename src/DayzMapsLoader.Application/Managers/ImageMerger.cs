@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Helpers;
+﻿using DayzMapsLoader.Application.Enums;
+using DayzMapsLoader.Application.Helpers;
 using DayzMapsLoader.Application.Helpers.WebpDecoder;
-using DayzMapsLoader.Domain.Entities.Map;
+using DayzMapsLoader.Application.Types;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;

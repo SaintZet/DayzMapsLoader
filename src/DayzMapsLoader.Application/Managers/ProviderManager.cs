@@ -1,31 +1,22 @@
 ﻿using DayzMapsLoader.Application.Helpers;
-using DayzMapsLoader.Domain.Entities.Map;
-using DayzMapsLoader.Domain.Entities.MapProvider;
+using DayzMapsLoader.Application.Types;
+using DayzMapsLoader.Domain.Entities;
 using System.Net;
 
 namespace DayzMapsLoader.Application.Managers;
 
 public class ProviderManager
 {
-    public MapProvider MapProvider { get; set; }
-
-    public override string ToString() => Enum.GetName(MapProvider.Name.GetType(), MapProvider.Name)!;
-
-    public MapInfo GetMapInfo(MapName mapName, MapType mapType, int mapZoom)
+    public MapParts GetMapParts(ProvidedMap map, int zoom)
     {
-        //TODO: Add validation.
-        return MapProvider.Maps.SingleOrDefault(x => x.Name == mapName);
-    }
-
-    public MapParts GetMapParts(MapInfo map, MapType mapType, int mapZoom)
-    {
-        MapSize mapSize = map.ZoomLevelRatioSize.SingleOrDefault(x => x.Key == mapZoom).Value;
+        // TODO: Fix it:
+        MapSize mapSize = new(0);  //map.ZoomLevelRatioSize.SingleOrDefault(x => x.Key == zoom).Value;
 
         MapParts mapParts = new(mapSize);
 
         WebClient webClient = new();
 
-        var queryBuilder = new QueryBuilder(MapProvider.Name, map, mapType, mapZoom);
+        var queryBuilder = new QueryBuilder(map, zoom);
 
         int yReversed = mapSize.Width - 1;
         for (int y = 0; y < mapSize.Width; y++)
