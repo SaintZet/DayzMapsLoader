@@ -13,13 +13,9 @@ namespace DayzMapsLoader.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<Map>> GetAllMapsAsync()
-        {
-            return await GetAll().ToListAsync();
-        }
+            => await GetAll().ToListAsync();
 
-        public async Task<Map> GetProviderByIdAsync(int id)
-        {
-            return (await GetAll().FirstOrDefaultAsync(x => x.Id == id))!;
-        }
+        public async Task<Map> GetMapByIdAsync(int id)
+            => (await GetAll().FirstOrDefaultAsync(x => x.Id == id))!;
     }
 }

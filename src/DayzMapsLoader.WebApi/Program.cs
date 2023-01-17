@@ -3,9 +3,10 @@ using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Services;
 using DayzMapsLoader.Infrastructure.Contexts;
 using DayzMapsLoader.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DayzMapsLoader.WebApi
+namespace DayzMapsLoader.Presentation.WebApi
 {
     public class Program
     {
@@ -19,6 +20,7 @@ namespace DayzMapsLoader.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddDbContext<DayzMapLoaderContext>(options => options
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(@"Server =.; DataBase=DayzMapLoader; User id=sa; password=Micr0!nvest; Integrated Security=True; TrustServerCertificate=True;"));
@@ -29,6 +31,8 @@ namespace DayzMapsLoader.WebApi
             builder.Services.AddTransient<IProvidedMapsRepository, ProvidedMapsRepository>();
 
             builder.Services.AddTransient<IMapDownloader, MapDownloader>();
+
+            builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 

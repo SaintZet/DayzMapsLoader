@@ -35,13 +35,6 @@ public class ImageMerger
         }
     }
 
-    public static Bitmap WebpToBitmap(byte[] bytes)
-    {
-        using WebP webp = new();
-
-        return webp.Decode(bytes);
-    }
-
     public Bitmap Merge(MapParts source, ImageExtension extension)
     {
         var mapSize = MapSize;
@@ -90,6 +83,13 @@ public class ImageMerger
         }
 
         return result;
+    }
+
+    private static Bitmap WebpToBitmap(byte[] bytes)
+    {
+        using WebP webp = new();
+
+        return webp.Decode(bytes);
     }
 
     private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension)

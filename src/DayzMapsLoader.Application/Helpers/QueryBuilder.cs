@@ -20,8 +20,8 @@ internal class QueryBuilder
     {
         return map.MapProvider.Id switch
         {
-            0 => $"https://static.xam.nu/dayz/maps/{map.NameForProvider}/{map.Version}/{map.MapTypeForProvider}/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
-            1 => $"https://maps.izurvive.com/maps/{map.NameForProvider}-{map.MapTypeForProvider}/{map.Version}/tiles/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
+            1 => $"https://static.xam.nu/dayz/maps/{map.NameForProvider}/{map.Version}/{map.MapTypeForProvider}/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
+            2 => $"https://maps.izurvive.com/maps/{map.NameForProvider}-{map.MapTypeForProvider}/{map.Version}/tiles/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
             _ => throw new NotImplementedException("Add new provider in this method!"),
         };
     }

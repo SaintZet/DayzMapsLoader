@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.UnitTests", "DayzMapsLoader.Application.UnitTests\DayzMapsLoader.Application.UnitTests.csproj", "{307C23A6-D5EF-4DA0-8273-7340F1D60655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.WebApi", "DayzMapsLoader.WebApi\DayzMapsLoader.WebApi.csproj", "{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.WebApi", "DayzMapsLoader.WebApi\DayzMapsLoader.Presentation.WebApi.csproj", "{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

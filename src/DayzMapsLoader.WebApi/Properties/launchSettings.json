@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "DayzMapsLoader.WebApi": {
+    "DayzMapsLoader.Presentation.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

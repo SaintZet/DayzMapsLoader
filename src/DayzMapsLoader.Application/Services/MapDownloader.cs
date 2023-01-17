@@ -4,7 +4,7 @@ using DayzMapsLoader.Application.Enums;
 using DayzMapsLoader.Application.Managers;
 using DayzMapsLoader.Application.Types;
 using DayzMapsLoader.Domain.Entities;
-using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace DayzMapsLoader.Application.Services;
 
@@ -13,7 +13,7 @@ public class MapDownloader : IMapDownloader
     private readonly IProvidedMapsRepository _providedMapsRepository;
 
     private readonly ImageMerger _imageMerger = new(new MapSize(256), 25);
-    private readonly ProviderManager _providerManager = new();
+    private readonly ExternalApiCaller _externalApiCaller = new();
 
     public MapDownloader(IProvidedMapsRepository providedMapsRepository)
     {
@@ -22,21 +22,15 @@ public class MapDownloader : IMapDownloader
 
     public int QualityMultiplier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-    public async Task<byte[]> DownloadMap(int providerId, int mapID, int typeId, int zoom)
+    public async Task<Bitmap> DownloadMap(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = _providerManager.GetMapParts(map, zoom);
+        var mapParts = _externalApiCaller.GetMapParts(map, zoom);
 
         Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 
-        var bitmap = _imageMerger.Merge(mapParts, extension);
-
-        using (MemoryStream ms = new())
-        {
-            bitmap.Save(ms, ImageFormat.Bmp);
-            return ms.ToArray();
-        }
+        return _imageMerger.Merge(mapParts, extension);
     }
 
     //public async IAsyncEnumerable<Task<byte[]>> DownloadAllMaps(int providerId, int zoom)
@@ -59,7 +53,7 @@ public class MapDownloader : IMapDownloader
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        return _providerManager.GetMapParts(map, zoom).GetRawMapParts();
+        return _externalApiCaller.GetMapParts(map, zoom).GetRawMapParts();
     }
 
     //public IEnumerable<MapParts> DownloadAllMapsInParts(int providerId, int zoom)

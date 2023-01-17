@@ -1,7 +1,8 @@
 ﻿using DayzMapsLoader.Application.Abstractions.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.IO.Compression;
 
-namespace DayzMapsLoader.WebApi.Controllers
+namespace DayzMapsLoader.Presentation.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,9 +23,34 @@ namespace DayzMapsLoader.WebApi.Controllers
         }
 
         [HttpGet("{providerId}/{mapID}/{typeId}/{zoom}")]
-        public async Task<ActionResult<byte[]>> Get(int providerId, int mapID, int typeId, int zoom)
+        public async Task<FileContentResult> Get(int providerId, int mapID, int typeId, int zoom)
         {
-            return await _mapDownloader.DownloadMap(providerId, mapID, typeId, zoom);
+            var map = await _mapDownloader.DownloadMap(providerId, mapID, typeId, zoom);
+
+            using (var compressedFileStream = new MemoryStream())
+            {
+                ////Create an archive and store the stream in memory.
+                //using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
+                //{
+                //    //Create a zip entry for each attachment
+                //    var zipEntry = zipArchive.CreateEntry(attachmentModel.Name);
+
+                //    //Get the stream of the attachment
+                //    using var originalFileStream = new MemoryStream(attachmentModel.Body);
+
+                //    using var zipEntryStream = zipEntry.Open();
+                //    //Copy the attachment stream to the zip entry stream
+                //    originalFileStream.CopyTo(zipEntryStream);
+                //}
+
+                return new FileContentResult(compressedFileStream.ToArray(), "application/zip") { FileDownloadName = "Filename.zip" };
+            }
+        }
+
+        private struct AttachmentModel
+        {
+            public string Name { get; set; }
+            public byte[] Body { get; set; }
         }
     }
 }

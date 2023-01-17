@@ -4,9 +4,9 @@ public class ProvidedMap
 {
     public int Id { get; set; }
     public string NameForProvider { get; set; } = string.Empty;
-    public MapProvider MapProvider { get; set; } = default!;
-    public Map Map { get; set; } = default!;
-    public MapType MapType { get; set; } = default!;
+    public virtual MapProvider MapProvider { get; set; } = default!;
+    public virtual Map Map { get; set; } = default!;
+    public virtual MapType MapType { get; set; } = default!;
     public string MapTypeForProvider { get; set; } = string.Empty;
     public int MaxMapLevel { get; set; }
     public bool IsFirstQuadrant { get; set; }
