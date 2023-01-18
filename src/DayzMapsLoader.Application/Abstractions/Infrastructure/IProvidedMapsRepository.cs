@@ -8,8 +8,8 @@ namespace DayzMapsLoader.Application.Abstractions.Infrastructure
 
         public Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByProviderIdAsync(int providerId);
 
-        public Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId);
+        public Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByMapIdAsync(int mapId);
 
-        public Task<ProvidedMap> GetProvidedMapsByProviderIdAsync(int providerId);
+        public Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId);
     }
 }

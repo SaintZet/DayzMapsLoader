@@ -15,11 +15,11 @@ namespace DayzMapsLoader.Infrastructure.Repositories
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsAsync()
             => await GetAll().ToListAsync();
 
+        public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByMapIdAsync(int mapId)
+            => await GetAll().Where(x => x.Map.Id == mapId).ToListAsync();
+
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByProviderIdAsync(int providerId)
             => await GetAll().Where(x => x.MapProvider.Id == providerId).ToListAsync();
-
-        public async Task<ProvidedMap> GetProvidedMapsByProviderIdAsync(int id)
-            => (await GetAll().FirstOrDefaultAsync(x => x.MapProvider.Id == id))!;
 
         public async Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId)
         => (await GetAll()
