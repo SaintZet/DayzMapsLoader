@@ -1,4 +1,5 @@
-﻿using DayzMapsLoader.Domain.Entities.Map;
+﻿using DayzMapsLoader.Application.Enums;
+using DayzMapsLoader.Application.Types;
 using System.Drawing;
 using System.Runtime.Versioning;
 

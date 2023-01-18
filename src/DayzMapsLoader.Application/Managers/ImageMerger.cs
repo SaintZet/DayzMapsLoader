@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Helpers;
+﻿using DayzMapsLoader.Application.Enums;
+using DayzMapsLoader.Application.Helpers;
 using DayzMapsLoader.Application.Helpers.WebpDecoder;
-using DayzMapsLoader.Domain.Entities.Map;
+using DayzMapsLoader.Application.Types;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -32,13 +33,6 @@ public class ImageMerger
 
             _dpiImprovementPercent = value;
         }
-    }
-
-    public static Bitmap WebpToBitmap(byte[] bytes)
-    {
-        using WebP webp = new();
-
-        return webp.Decode(bytes);
     }
 
     public Bitmap Merge(MapParts source, ImageExtension extension)
@@ -89,6 +83,13 @@ public class ImageMerger
         }
 
         return result;
+    }
+
+    private static Bitmap WebpToBitmap(byte[] bytes)
+    {
+        using WebP webp = new();
+
+        return webp.Decode(bytes);
     }
 
     private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension)

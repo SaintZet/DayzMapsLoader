@@ -1,5 +1,4 @@
-﻿using DayzMapsLoader.Domain.Entities.Map;
-using DayzMapsLoader.Domain.Entities.MapProvider;
+﻿using DayzMapsLoader.Domain.Entities;
 
 namespace DayzMapsLoader.Application.Helpers;
 
@@ -7,9 +6,9 @@ internal class QueryBuilder
 {
     private readonly string _queryTemplate;
 
-    public QueryBuilder(MapProviderName mapProvider, MapInfo currentMap, MapType typeMap, int zoom)
+    public QueryBuilder(ProvidedMap map, int zoom)
     {
-        _queryTemplate = BuildTemplateQuery(mapProvider, currentMap, typeMap, zoom);
+        _queryTemplate = BuildTemplateQuery(map, zoom);
     }
 
     public string GetQuery(int i, int j)
@@ -17,23 +16,13 @@ internal class QueryBuilder
         return string.Format(_queryTemplate, i.ToString(), j.ToString());
     }
 
-    private static string BuildTemplateQuery(MapProviderName mapProvider, MapInfo currentMap, MapType typeMap, int zoom)
+    private static string BuildTemplateQuery(ProvidedMap map, int zoom)
     {
-        return mapProvider switch
+        return map.MapProvider.Id switch
         {
-            MapProviderName.xam => $"https://static.xam.nu/dayz/maps/{currentMap.NameForProvider}/{currentMap.Version}/{typeMap}/{zoom}/{{0}}/{{1}}.{currentMap.MapExtension}",
-            MapProviderName.ginfo => $"https://maps.izurvive.com/maps/{currentMap.NameForProvider}-{GetTypeMap(typeMap)}/{currentMap.Version}/tiles/{zoom}/{{0}}/{{1}}.{currentMap.MapExtension}",
+            1 => $"https://static.xam.nu/dayz/maps/{map.NameForProvider}/{map.Version}/{map.MapTypeForProvider}/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
+            2 => $"https://maps.izurvive.com/maps/{map.NameForProvider}-{map.MapTypeForProvider}/{map.Version}/tiles/{zoom}/{{0}}/{{1}}.{map.ImageExtension}",
             _ => throw new NotImplementedException("Add new provider in this method!"),
-        };
-    }
-
-    private static string GetTypeMap(MapType typeMap)
-    {
-        return typeMap switch
-        {
-            MapType.topographic => "Top",
-            MapType.satellite => "Sat",
-            _ => throw new NotImplementedException("Not support this type!"),
         };
     }
 }
