@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IO.Compression;
 
-namespace DayzMapsLoader.Presentation.WebApi.Controllers
+namespace DayzMapsLoader.Presentation.WebApi.Controllers.ProvidedMaps
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProvidedMapController : ControllerBase
+    public class ProvidedMapsController : ControllerBase
     {
         private readonly IMapDownloader _mapDownloader;
 
-        public ProvidedMapController(IMapDownloader mapDownloader)
+        public ProvidedMapsController(IMapDownloader mapDownloader)
         {
             _mapDownloader = mapDownloader;
         }
