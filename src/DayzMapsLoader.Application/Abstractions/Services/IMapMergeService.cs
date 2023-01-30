@@ -2,7 +2,7 @@
 
 namespace DayzMapsLoader.Application.Abstractions.Services
 {
-    public interface IMapMerger
+    public interface IMapMergeService
     {
         public int QualityMultiplier { get; set; }
 

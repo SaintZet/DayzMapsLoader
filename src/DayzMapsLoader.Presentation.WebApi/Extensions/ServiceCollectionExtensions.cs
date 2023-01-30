@@ -38,7 +38,7 @@ namespace DayzMapsLoader.Presentation.WebApi.Extensions
                 });
 
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
-            => services.AddTransient<IMapDownloader, MapDownloader>();
+            => services.AddTransient<IMapDownloadService, MapDownloadService>();
 
         public static IServiceCollection AddInfrastractureLayer(this IServiceCollection services, IConfiguration configuration)
             => services
