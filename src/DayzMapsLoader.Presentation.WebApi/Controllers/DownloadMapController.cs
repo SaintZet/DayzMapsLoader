@@ -1,8 +1,6 @@
-﻿using DayzMapsLoader.Application.Abstractions.Services;
+﻿using DayzMapsLoader.Application.Features.MapArchive.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Imaging;
-using System.IO.Compression;
 
 namespace DayzMapsLoader.Presentation.WebApi.Controllers
 {
@@ -10,37 +8,25 @@ namespace DayzMapsLoader.Presentation.WebApi.Controllers
     [ApiController]
     public class DownloadMapController : BaseController
     {
-        private readonly IMapDownloader _mapDownloader;
+        public DownloadMapController(IMediator mediator)
+            : base(mediator) { }
 
-        public DownloadMapController(IMediator mediator, IMapDownloader mapDownloader) : base(mediator)
+        [HttpGet("providers/{providerId}/maps/{mapId}/types/{typeId}/zoom/{zoom}/image-archive")]
+        public async Task<FileContentResult> GetMapImageArchive(int providerId, int mapId, int typeId, int zoom)
         {
-            _mapDownloader = mapDownloader;
+            var query = new GetMapImageArchiveQuery(providerId, mapId, typeId, zoom);
+            var (data, name) = await _mediator.Send(query);
+
+            return new FileContentResult(data, "application/zip") { FileDownloadName = name };
         }
 
-        [HttpGet("{providerId}/{mapID}/{typeId}/{zoom}")]
-        public async Task<FileContentResult> Get(int providerId, int mapID, int typeId, int zoom)
+        [HttpGet("providers/{providerId}/maps/{mapId}/types/{typeId}/zoom/{zoom}/image-parts-archive")]
+        public async Task<FileContentResult> GetMapImagePartsArchive(int providerId, int mapId, int typeId, int zoom)
         {
-            var map = await _mapDownloader.DownloadMap(providerId, mapID, typeId, zoom);
+            var query = new GetMapImagePartsArchiveQuery(providerId, mapId, typeId, zoom);
+            var (data, name) = await _mediator.Send(query);
 
-            using (var compressedFileStream = new MemoryStream())
-            {
-                //Create an archive and store the stream in memory.
-                using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
-                {
-                    //Create a zip entry for each attachment
-                    var zipEntry = zipArchive.CreateEntry("TestName");
-
-                    //Get the stream of the attachment
-                    using var originalFileStream = new MemoryStream();
-                    map.Save(originalFileStream, ImageFormat.Png);
-
-                    using var zipEntryStream = zipEntry.Open();
-                    //Copy the attachment stream to the zip entry stream
-                    originalFileStream.CopyTo(zipEntryStream);
-                }
-
-                return new FileContentResult(compressedFileStream.ToArray(), "application/zip") { FileDownloadName = "Filename.zip" };
-            }
+            return new FileContentResult(data, "application/zip") { FileDownloadName = name };
         }
     }
 }
