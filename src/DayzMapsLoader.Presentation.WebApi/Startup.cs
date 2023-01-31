@@ -1,4 +1,6 @@
-﻿using DayzMapsLoader.Presentation.WebApi.Extensions;
+﻿using DayzMapsLoader.Application.Extensions;
+using DayzMapsLoader.Infrastructure.Extensions;
+using DayzMapsLoader.Presentation.WebApi.Extensions;
 using MediatR;
 
 namespace DayzMapsLoader.Presentation.WebApi;
@@ -15,7 +17,8 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApplicationLayer();
-        services.AddInfrastractureLayer(_configuration);
+        services.AddInfrastractureLayer();
+        services.AddDatabase(_configuration);
         services.AddControllers();
         services.AddSwagger();
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
