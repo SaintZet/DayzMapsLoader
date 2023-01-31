@@ -13,7 +13,7 @@ internal class MapDownloadImageService : BaseMapDownloadService, IMapDownloadIma
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        using MemoryStream memoryStream = GetMapInMemoryStream(map, zoom);
+        using MemoryStream memoryStream = await GetMapInMemoryStreamAsync(map, zoom);
 
         return memoryStream.ToArray();
     }
@@ -22,7 +22,9 @@ internal class MapDownloadImageService : BaseMapDownloadService, IMapDownloadIma
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        return _externalApiManager.GetMapParts(map, zoom).GetRawMapParts();
+        var mapParts = await _externalApiManager.GetMapPartsAsync(map, zoom);
+
+        return mapParts.GetRawMapParts();
     }
 
     public async Task<IEnumerable<byte[]>> DownloadAllMapImages(int providerId, int zoom)

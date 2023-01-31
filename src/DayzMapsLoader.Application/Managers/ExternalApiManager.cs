@@ -6,13 +6,12 @@ namespace DayzMapsLoader.Application.Managers;
 
 internal class ExternalApiManager
 {
-    public MapParts GetMapParts(ProvidedMap map, int zoom)
+    private readonly HttpClient _httpClient = new();
+
+    public async Task<MapParts> GetMapPartsAsync(ProvidedMap map, int zoom)
     {
         MapSize mapSize = ConvertZoomLevelRatioSize(zoom);
-
         MapParts mapParts = new(mapSize);
-
-        HttpClient httpClient = new();
 
         QueryBuilder queryBuilder = new(map, zoom);
 
@@ -23,8 +22,10 @@ internal class ExternalApiManager
             {
                 string query = map.IsFirstQuadrant ? queryBuilder.BuildQuery(x, yReversed) : queryBuilder.BuildQuery(x, y);
 
-                var response = httpClient.GetAsync(query).Result;
-                mapParts.AddPart(x, y, new MapPart(response.Content.ReadAsByteArrayAsync().Result));
+                var response = await _httpClient.GetAsync(query);
+                var data = await response.Content.ReadAsByteArrayAsync();
+
+                mapParts.AddPart(x, y, new MapPart(data));
             }
 
             yReversed--;
