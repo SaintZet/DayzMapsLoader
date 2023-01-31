@@ -12,17 +12,29 @@ namespace DayzMapsLoader.Application.Services;
 public class MapDownloadService : IMapDownloadService
 {
     private readonly IProvidedMapsRepository _providedMapsRepository;
-    private readonly ImageMerger _imageMerger = new(new MapSize(256), 25);
-    private readonly ExternalApiCaller _externalApiCaller = new();
+    private readonly ImageMergeManager _imageMergeManager;
+    private readonly ExternalApiManager _externalApiManager;
+
+    private int _qualityMultiplier = 25;
 
     public MapDownloadService(IProvidedMapsRepository providedMapsRepository)
     {
         _providedMapsRepository = providedMapsRepository;
+        _imageMergeManager = new ImageMergeManager(new MapSize(256), _qualityMultiplier);
+        _externalApiManager = new ExternalApiManager();
     }
 
-    public int QualityMultiplier { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int QualityMultiplier
+    {
+        get => _qualityMultiplier;
+        set
+        {
+            _qualityMultiplier = value;
+            _imageMergeManager.DpiImprovementPercent = value;
+        }
+    }
 
-    public async Task<byte[]> DownloadMapImage(int providerId, int mapID, int typeId, int zoom)
+    public async Task<byte[]> DownloadMapImageAsync(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
@@ -31,14 +43,30 @@ public class MapDownloadService : IMapDownloadService
         return memoryStream.ToArray();
     }
 
-    public async Task<byte[,][]> DownloadMapImageInParts(int providerId, int mapID, int typeId, int zoom)
+    public async Task<byte[,][]> DownloadMapImageInPartsAsync(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        return _externalApiCaller.GetMapParts(map, zoom).GetRawMapParts();
+        return _externalApiManager.GetMapParts(map, zoom).GetRawMapParts();
     }
 
-    public async Task<(byte[] data, string name)> DownloadMapImageArchive(int providerId, int mapID, int typeId, int zoom)
+    public async Task<IEnumerable<byte[]>> DownloadAllMapImages(int providerId, int zoom)
+    {
+        List<byte[]> result = new();
+
+        var providedMaps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
+
+        Parallel.ForEach(providedMaps, async map =>
+        {
+            var image = await DownloadMapImageAsync(providerId, map.Id, map.MapType.Id, zoom).ConfigureAwait(false);
+
+            result.Add(image);
+        });
+
+        return result;
+    }
+
+    public async Task<(byte[] data, string name)> DownloadMapImageArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
@@ -58,11 +86,11 @@ public class MapDownloadService : IMapDownloadService
         return (compressedFileStream.ToArray(), $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip");
     }
 
-    public async Task<(byte[] data, string name)> DownloadMapImagePartsArchive(int providerId, int mapID, int typeId, int zoom)
+    public async Task<(byte[] data, string name)> DownloadMapImagePartsArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = _externalApiCaller.GetMapParts(map, zoom);
+        var mapParts = _externalApiManager.GetMapParts(map, zoom);
 
         int axisY = mapParts.Weight;
         int axisX = mapParts.Height;
@@ -96,13 +124,36 @@ public class MapDownloadService : IMapDownloadService
         return (compressedFileStream.ToArray(), $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip");
     }
 
+    public async Task<(byte[] data, string name)> DownloadAllMapsImagesArchiveAsync(int providerId, int zoom)
+    {
+        var maps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
+
+        using MemoryStream compressedFileStream = new();
+
+        foreach (var map in maps)
+        {
+            using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
+            {
+                ZipArchiveEntry zipEntry = zipArchive.CreateEntry($"{map.Map.Name}.jpg");
+
+                using MemoryStream originalFileStream = GetMapInMemoryStream(map, zoom);
+                originalFileStream.Seek(0, SeekOrigin.Begin);
+
+                using Stream zipEntryStream = zipEntry.Open();
+                originalFileStream.CopyTo(zipEntryStream);
+            }
+        }
+
+        return (compressedFileStream.ToArray(), $"{maps.First().MapProvider.Name}-{zoom}.zip");
+    }
+
     private MemoryStream GetMapInMemoryStream(ProvidedMap map, int zoom)
     {
-        var mapParts = _externalApiCaller.GetMapParts(map, zoom);
+        var mapParts = _externalApiManager.GetMapParts(map, zoom);
 
         Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 
-        var image = _imageMerger.Merge(mapParts, extension);
+        var image = _imageMergeManager.Merge(mapParts, extension);
 
         var memoryStream = new MemoryStream();
 
@@ -110,33 +161,4 @@ public class MapDownloadService : IMapDownloadService
 
         return memoryStream;
     }
-
-    //public async IAsyncEnumerable<Task<byte[]>> DownloadAllMaps(int providerId, int zoom)
-    //{
-    //    List<Task<byte[]>> result = new();
-
-    //    var providedMaps = await _providedMapsRepository.GetProvidedMapsByProviderId(providerId).ConfigureAwait(false);
-
-    //    Parallel.ForEach(providedMaps, async map =>
-    //    {
-    //        var image = await DownloadMap(providerId, map.Id, map.Type.Id, zoom).ConfigureAwait(false);
-
-    //        result.Add(image);
-    //    });
-
-    //    return await result.ToListAsync();
-    //}
-    //public IEnumerable<MapParts> DownloadAllMapsInParts(int providerId, int zoom)
-    //{
-    //    List<MapParts> result = new();
-
-    //    Parallel.ForEach(_mapsDbContext.GetProvidedMapsByProviderId(providerId), map =>
-    //    {
-    //        var image = DownloadMapInParts(providerId, map.Id, map.Type.Id, zoom);
-
-    //        result.Add(image);
-    //    });
-
-    //    return result;
-    //}
 }

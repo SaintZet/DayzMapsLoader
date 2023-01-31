@@ -16,6 +16,6 @@ internal class GetMapImageArchiveHandler : IRequestHandler<GetMapImageArchiveQue
 
     public async Task<(byte[] data, string name)> Handle(GetMapImageArchiveQuery request, CancellationToken cancellationToken)
     {
-        return await _mapDownloader.DownloadMapImageArchive(request.ProviderId, request.MapID, request.TypeId, request.Zoom).ConfigureAwait(false);
+        return await _mapDownloader.DownloadMapImageArchiveAsync(request.ProviderId, request.MapID, request.TypeId, request.Zoom).ConfigureAwait(false);
     }
 }

@@ -9,11 +9,11 @@ using System.Runtime.Versioning;
 namespace DayzMapsLoader.Application.Managers;
 
 [SupportedOSPlatform("windows")]
-public class ImageMerger
+public class ImageMergeManager
 {
     private int _dpiImprovementPercent;
 
-    public ImageMerger(MapSize mapSize, int dpiImprovementPercent)
+    public ImageMergeManager(MapSize mapSize, int dpiImprovementPercent)
     {
         MapSize = mapSize;
         DpiImprovementPercent = dpiImprovementPercent;
@@ -27,9 +27,7 @@ public class ImageMerger
         set
         {
             if (value > 100 || value < 0)
-            {
                 throw new ArgumentException("Value must be between 0 and 100");
-            }
 
             _dpiImprovementPercent = value;
         }
