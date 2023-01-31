@@ -1,6 +1,6 @@
-﻿namespace DayzMapsLoader.Application.Types;
+﻿namespace DayzMapsLoader.Application.Wrappers;
 
-public class MapParts
+internal class MapParts
 {
     private readonly MapPart[,] _images;
     private readonly byte[,][] _rawImages;

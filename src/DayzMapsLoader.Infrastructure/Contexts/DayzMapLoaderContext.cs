@@ -6,13 +6,11 @@ namespace DayzMapsLoader.Infrastructure.Contexts;
 public class DayzMapLoaderContext : DbContext
 {
     public DayzMapLoaderContext()
-    {
-    }
+    { }
 
     public DayzMapLoaderContext(DbContextOptions<DayzMapLoaderContext> options)
         : base(options)
-    {
-    }
+    { }
 
     public DbSet<Map> Maps { get; set; }
     public DbSet<MapProvider> MapProviders { get; set; }

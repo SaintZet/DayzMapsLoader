@@ -2,7 +2,7 @@
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Enums;
 using DayzMapsLoader.Application.Managers;
-using DayzMapsLoader.Application.Types;
+using DayzMapsLoader.Application.Wrappers;
 using DayzMapsLoader.Domain.Entities;
 using System.Drawing.Imaging;
 using System.IO.Compression;

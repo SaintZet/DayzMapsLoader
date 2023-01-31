@@ -1,7 +1,7 @@
 ﻿using DayzMapsLoader.Application.Enums;
 using DayzMapsLoader.Application.Helpers;
 using DayzMapsLoader.Application.Helpers.WebpDecoder;
-using DayzMapsLoader.Application.Types;
+using DayzMapsLoader.Application.Wrappers;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.Versioning;
@@ -9,7 +9,7 @@ using System.Runtime.Versioning;
 namespace DayzMapsLoader.Application.Managers;
 
 [SupportedOSPlatform("windows")]
-public class ImageMergeManager
+internal class ImageMergeManager
 {
     private int _dpiImprovementPercent;
 

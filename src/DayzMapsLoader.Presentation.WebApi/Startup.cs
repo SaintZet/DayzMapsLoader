@@ -1,16 +1,5 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
-using DayzMapsLoader.Application.Abstractions.Services;
-using DayzMapsLoader.Application.Services;
-using DayzMapsLoader.Infrastructure.Contexts;
-using DayzMapsLoader.Infrastructure.Repositories;
-using DayzMapsLoader.Presentation.WebApi.Extensions;
+﻿using DayzMapsLoader.Presentation.WebApi.Extensions;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Localization;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 namespace DayzMapsLoader.Presentation.WebApi;
 

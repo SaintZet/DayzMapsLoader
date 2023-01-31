@@ -3,11 +3,11 @@ using DayzMapsLoader.Infrastructure.Contexts;
 
 namespace DayzMapsLoader.Infrastructure.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
         protected readonly DayzMapLoaderContext _dayzMapLoaderContext;
 
-        public Repository(DayzMapLoaderContext dayzMapLoaderContext)
+        public BaseRepository(DayzMapLoaderContext dayzMapLoaderContext)
         {
             _dayzMapLoaderContext = dayzMapLoaderContext;
         }

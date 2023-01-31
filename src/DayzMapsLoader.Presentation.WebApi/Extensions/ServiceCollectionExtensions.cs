@@ -43,7 +43,7 @@ namespace DayzMapsLoader.Presentation.WebApi.Extensions
         public static IServiceCollection AddInfrastractureLayer(this IServiceCollection services, IConfiguration configuration)
             => services
                 .AddDatabase(configuration)
-                .AddTransient(typeof(IRepository<>), typeof(Repository<>))
+                .AddTransient(typeof(IRepository<>), typeof(BaseRepository<>))
                 .AddTransient<IMapProvidersRepository, MapProvidersRepository>()
                 .AddTransient<IMapsRepository, MapsRepository>()
                 .AddTransient<IProvidedMapsRepository, ProvidedMapsRepository>();
