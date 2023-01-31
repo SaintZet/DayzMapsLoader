@@ -7,9 +7,9 @@ public record GetMapImagePartsArchiveQuery(int ProviderId, int MapId, int TypeId
 
 internal class GetMapImagePartsArchiveHandler : IRequestHandler<GetMapImagePartsArchiveQuery, (byte[] data, string name)>
 {
-    private readonly IMapDownloadService _mapDownloader;
+    private readonly IMapDownloadArchiveService _mapDownloader;
 
-    public GetMapImagePartsArchiveHandler(IMapDownloadService mapDownloader)
+    public GetMapImagePartsArchiveHandler(IMapDownloadArchiveService mapDownloader)
     {
         _mapDownloader = mapDownloader;
     }

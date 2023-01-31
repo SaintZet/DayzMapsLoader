@@ -1,11 +1,10 @@
 ﻿using DayzMapsLoader.Application.Helpers;
-using DayzMapsLoader.Application.Types;
+using DayzMapsLoader.Application.Wrappers;
 using DayzMapsLoader.Domain.Entities;
-using System.Net;
 
 namespace DayzMapsLoader.Application.Managers;
 
-public class ExternalApiManager
+internal class ExternalApiManager
 {
     public MapParts GetMapParts(ProvidedMap map, int zoom)
     {
@@ -13,7 +12,7 @@ public class ExternalApiManager
 
         MapParts mapParts = new(mapSize);
 
-        WebClient webClient = new();
+        HttpClient httpClient = new();
 
         QueryBuilder queryBuilder = new(map, zoom);
 
@@ -24,7 +23,8 @@ public class ExternalApiManager
             {
                 string query = map.IsFirstQuadrant ? queryBuilder.BuildQuery(x, yReversed) : queryBuilder.BuildQuery(x, y);
 
-                mapParts.AddPart(x, y, new MapPart(webClient.DownloadData(query)));
+                var response = httpClient.GetAsync(query).Result;
+                mapParts.AddPart(x, y, new MapPart(response.Content.ReadAsByteArrayAsync().Result));
             }
 
             yReversed--;

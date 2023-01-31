@@ -1,8 +1,4 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
-using DayzMapsLoader.Application.Abstractions.Services;
-using DayzMapsLoader.Application.Services;
-using DayzMapsLoader.Infrastructure.Contexts;
-using DayzMapsLoader.Infrastructure.Repositories;
+﻿using DayzMapsLoader.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -37,18 +33,7 @@ namespace DayzMapsLoader.Presentation.WebApi.Extensions
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                 });
 
-        public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
-            => services.AddTransient<IMapDownloadService, MapDownloadService>();
-
-        public static IServiceCollection AddInfrastractureLayer(this IServiceCollection services, IConfiguration configuration)
-            => services
-                .AddDatabase(configuration)
-                .AddTransient(typeof(IRepository<>), typeof(Repository<>))
-                .AddTransient<IMapProvidersRepository, MapProvidersRepository>()
-                .AddTransient<IMapsRepository, MapsRepository>()
-                .AddTransient<IProvidedMapsRepository, ProvidedMapsRepository>();
-
-        private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             string conncection = configuration.GetConnectionString("DefaultConnection")!;
 

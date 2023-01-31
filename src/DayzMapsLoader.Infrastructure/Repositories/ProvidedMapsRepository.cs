@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Repositories
 {
-    public class ProvidedMapsRepository : Repository<ProvidedMap>, IProvidedMapsRepository
+    public class ProvidedMapsRepository : BaseRepository<ProvidedMap>, IProvidedMapsRepository
     {
         public ProvidedMapsRepository(DayzMapLoaderContext dayzMapLoaderContext)
             : base(dayzMapLoaderContext)

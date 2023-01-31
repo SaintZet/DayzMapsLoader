@@ -7,9 +7,9 @@ public record GetAllMapsImagesArchiveQuery(int ProviderId, int Zoom) : IRequest<
 
 internal class GetAllMapsImagesArchiveHandler : IRequestHandler<GetAllMapsImagesArchiveQuery, (byte[] data, string name)>
 {
-    private readonly IMapDownloadService _mapDownloader;
+    private readonly IMapDownloadArchiveService _mapDownloader;
 
-    public GetAllMapsImagesArchiveHandler(IMapDownloadService mapDownloader)
+    public GetAllMapsImagesArchiveHandler(IMapDownloadArchiveService mapDownloader)
     {
         _mapDownloader = mapDownloader;
     }
