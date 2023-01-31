@@ -1,6 +1,6 @@
 ﻿namespace DayzMapsLoader.Application.Abstractions.Services
 {
-    public interface IMapSaver
+    public interface IMapSaveService
     {
         public int QualityMultiplier { get; set; }
 
