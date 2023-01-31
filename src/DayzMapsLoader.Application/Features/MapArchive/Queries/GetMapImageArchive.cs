@@ -7,15 +7,16 @@ public record GetMapImageArchiveQuery(int ProviderId, int MapID, int TypeId, int
 
 internal class GetMapImageArchiveHandler : IRequestHandler<GetMapImageArchiveQuery, (byte[] data, string name)>
 {
-    private readonly IMapDownloadService _mapDownloader;
+    private readonly IMapDownloadArchiveService _mapDownloader;
 
-    public GetMapImageArchiveHandler(IMapDownloadService mapDownloader)
+    public GetMapImageArchiveHandler(IMapDownloadArchiveService mapDownloader)
     {
         _mapDownloader = mapDownloader;
     }
 
     public async Task<(byte[] data, string name)> Handle(GetMapImageArchiveQuery request, CancellationToken cancellationToken)
     {
-        return await _mapDownloader.DownloadMapImageArchiveAsync(request.ProviderId, request.MapID, request.TypeId, request.Zoom).ConfigureAwait(false);
+        return await _mapDownloader.DownloadMapImageArchiveAsync(request.ProviderId, request.MapID, request.TypeId, request.Zoom)
+            .ConfigureAwait(false);
     }
 }

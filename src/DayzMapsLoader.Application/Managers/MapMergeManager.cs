@@ -9,11 +9,11 @@ using System.Runtime.Versioning;
 namespace DayzMapsLoader.Application.Managers;
 
 [SupportedOSPlatform("windows")]
-internal class ImageMergeManager
+internal class MapMergeManager
 {
     private int _dpiImprovementPercent;
 
-    public ImageMergeManager(MapSize mapSize, int dpiImprovementPercent)
+    public MapMergeManager(MapSize mapSize, int dpiImprovementPercent)
     {
         MapSize = mapSize;
         DpiImprovementPercent = dpiImprovementPercent;

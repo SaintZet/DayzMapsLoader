@@ -1,67 +1,67 @@
 ﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
-using DayzMapsLoader.Infrastructure.Contexts;
+using DayzMapsLoader.Domain.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
-namespace DayzMapsLoader.Infrastructure.Repositories
+namespace DayzMapsLoader.Infrastructure.Repositories;
+
+public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity, new()
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    protected readonly DbContext _dbContext;
+
+    public BaseRepository(DbContext dayzMapLoaderContext)
     {
-        protected readonly DayzMapLoaderContext _dayzMapLoaderContext;
+        _dbContext = dayzMapLoaderContext;
+    }
 
-        public BaseRepository(DayzMapLoaderContext dayzMapLoaderContext)
+    public IQueryable<TEntity> GetAll()
+    {
+        try
         {
-            _dayzMapLoaderContext = dayzMapLoaderContext;
+            return _dbContext.Set<TEntity>();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+        }
+    }
+
+    public async Task<TEntity> AddAsync(TEntity entity)
+    {
+        if (entity == null)
+        {
+            throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
         }
 
-        public IQueryable<TEntity> GetAll()
+        try
         {
-            try
-            {
-                return _dayzMapLoaderContext.Set<TEntity>();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
-            }
+            await _dbContext.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
+        }
+    }
+
+    public async Task<TEntity> UpdateAsync(TEntity entity)
+    {
+        if (entity == null)
+        {
+            throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        try
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
-            }
+            _dbContext.Update(entity);
+            await _dbContext.SaveChangesAsync();
 
-            try
-            {
-                await _dayzMapLoaderContext.AddAsync(entity);
-                await _dayzMapLoaderContext.SaveChangesAsync();
-
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
-            }
+            return entity;
         }
-
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        catch (Exception ex)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
-            }
-
-            try
-            {
-                _dayzMapLoaderContext.Update(entity);
-                await _dayzMapLoaderContext.SaveChangesAsync();
-
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
-            }
+            throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
         }
     }
 }
