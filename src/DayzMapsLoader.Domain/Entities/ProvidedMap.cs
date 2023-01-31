@@ -1,6 +1,8 @@
-﻿namespace DayzMapsLoader.Domain.Entities;
+﻿using DayzMapsLoader.Domain.Abstractions;
 
-public class ProvidedMap
+namespace DayzMapsLoader.Domain.Entities;
+
+public class ProvidedMap : IEntity
 {
     public int Id { get; set; }
     public string NameForProvider { get; set; } = string.Empty;
