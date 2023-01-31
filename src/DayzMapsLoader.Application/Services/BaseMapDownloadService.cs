@@ -35,9 +35,9 @@ internal class BaseMapDownloadService : IBaseMapDownloadService
         }
     }
 
-    protected MemoryStream GetMapInMemoryStream(ProvidedMap map, int zoom)
+    protected async Task<MemoryStream> GetMapInMemoryStreamAsync(ProvidedMap map, int zoom)
     {
-        var mapParts = _externalApiManager.GetMapParts(map, zoom);
+        var mapParts = await _externalApiManager.GetMapPartsAsync(map, zoom);
 
         Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 

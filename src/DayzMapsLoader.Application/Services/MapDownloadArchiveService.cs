@@ -16,13 +16,12 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
         using MemoryStream compressedFileStream = new();
 
-        string fileName = $"{map.Map.Name}.jpg";
-
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
+            string fileName = $"{map.Map.Name}.jpg";
             ZipArchiveEntry zipEntry = zipArchive.CreateEntry(fileName);
 
-            using MemoryStream originalFileStream = GetMapInMemoryStream(map, zoom);
+            using MemoryStream originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
             originalFileStream.Seek(0, SeekOrigin.Begin);
 
             using Stream zipEntryStream = zipEntry.Open();
@@ -39,7 +38,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = _externalApiManager.GetMapParts(map, zoom);
+        var mapParts = await _externalApiManager.GetMapPartsAsync(map, zoom);
 
         int axisY = mapParts.Weight;
         int axisX = mapParts.Height;
@@ -87,9 +86,9 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
             using var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false);
 
             string fileName = $"{map.Map.Name}.jpg";
-            ZipArchiveEntry zipEntry = zipArchive.CreateEntry($"{map.Map.Name}.jpg");
+            ZipArchiveEntry zipEntry = zipArchive.CreateEntry(fileName);
 
-            using MemoryStream originalFileStream = GetMapInMemoryStream(map, zoom);
+            using MemoryStream originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
             originalFileStream.Seek(0, SeekOrigin.Begin);
 
             using Stream zipEntryStream = zipEntry.Open();

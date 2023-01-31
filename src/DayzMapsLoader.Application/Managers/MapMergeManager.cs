@@ -4,11 +4,9 @@ using DayzMapsLoader.Application.Helpers.WebpDecoder;
 using DayzMapsLoader.Application.Wrappers;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.Versioning;
 
 namespace DayzMapsLoader.Application.Managers;
 
-[SupportedOSPlatform("windows")]
 internal class MapMergeManager
 {
     private int _dpiImprovementPercent;
