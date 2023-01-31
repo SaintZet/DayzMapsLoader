@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33027.164
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application", "DayzMapsLoader.Application\DayzMapsLoader.Application.csproj", "{685C713D-4333-4286-9FB3-9D28DF97CA41}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.ConsoleApp", "DayzMapsLoader.Presentation.Console\DayzMapsLoader.Presentation.ConsoleApp.csproj", "{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Domain", "DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj", "{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6E87C51-E9B0-4F41-8DA0-B2B60B8A7C49}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
