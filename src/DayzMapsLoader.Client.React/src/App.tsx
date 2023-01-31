@@ -1,41 +1,38 @@
 import React, {useState} from 'react';
 import './App.css';
-import {getProvidedMaps, getProviders} from "./shared/consts";
-import {MapProvider, ProvidedMaps} from "./shared/types";
-import useAxios from "./shared/hooks";
 import {FormControl} from "@mui/material";
-import SelectMap from "./components/SelectMapComponent";
+import {useQuery} from "react-query";
+import {MapProvider, Map} from "./shared/types";
 import SelectMapProvider from "./components/SelectMapProviderComponent";
+import {ProvidedMapsService} from "./services/providedMaps.service";
+import {FindDistinctProviders, FindMapsOfProvider} from "./utils";
+import SelectMap from "./components/SelectMapComponent";
 
 export default function App() {
-    const {providers, loading, error} = useAxios<MapProvider>(getProviders);
-    // const {providedMaps, loading, error} = useAxios<ProvidedMaps>(getProvidedMaps);
-    const [selectedProvider, setSelectedProvider] = useState<MapProvider>();
 
-    const updateSelectedProvider = (provider: MapProvider) => {
-        setSelectedProvider(provider);
-    }
+    const {isLoading, error, data: response} = useQuery('provided maps data', () => ProvidedMapsService.getAll());
+    const [selectedProvider, setSelectedProvider] = useState<MapProvider>({
+        id: 0,
+        name: '',
+        link: ''
+    });
+    const providers: undefined | MapProvider[] = response && FindDistinctProviders(response.data);
+    const updateSelectedProvider = (provider: MapProvider) => setSelectedProvider(provider);
 
-    if (loading) {
-        return (<div className="loading-section">
-            <p>Loading ...</p>
-        </div>)
-    }
+    const maps: undefined | Map[] = response && FindMapsOfProvider(response.data, selectedProvider);
 
-    if (error) {
-        return (<div>
-            <p>error</p>
-        </div>)
-    }
+    if (isLoading) return (<p>Загрузка...</p>)
+
+    if (error) return (<p>error</p>)
 
     return (
         <div className="select-provider-section">
             <FormControl sx={{width: 500}}>
-                <SelectMapProvider providers={providers} customHandleChange={updateSelectedProvider}></SelectMapProvider>
-                <SelectMap provider={selectedProvider}></SelectMap>
+                <SelectMapProvider providers={providers ?? []}
+                                   customHandleChange={updateSelectedProvider}></SelectMapProvider>
+                <SelectMap maps={maps ?? []}></SelectMap>
             </FormControl>
         </div>
-
     );
 }
 

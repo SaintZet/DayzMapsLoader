@@ -1,6 +1,5 @@
-const providerNames: string[] = ["Xam", "Ginfo"];
-const mapNames: string[] = ["chernorus", "livonia", "namalsk", "esseker", "takistan", "banov"];
+import {MapProvider, ProvidedMap} from "./shared/types";
 
-export const MapProviderNameDecorator = (index: string) => providerNames[parseInt(index)];
-export const MapNameDecorator = (index: string) => mapNames[parseInt(index)];
+export const FindDistinctProviders = (data: ProvidedMap[]) => data ? data.map((x) => x.mapProvider).filter((provider, index , self) => self.indexOf(provider) === index) : [];
 
+export const FindMapsOfProvider = (data: ProvidedMap[], selectedProvider: MapProvider) => data && data.filter(x => x.mapProvider === selectedProvider).map(x => x.map);

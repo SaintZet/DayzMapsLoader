@@ -3,7 +3,7 @@ export interface MapProvider {
     name: string;
     link: string;
 }
-export interface Maps{
+export interface Map {
     id: number;
     name: string;
     description: string;
@@ -11,15 +11,6 @@ export interface Maps{
     author: string;
     link: string;
 }
-// export interface Map {
-//     isFirstQuadrant: Boolean;
-//     mapExtension: number;
-//     name: number;
-//     nameForProvider: string;
-//     version: string;
-//     typesMap: number[];
-//     zoomLevelRationSize: ZoomLevelRatioSize[];
-// }
 
 export interface ZoomLevelRatioSize {
     height: number;
@@ -31,12 +22,12 @@ interface MapTypes {
     name: string;
 }
 
-export interface ProvidedMaps{
+export interface ProvidedMap {
     id: number;
     nameForProvider: string;
-    mapProvidedId: number;
-    mapId: number;
-    mapTypeId: number;
+    mapProvider: MapProvider;
+    map: Map;
+    mapType: MapTypes;
     maxTypeForProvider: string;
     maxMapLevel: number;
     isFirstQuadrant: boolean;

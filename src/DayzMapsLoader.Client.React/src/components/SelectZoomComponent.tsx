@@ -9,8 +9,7 @@ interface ZoomState{
 
 }
 class SelectZoomComponent extends React.Component<ZoomProps, ZoomState> {
-
-
+    
         render () {
             return <div>
                 <p>
