@@ -103,69 +103,79 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 
 <div align="center">
   <a href="https://github.com/SaintZet/DayzMapsLoader">
-    <img src="images/ddd-diagram.png" alt="ddd-diagram" width="601" height="466">
+    <img src="images/ddd-diagram.png" alt="ddd-diagram" width="400" height="310">
   </a>
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Solution Structure
-#### Domain layer
-I used Anemic Domain Model. Is used in DDD when the main focus is on data persistence and becouse in this project there's not much need for complex business logic. A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.
+<details>
+  <summary><h4>Domain layer</h4></summary>
+      I used Anemic Domain Model. Is used in DDD when the main focus is on data persistence and 
+      becouse in this project there's not much need for complex business logic.<br>
+      A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.<br>
+    <br>
+    <div align="left">
+      <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
+      <!-- Images/SolutionTree/domain.png -->
+        <img src="images/SolutionTree/domain.png" alt="domain-layer" width="415" height="75">
+      </a>
+    </div>
+</details>
 
-<div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
-  <!-- Images/SolutionTree/domain.png -->
-    <img src="images/SolutionTree/domain.png" alt="domain-layer" width="415" height="75">
-  </a>
-</div>
+<details> <summary><h4>Application layer</h4></summary>
+  <i>Public components</i>
+  <br>
+  <li> Abstactions - interaces for Infrastructure layer (patter Repository) and for Services.</li>
+  <li> Features - Queries and Commands for pattern CQRS.</li>
+  <li> Extensions - here we have method for configure this layer for DI container.</li>
+  <br>
+  <i>Internal components</i>
+  <br>
+  <li> Wrappers - wrappers over awkward types.</li>
+  <li> Services - CQRS Handlers use it for get result.</li>
+  <li> Managers - internal services.</li>
+  <li> Helpers - bad practice, but this classes maked code more readable by grouping related functions and providing a clear purpose for the code.</li>
+  <br>
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
+    <!-- Images/SolutionTree/domain.png -->
+      <img src="images/SolutionTree/application.png" alt="application-layer" width="415" height="250">
+    </a>
+  </div>
+</details>
 
-#### Application layer
-*Public components*
-* Abstactions - interaces for Infrastructure layer (patter Repository) and for Services. 
-* Features - Queries and Commands for pattern CQRS.
-* Extensions - here we have method for configure this layer for DI container. 
+<details> <summary><h4>Infrastructure layer</h4></summary>
+  <i>Public components</i>
+  <br>
+  <li> Contexts - data base contexts (EntityFramework).</li>
+  <li> Migrations - data base migrations (EntityFramework).</li>
+  <li> Repositories - implement pattern Reposity. </li>
+  <li> Extensions - here we have method for configure this layer for DI container.</li>
+  <br>
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
+    <!-- Images/SolutionTree/domain.png -->
+      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="415" height="114">
+    </a>
+  </div>
+</details>
 
-*Internal components*
-
-* Wrappers - wrappers over awkward types.
-* Services - CQRS Handlers use it for get result.
-* Managers - internal services.
-* Helpers - bad practice, but this classes maked code more readable by grouping related functions and providing a clear purpose for the code.
-
-<div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
-  <!-- Images/SolutionTree/domain.png -->
-    <img src="images/SolutionTree/application.png" alt="application-layer" width="415" height="250">
-  </a>
-</div>
-
-#### Infrastructure layer
-*Public components*
-* Contexts - data base contexts (EntityFramework).
-* Migrations - data base migrations (EntityFramework).
-* Repositories - implement pattern Reposity. 
-* Extensions - here we have method for configure this layer for DI container. 
-
-<div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
-  <!-- Images/SolutionTree/domain.png -->
-    <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="415" height="114">
-  </a>
-</div>
-
-#### Presentation layer
-*Public components*
-* wwwroot - have custom UI for Swagger.
-* Controllers - connection between Application and Client(web, desktop, mobile).
-* Extensions - here we have method for configure DI container. 
-
-<div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
-  <!-- Images/SolutionTree/domain.png -->
-    <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="415" height="196">
-  </a>
-</div>
+<details> <summary><h4>Presentation layer</h4></summary>
+  <i>Public components</i>
+  <br>
+  <li> wwwroot - have custom UI for Swagger.</li>
+  <li> Controllers - connection between Application and Client(web, desktop, mobile).</li>
+  <li> Extensions - here we have method for configure DI container.</li>
+  <br>
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
+    <!-- Images/SolutionTree/domain.png -->
+      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="415" height="196">
+    </a>
+  </div>
+</details>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
