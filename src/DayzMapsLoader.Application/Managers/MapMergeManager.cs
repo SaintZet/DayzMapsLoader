@@ -1,19 +1,17 @@
 ﻿using DayzMapsLoader.Application.Enums;
 using DayzMapsLoader.Application.Helpers;
 using DayzMapsLoader.Application.Helpers.WebpDecoder;
-using DayzMapsLoader.Application.Types;
+using DayzMapsLoader.Application.Wrappers;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.Versioning;
 
 namespace DayzMapsLoader.Application.Managers;
 
-[SupportedOSPlatform("windows")]
-public class ImageMerger
+internal class MapMergeManager
 {
     private int _dpiImprovementPercent;
 
-    public ImageMerger(MapSize mapSize, int dpiImprovementPercent)
+    public MapMergeManager(MapSize mapSize, int dpiImprovementPercent)
     {
         MapSize = mapSize;
         DpiImprovementPercent = dpiImprovementPercent;
@@ -27,9 +25,7 @@ public class ImageMerger
         set
         {
             if (value > 100 || value < 0)
-            {
                 throw new ArgumentException("Value must be between 0 and 100");
-            }
 
             _dpiImprovementPercent = value;
         }

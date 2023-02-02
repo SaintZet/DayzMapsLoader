@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Repositories
 {
-    public class ProvidedMapsRepository : Repository<ProvidedMap>, IProvidedMapsRepository
+    public class ProvidedMapsRepository : BaseRepository<ProvidedMap>, IProvidedMapsRepository
     {
         public ProvidedMapsRepository(DayzMapLoaderContext dayzMapLoaderContext)
             : base(dayzMapLoaderContext)
@@ -13,13 +13,27 @@ namespace DayzMapsLoader.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsAsync()
-            => await GetAll().ToListAsync();
+            => await GetAll()
+            .Include(p => p.MapProvider)
+            .Include(p => p.Map)
+            .Include(p => p.MapType)
+            .ToListAsync();
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByMapIdAsync(int mapId)
-            => await GetAll().Where(x => x.Map.Id == mapId).ToListAsync();
+            => await GetAll()
+            .Include(p => p.MapProvider)
+            .Include(p => p.Map)
+            .Include(p => p.MapType)
+            .Where(x => x.Map.Id == mapId)
+            .ToListAsync();
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByProviderIdAsync(int providerId)
-            => await GetAll().Where(x => x.MapProvider.Id == providerId).ToListAsync();
+            => await GetAll()
+            .Include(p => p.MapProvider)
+            .Include(p => p.Map)
+            .Include(p => p.MapType)
+            .Where(x => x.MapProvider.Id == providerId)
+            .ToListAsync();
 
         public async Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId)
         => (await GetAll()

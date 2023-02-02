@@ -1,6 +1,6 @@
-﻿namespace DayzMapsLoader.Application.Types;
+﻿namespace DayzMapsLoader.Application.Wrappers;
 
-public class MapSize
+internal class MapSize
 {
     public MapSize(int side)
     {

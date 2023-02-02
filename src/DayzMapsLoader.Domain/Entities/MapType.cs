@@ -1,6 +1,8 @@
-﻿namespace DayzMapsLoader.Domain.Entities;
+﻿using DayzMapsLoader.Domain.Abstractions;
 
-public class MapType
+namespace DayzMapsLoader.Domain.Entities;
+
+public class MapType : IEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
