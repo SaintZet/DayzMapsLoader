@@ -21,13 +21,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/SaintZet/DayzMapsLoader">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="repository-logo.png" alt="Logo" width="690" height="335">
   </a>
 
-<h3 align="center">DayZ Maps Loader</h3>
+  <h3 align="center">DayZ Maps Loader</h3>
 
   <p align="center">
-    project_description
+    Select your map, create a good stuff!    
     <br />
     <a href="https://github.com/SaintZet/DayzMapsLoader"><strong>Explore the docs »</strong></a>
     <br />
@@ -73,23 +73,22 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+This Github pet project is an application built with Domain-Driven Design (DDD) architecture and modern development patterns. It has a server component built using ASP.NET Core and a client component built using React. 
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+The main purpose of this project is to allow users to download maps for the game DayZ from two different map providers: Ginfo and Xam. The downloaded maps are of high quality and can be used to create posters, cups, or other stuff. 
+
+This repository are also a small personal library of knowledge.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 ### Built With
-
-* [![Next][Next.js]][Next-url]
+* [![.NET 6][.Net]][.Net-url]
+* [![MicrosoftSQLServer][MicrosoftSQLServer]][MicrosoftSQLServer-url]
+* [![Swagger][Swagger]][Swagger-url]
 * [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![ReactQuery][ReactQuery]][ReactQuery-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -112,19 +111,15 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/SaintZet/DayzMapsLoader.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -133,9 +128,18 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+At the moment you can install the latest version of the product to start the server and get all the necessary maps. 
+You know what to do with them.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+You can create a fork and expand the repository, for example 
+* create a desktop client 
+* change image processing algorithms
+* add functionality that is useful to you
+* other
+
+Take some techniques and approaches to your projects.
+
+And of course - to contribute to the development of the project, help with existing issues or create a new one, improve the algorithm or change something else!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,12 +148,26 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [x] Provide arhive(web) and byte array(desktop) with
+    - [x] selected map
+    - [x] selected map in parts
+    - [x] all maps by specific provider
+- [ ] Option for select map
+    - [x] provider (GInfo e.g.)
+    - [x] name (Chernarus e.g)
+    - [ ] type
+        - [x] sattelit
+        - [x] topografic
+        - [ ] tourist
+    - [x] zoom level
+    - [ ] version
+    - [ ] image quality
+    - [ ] image extension
+ - [ ] Client application (in process)
+ - [ ] Hosting server and client
+ - [ ] Improve performance - store images on the server and just download when choose something (e.g version map).
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/SaintZet/DayzMapsLoader/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -182,20 +200,35 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 
-<!-- CONTACT -->
-## Contact
+<!-- CONTACTS -->
+## Contacts
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Chepets Serhii - [@LinkedIn](https://www.linkedin.com/in/serhii-chepets/) - chepets9685@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) - ytimchenko57@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
 <details>
-<summary>Repository:</summary>
+<summary>Domain Driven Design</summary>
+<br>
+<ul>
+ <li>https://www.codeproject.com/Articles/5351235/Clean-Architecture-Incorporating-Repository-Patter</li>
+ <li>https://dev.to/stevescruz/domain-driven-design-ddd-file-structure-4pja</li>
+ <li>https://thedomaindrivendesign.io/anemic-model-x-rich-model/</li>
+ <li>https://medium.com/software-alchemy/a-brief-intro-to-clean-architecture-clean-ddd-and-cqrs-23243c3f31b3</li>
+ <li>https://medium.com/software-alchemy/a-template-for-clean-domain-driven-design-architecture-e386ad235f32</li>
+</ul>
+</details>
+
+<details>
+<summary>Unit Of Work / Repository patterns</summary>
+<br>
 <ul>
  <li>https://www.programmingwithwolfgang.com/repository-pattern-net-core/</li>
  <li>https://dotnettutorials.net/lesson/repository-design-pattern-csharp/</li>
@@ -206,20 +239,22 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 </details>
 
 <details>
-<summary>Cqrs and MediatR:</summary>
+<summary>Cqrs / MediatR patterns</summary>
+<br>
 <ul>
   <li>https://codeopinion.com/should-you-use-the-repository-pattern-with-cqrs-yes-and-no/</li>
   <li>https://abdelmajid-baco.medium.com/cqrs-pattern-with-c-a9aff05aae3f</li>
   <li>https://code-maze.com/cqrs-mediatr-in-aspnet-core/</li>
-  <li>https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/microservice-application-layer-implementation-web-api</li>
   <li>https://www.puresourcecode.com/dotnet/introducing-cqrs-in-the-architecture/</li>
   <li>https://medium.com/@dbottiau/a-naive-introduction-to-cqrs-in-c-9d0d99cd2d54</li>
+  <li>https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/microservice-application-layer-implementation-web-api</li>
   <li>https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/cqrs-microservice-reads</li>
 </ul>
 </details>
 
 <details>
-<summary>Swagger:</summary>
+<summary>Swagger</summary>
+<br>
 <ul>
   <li>https://github.com/ostranme/swagger-ui-themes</li>
   <li>https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&tabs=visual-studio</li>
@@ -245,21 +280,17 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/serhii-chepets/
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/banner.png
 
-[Next.js]: https://img.shields.io/badge/-.NET%206.0-blueviolet
-[Next-url]: https://nextjs.org/
+[.Net]: https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white
+[.Net-url]: https://dotnet.microsoft.com/en-us/
+[Swagger]: https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white
+[Swagger-url]: https://swagger.io
+[MicrosoftSQLServer]: https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white
+[MicrosoftSQLServer-url]: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
+[ReactQuery]: https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white
+[ReactQuery-url]: https://react-query-v3.tanstack.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com
