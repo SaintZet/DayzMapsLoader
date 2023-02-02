@@ -11,7 +11,7 @@ internal class QueryBuilder
         _queryTemplate = BuildTemplateQuery(map, zoom);
     }
 
-    public string GetQuery(int i, int j)
+    public string BuildQuery(int i, int j)
     {
         return string.Format(_queryTemplate, i.ToString(), j.ToString());
     }

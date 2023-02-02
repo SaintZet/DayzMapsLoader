@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\MapProviders\Commands\**" />
+    <Compile Remove="Features\Maps\Commands\**" />
+    <Compile Remove="Features\ProvidedMaps\Commands\**" />
+    <EmbeddedResource Remove="Features\MapProviders\Commands\**" />
+    <EmbeddedResource Remove="Features\Maps\Commands\**" />
+    <EmbeddedResource Remove="Features\ProvidedMaps\Commands\**" />
+    <None Remove="Features\MapProviders\Commands\**" />
+    <None Remove="Features\Maps\Commands\**" />
+    <None Remove="Features\ProvidedMaps\Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="libwebp_x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CustomToolNamespace>libs</CustomToolNamespace>
@@ -31,12 +43,6 @@
 	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
 		<_Parameter1>DayzMapsLoader.Application.UnitTests</_Parameter1>
 	</AssemblyAttribute>
-</ItemGroup>
-
-<ItemGroup>
-  <Folder Include="Features\MapProviders\Commands\" />
-  <Folder Include="Features\Maps\Commands\" />
-  <Folder Include="Features\ProvidedMaps\Commands\" />
 </ItemGroup>
 
 </Project>
