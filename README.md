@@ -63,7 +63,7 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contacts">Contacts</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -119,7 +119,20 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-
+3. Add connection string to appsettings.json 
+   ```json
+     "ConnectionStrings": {
+    "DefaultConnection": "Server = YourServer; DataBase=DayzMapLoader; User id= YourUserID; password= YourPassword; Integrated Security=True; TrustServerCertificate=True;"
+    }
+   ```
+ 4. Dotnet ef must be installed as a global or local tool .NET CLI:
+     ```sh
+     dotnet tool install --global dotnet-ef
+     ```
+ 5. At this point you can have EF create database and create schema from the migration .NET CLI:
+     ```sh
+     dotnet ef database update
+     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
