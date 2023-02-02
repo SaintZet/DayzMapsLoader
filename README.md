@@ -8,20 +8,20 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+<div align="center">
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
-
-
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/SaintZet/DayzMapsLoader">
-    <img src="repository-logo.png" alt="Logo" width="690" height="335">
+    <img src="images/repository-logo.png" alt="Logo" width="690" height="335">
   </a>
 
   <h3 align="center">DayZ Maps Loader</h3>
@@ -101,7 +101,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 
 <div align="center">
   <a href="https://github.com/SaintZet/DayzMapsLoader">
-    <img src="repository-logo.png" alt="Logo" width="690" height="335">
+    <img src="images/ddd-diagram.png" alt="ddd-diagram" width="601" height="466">
   </a>
 </div>
 
@@ -116,9 +116,9 @@ I used Anemic Domain Model is used in DDD when the main focus is on data persist
 How I say before we are use anemic domain.
 
 <div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
   <!-- Images/SolutionTree/domain.png -->
-    <img src="repository-logo.png" alt="domain-layer" width="415" height="75">
+    <img src="images/SolutionTree/domain.png" alt="domain-layer" width="415" height="75">
   </a>
 </div>
 
@@ -136,9 +136,9 @@ How I say before we are use anemic domain.
 * Helpers - bad practice, but this classes maked code more readable by grouping related functions and providing a clear purpose for the code.
 
 <div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
   <!-- Images/SolutionTree/domain.png -->
-    <img src="repository-logo.png" alt="application-layer" width="415" height="250">
+    <img src="images/SolutionTree/application.png" alt="application-layer" width="415" height="250">
   </a>
 </div>
 
@@ -150,9 +150,9 @@ How I say before we are use anemic domain.
 * Extensions - here we have method for configure this layer for DI container. 
 
 <div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
   <!-- Images/SolutionTree/domain.png -->
-    <img src="repository-logo.png" alt="application-layer" width="415" height="114">
+    <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="415" height="114">
   </a>
 </div>
 
@@ -163,9 +163,9 @@ How I say before we are use anemic domain.
 * Extensions - here we have method for configure DI container. 
 
 <div align="left">
-  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
   <!-- Images/SolutionTree/domain.png -->
-    <img src="repository-logo.png" alt="application-layer" width="415" height="196">
+    <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="415" height="196">
   </a>
 </div>
 
