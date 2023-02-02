@@ -1,16 +1,23 @@
-import {Button, ButtonGroup, MenuItem, Select} from "@mui/material";
+import {Button, ButtonGroup} from "@mui/material";
 import axios from "axios";
-
-interface ButtonProps{
+import { saveAs } from 'file-saver';
+interface ButtonProps {
     providerId: number;
     mapId: number;
     typeId: number;
     zoom: number;
 }
+
 export default function SelectButton(props: ButtonProps) {
     const [providerId, mapId, typeId, zoom] = [props.providerId, props.mapId, props.typeId, props.zoom];
     const clickFullParamArchiv = () => {
-        axios.get(`${axios.defaults.baseURL}/providers/${providerId}/maps/${mapId}/types/${typeId}/zoom/${zoom}/image-archive`);
+        fetch(`${axios.defaults.baseURL}/download-map/providers/${providerId}/maps/${mapId}/types/${typeId}/zoom/${zoom}/image-archive`)
+            .then(res => res.blob())
+            .then(blob => saveAs(blob, 'Map.zip')) // saveAs is a function from the file-saver package.
+            .catch((err) => {
+                console.log(err.message);
+            });
+        ;
     }
     const clickFullParamParts = () => {
         alert(`${axios.defaults.baseURL}/providers/${providerId}/maps/${mapId}/types/${typeId}/zoom/${zoom}/image-parts-archive`);
