@@ -26,12 +26,10 @@
     <img src="images/repository-logo.png" alt="Logo" width="690" height="335">
   </a>
 
-  <h3 align="center">DayZ Maps Loader</h3>
-
   <p align="center">
     Select your map, create a good stuff!    
     <br />
-    <a href="https://github.com/SaintZet/DayzMapsLoader"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/SaintZet/DayzMapsLoader/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/SaintZet/DayzMapsLoader">View Demo</a>
@@ -52,6 +50,8 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#solution-structure">Solution Structure</a></li>
       </ul>
     </li>
     <li>
@@ -91,7 +91,7 @@ This repository are also a small personal library of knowledge.
 * [![Swagger][Swagger]][Swagger-url]
 * [![React][React.js]][React-url]
 * [![ReactQuery][ReactQuery]][ReactQuery-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![TypeScript][TypeScript]][TypeScript-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -107,15 +107,11 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   </a>
 </div>
 
-I used Anemic Domain Model is used in DDD when the main focus is on data persistence and becouse in this project there's not much need for complex business logic. A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Solution Structure
-
 #### Domain layer
-How I say before we are use anemic domain.
+I used Anemic Domain Model. Is used in DDD when the main focus is on data persistence and becouse in this project there's not much need for complex business logic. A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.
 
 <div align="left">
   <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
@@ -158,7 +154,7 @@ How I say before we are use anemic domain.
   </a>
 </div>
 
-#### Presentation layer (WebApi)
+#### Presentation layer
 *Public components*
 * wwwroot - have custom UI for Swagger.
 * Controllers - connection between Application and Client(web, desktop, mobile).
@@ -170,6 +166,8 @@ How I say before we are use anemic domain.
     <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="415" height="196">
   </a>
 </div>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -184,6 +182,10 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   npm install npm@latest -g
   ```
+ * Dotnet ef
+     ```sh
+     dotnet tool install --global dotnet-ef
+     ```
 
 ### Installation
 
@@ -201,11 +203,7 @@ This is an example of how to list things you need to use the software and how to
     "DefaultConnection": "Server = YourServer; DataBase=DayzMapLoader; User id= YourUserID; password= YourPassword; Integrated Security=True; TrustServerCertificate=True;"
     }
    ```
- 4. Dotnet ef must be installed as a global or local tool .NET CLI:
-     ```sh
-     dotnet tool install --global dotnet-ef
-     ```
- 5. At this point you can have EF create database and create schema from the migration .NET CLI:
+ 4. At this point you can have EF create database and create schema from the migration .NET CLI:
      ```sh
      dotnet ef database update
      ```
@@ -316,7 +314,7 @@ Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) 
 </details>
 
 <details>
-<summary>Unit Of Work / Repository patterns</summary>
+<summary>Unit Of Work and Repository patterns</summary>
 <br>
 <ul>
  <li>https://www.programmingwithwolfgang.com/repository-pattern-net-core/</li>
@@ -328,7 +326,7 @@ Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) 
 </details>
 
 <details>
-<summary>Cqrs / MediatR patterns</summary>
+<summary>Cqrs and MediatR patterns</summary>
 <br>
 <ul>
   <li>https://codeopinion.com/should-you-use-the-repository-pattern-with-cqrs-yes-and-no/</li>
@@ -381,5 +379,5 @@ Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) 
 [React-url]: https://reactjs.org/
 [ReactQuery]: https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white
 [ReactQuery-url]: https://react-query-v3.tanstack.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com
+[TypeScript]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org
