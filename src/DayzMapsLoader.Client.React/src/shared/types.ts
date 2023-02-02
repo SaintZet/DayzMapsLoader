@@ -17,7 +17,7 @@ export interface ZoomLevelRatioSize {
     width: number;
 }
 
-interface MapTypes {
+export interface MapType {
     id: number;
     name: string;
 }
@@ -27,7 +27,7 @@ export interface ProvidedMap {
     nameForProvider: string;
     mapProvider: MapProvider;
     map: Map;
-    mapType: MapTypes;
+    mapType: MapType;
     maxTypeForProvider: string;
     maxMapLevel: number;
     isFirstQuadrant: boolean;

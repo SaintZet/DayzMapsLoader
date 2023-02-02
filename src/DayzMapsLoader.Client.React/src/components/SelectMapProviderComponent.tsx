@@ -20,11 +20,10 @@ export default function SelectMapProvider(props: MapProvidersProps) {
             <div className="select-map-provider">
                 <FormControl sx={{m: 2, width: 300}}>
                     <InputLabel id="providers-select-label">Provider</InputLabel>
-                    <Select labelId="providers-select-label" label="providers"
-                            onChange={handleChange}>
+                    <Select labelId="providers-select-label" label="providers" onChange={handleChange}>
                         {
                             providers.map((provider) => (
-                                <MenuItem key={provider.id} value={provider.name}>
+                                <MenuItem key={provider.name} value={provider.name}>
                                     {
                                         provider.name
                                     }
