@@ -47,7 +47,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Maps");
+                    b.ToTable("Maps", (string)null);
                 });
 
             modelBuilder.Entity("DayzMapsLoader.Domain.Entities.MapProvider", b =>
@@ -67,7 +67,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MapProviders");
+                    b.ToTable("MapProviders", (string)null);
                 });
 
             modelBuilder.Entity("DayzMapsLoader.Domain.Entities.MapType", b =>
@@ -84,7 +84,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MapTypes");
+                    b.ToTable("MapTypes", (string)null);
                 });
 
             modelBuilder.Entity("DayzMapsLoader.Domain.Entities.ProvidedMap", b =>
@@ -134,7 +134,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
 
                     b.HasIndex("MapTypeId");
 
-                    b.ToTable("ProvidedMaps");
+                    b.ToTable("ProvidedMaps", (string)null);
                 });
 
             modelBuilder.Entity("DayzMapsLoader.Domain.Entities.ProvidedMap", b =>
