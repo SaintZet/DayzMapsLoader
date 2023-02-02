@@ -94,6 +94,80 @@ This repository are also a small personal library of knowledge.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+### Architecture
+The concept of a Clean Architecture pattern has been around for over a decade and initially conceived by Robert Martin. The keyword from Uncle Bob is Interchangeable. In the image below, everything on the blue circle is **interchangeable**, for e.g., the UI can be swapped out from React to Angular, or the database can be migrated from MySQL to Oracle, and nothing in the underlying layers need to change.
+
+The concept of having all your interfaces (Infrastructure and Application) in one project, will make it easier to Unit Test and mock.
+
+<div align="center">
+  <a href="https://github.com/SaintZet/DayzMapsLoader">
+    <img src="repository-logo.png" alt="Logo" width="690" height="335">
+  </a>
+</div>
+
+I used Anemic Domain Model is used in DDD when the main focus is on data persistence and becouse in this project there's not much need for complex business logic. A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Solution Structure
+
+#### Domain layer
+How I say before we are use anemic domain.
+
+<div align="left">
+  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <!-- Images/SolutionTree/domain.png -->
+    <img src="repository-logo.png" alt="domain-layer" width="415" height="75">
+  </a>
+</div>
+
+#### Application layer
+*Public components*
+* Abstactions - interaces for Infrastructure layer (patter Repository) and for Services. 
+* Features - Queries and Commands for pattern CQRS.
+* Extensions - here we have method for configure this layer for DI container. 
+
+*Internal components*
+
+* Wrappers - wrappers over awkward types.
+* Services - CQRS Handlers use it for get result.
+* Managers - internal services.
+* Helpers - bad practice, but this classes maked code more readable by grouping related functions and providing a clear purpose for the code.
+
+<div align="left">
+  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <!-- Images/SolutionTree/domain.png -->
+    <img src="repository-logo.png" alt="application-layer" width="415" height="250">
+  </a>
+</div>
+
+#### Infrastructure layer
+*Public components*
+* Contexts - data base contexts (EntityFramework).
+* Migrations - data base migrations (EntityFramework).
+* Repositories - implement pattern Reposity. 
+* Extensions - here we have method for configure this layer for DI container. 
+
+<div align="left">
+  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <!-- Images/SolutionTree/domain.png -->
+    <img src="repository-logo.png" alt="application-layer" width="415" height="114">
+  </a>
+</div>
+
+#### Presentation layer (WebApi)
+*Public components*
+* wwwroot - have custom UI for Swagger.
+* Controllers - connection between Application and Client(web, desktop, mobile).
+* Extensions - here we have method for configure DI container. 
+
+<div align="left">
+  <a href="https://github.com/SaintZet/DayzMapsLoader">
+  <!-- Images/SolutionTree/domain.png -->
+    <img src="repository-logo.png" alt="application-layer" width="415" height="196">
+  </a>
+</div>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -169,8 +243,8 @@ And of course - to contribute to the development of the project, help with exist
     - [x] provider (GInfo e.g.)
     - [x] name (Chernarus e.g)
     - [ ] type
-        - [x] sattelit
-        - [x] topografic
+        - [x] satellite
+        - [x] topographic
         - [ ] tourist
     - [x] zoom level
     - [ ] version
