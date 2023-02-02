@@ -111,7 +111,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 
 ### Solution Structure
 <details>
-  <summary><h4>Domain layer</h4></summary>
+  <summary>Domain layer</summary>
       I used Anemic Domain Model. Is used in DDD when the main focus is on data persistence and 
       becouse in this project there's not much need for complex business logic.<br>
       A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.<br>
@@ -124,7 +124,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
     </div>
 </details>
 
-<details> <summary><h4>Application layer</h4></summary>
+<details> <summary>Application layer</summary>
   <i>Public components</i>
   <br>
   <li> Abstactions - interaces for Infrastructure layer (patter Repository) and for Services.</li>
@@ -146,7 +146,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   </div>
 </details>
 
-<details> <summary><h4>Infrastructure layer</h4></summary>
+<details> <summary>Infrastructure layer</summary>
   <i>Public components</i>
   <br>
   <li> Contexts - data base contexts (EntityFramework).</li>
@@ -162,7 +162,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   </div>
 </details>
 
-<details> <summary><h4>Presentation layer</h4></summary>
+<details> <summary>Presentation layer</summary>
   <i>Public components</i>
   <br>
   <li> wwwroot - have custom UI for Swagger.</li>
