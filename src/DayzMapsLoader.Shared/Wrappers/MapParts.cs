@@ -1,14 +1,14 @@
-﻿namespace DayzMapsLoader.Application.Wrappers;
+﻿namespace DayzMapsLoader.Shared.Wrappers;
 
-internal class MapParts
+public class MapParts
 {
     private readonly MapPart[,] _images;
     private readonly byte[,][] _rawImages;
 
     public MapParts(MapSize size)
     {
-        _images = new MapPart[size.Width, size.Height];
-        _rawImages = new byte[size.Width, size.Height][];
+        _images = new MapPart[size.WidthPixels, size.HeightPixels];
+        _rawImages = new byte[size.WidthPixels, size.HeightPixels][];
     }
 
     public int Weight => _images.GetLength(0);
