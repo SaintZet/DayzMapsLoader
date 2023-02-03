@@ -37,8 +37,11 @@ namespace DayzMapsLoader.Presentation.WebApi.Extensions
         {
             string conncection = configuration.GetConnectionString("DefaultConnection")!;
 
-            return services.AddDbContext<DayzMapLoaderContext>(options => options
-            .EnableSensitiveDataLogging().UseSqlServer(conncection));
+            return services.AddDbContext<DayzMapLoaderContext>(
+                options => options
+                            .EnableSensitiveDataLogging()
+                            .UseSqlServer(conncection)
+                            );
         }
     }
 }
