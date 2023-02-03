@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Application.Abstractions.Infrastructure;
+﻿namespace DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 
 public interface IBaseRepository<TEntity> where TEntity : class, new()
 {

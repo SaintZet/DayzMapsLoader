@@ -1,6 +1,6 @@
 ﻿using DayzMapsLoader.Domain.Entities;
 
-namespace DayzMapsLoader.Application.Abstractions.Infrastructure;
+namespace DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 
 public interface IProvidedMapsRepository : IBaseRepository<ProvidedMap>
 {
