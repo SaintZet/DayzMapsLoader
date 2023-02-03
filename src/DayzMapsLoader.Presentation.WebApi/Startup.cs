@@ -21,6 +21,7 @@ public class Startup
         services.AddDatabase(_configuration);
         services.AddControllers();
         services.AddSwagger();
+        services.AddCors();
         services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     }
 
@@ -36,6 +37,7 @@ public class Startup
         app.UseStaticFiles();
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseCors(builder => builder.AllowAnyOrigin());
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

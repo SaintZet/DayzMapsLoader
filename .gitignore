@@ -402,3 +402,5 @@ FodyWeavers.xsd
 /DataBindingZoomAndPanSample
 /AdvancedZoomAndPanSample
 src/.idea
+src/DayzMapsLoader.Client.React/.idea
+src/DayzMapsLoader.Presentation.React/.idea
