@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace DayzMapsLoader.Infrastructure.Migrations
 {
@@ -17,6 +20,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UrlQueryTemplate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -31,8 +35,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastVersion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastUpdate = table.Column<DateTime>(type: "date", nullable: true),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Link = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -91,6 +94,68 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                         principalTable: "Maps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "MapProviders",
+                columns: new[] { "Id", "Link", "Name", "UrlQueryTemplate" },
+                values: new object[,]
+                {
+                    { 1, "https://xam.nu/", "Xam", "https://static.xam.nu/dayz/maps/{Map.NameForProvider}/{Map.Version}/{Map.MapTypeForProvider}/{Zoom}/{X}/{Y}.{Map.ImageExtension}" },
+                    { 2, "https://ginfo.gg/", "GInfo", "https://maps.izurvive.com/maps/{Map.NameForProvider}-{Map.MapTypeForProvider}/{Map.Version}/tiles/{Zoom}/{X}/{Y}.{Map.ImageExtension}" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MapTypes",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "topographic" },
+                    { 2, "satellite" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Maps",
+                columns: new[] { "Id", "Author", "LastUpdate", "Link", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Bohemia Interactive", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://www.bohemia.net", "Chernarus" },
+                    { 2, "Bohemia Interactive", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://www.bohemia.net", "Livonia" },
+                    { 3, "Sumrak", new DateTime(2022, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://steamcommunity.com/workshop/filedetails/?id=2289456201", "Namalsk" },
+                    { 4, "RonhillUltra", new DateTime(2021, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://steamcommunity.com/sharedfiles/filedetails/?id=2462896799", "Esseker" },
+                    { 5, "CypeRevenge", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://steamcommunity.com/sharedfiles/filedetails/?id=2563233742", "Takistan" },
+                    { 6, "KubeloLive", new DateTime(2022, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://steamcommunity.com/sharedfiles/filedetails/?id=2415195639", "Banov" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProvidedMaps",
+                columns: new[] { "Id", "ImageExtension", "IsFirstQuadrant", "MapId", "MapProviderId", "MapTypeForProvider", "MapTypeId", "MaxMapLevel", "NameForProvider", "Version" },
+                values: new object[,]
+                {
+                    { 1, "jpg", false, 1, 1, "topographic", 1, 7, "chernarusplus", "1.17-1" },
+                    { 2, "jpg", false, 1, 1, "satellite", 2, 7, "chernarusplus", "1.17-1" },
+                    { 3, "jpg", false, 2, 1, "topographic", 1, 7, "livonia", "1.17-1" },
+                    { 4, "jpg", false, 2, 1, "satellite", 2, 7, "livonia", "1.17-1" },
+                    { 5, "jpg", false, 3, 1, "topographic", 1, 7, "namalsk", "04.19" },
+                    { 6, "jpg", false, 3, 1, "satellite", 2, 7, "namalsk", "04.19" },
+                    { 7, "jpg", false, 4, 1, "topographic", 1, 7, "esseker", "0.58" },
+                    { 8, "jpg", false, 4, 1, "satellite", 2, 7, "esseker", "0.58" },
+                    { 9, "jpg", false, 5, 1, "topographic", 1, 7, "takistanplus", "1.041" },
+                    { 10, "jpg", false, 5, 1, "satellite", 2, 7, "takistanplus", "1.041" },
+                    { 11, "jpg", false, 6, 1, "topographic", 1, 7, "banov", "04.19" },
+                    { 12, "jpg", false, 6, 1, "satellite", 2, 7, "banov", "04.04" },
+                    { 13, "webp", false, 1, 2, "Top", 1, 8, "ChernarusPlus", "1.0.0" },
+                    { 14, "webp", false, 1, 2, "Sat", 2, 8, "ChernarusPlus", "1.0.0" },
+                    { 15, "webp", false, 2, 2, "Top", 1, 8, "Livonia", "1.0.0" },
+                    { 16, "webp", false, 2, 2, "Sat", 2, 8, "Livonia", "1.0.0" },
+                    { 17, "jpg", true, 3, 2, "Top", 1, 7, "Namalsk", "0.1.0" },
+                    { 18, "jpg", true, 3, 1, "Sat", 2, 7, "Namalsk", "0.1.0" },
+                    { 19, "jpg", true, 4, 2, "Top", 1, 7, "Esseker", "1.1.0" },
+                    { 20, "jpg", true, 4, 2, "Sat", 2, 7, "Esseker", "1.1.0" },
+                    { 21, "jpg", true, 5, 2, "Top", 1, 7, "TakistanPlus", "1.1.0" },
+                    { 22, "jpg", true, 5, 2, "Sat", 2, 7, "TakistanPlus", "1.1.0" },
+                    { 23, "webp", false, 6, 2, "Top", 1, 7, "Banov", "1.1.0" },
+                    { 24, "webp", false, 6, 2, "Sat", 2, 7, "Banov", "1.1.0" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 using DayzMapsLoader.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 

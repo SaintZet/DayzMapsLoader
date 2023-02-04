@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj" />
   </ItemGroup>
 
 <ItemGroup>

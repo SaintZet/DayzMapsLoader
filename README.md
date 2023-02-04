@@ -27,7 +27,7 @@
   </a>
 
   <p align="center">
-    Select your map, create a good stuff!    
+    Select your map, and create good stuff!    
     <br />
     <a href="https://github.com/SaintZet/DayzMapsLoader/wiki"><strong>Explore the docs »</strong></a>
     <br />
@@ -79,7 +79,7 @@ This Github pet project is an application built with Domain-Driven Design (DDD) 
 
 The main purpose of this project is to allow users to download maps for the game DayZ from two different map providers: Ginfo and Xam. The downloaded maps are of high quality and can be used to create posters, cups, or other stuff. 
 
-This repository are also a small personal library of knowledge.
+This repository is also a small personal library of knowledge.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,7 +97,7 @@ This repository are also a small personal library of knowledge.
 
 
 ### Architecture
-The concept of a Clean Architecture pattern has been around for over a decade and initially conceived by Robert Martin. The keyword from Uncle Bob is Interchangeable. In the image below, everything on the blue circle is **interchangeable**, for e.g., the UI can be swapped out from React to Angular, or the database can be migrated from MySQL to Oracle, and nothing in the underlying layers need to change.
+The concept of a Clean Architecture pattern has been around for over a decade and was initially conceived by Robert Martin. The keyword from Uncle Bob is Interchangeable. In the image below, everything on the blue circle is **interchangeable**, e.g., the UI can be swapped out from React to Angular, or the database can be migrated from MSSQL to Oracle, and nothing in the underlying layers needs to change.
 
 The concept of having all your interfaces (Infrastructure and Application) in one project, will make it easier to Unit Test and mock.
 
@@ -111,68 +111,87 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 
 ### Solution Structure
 <details>
+<br>
   <summary>Domain layer</summary>
       I used Anemic Domain Model. Is used in DDD when the main focus is on data persistence and 
-      becouse in this project there's not much need for complex business logic.<br>
+      because in this project there's not much need for complex business logic.<br>
       A Rich Domain Model is preferred when complex business logic needs to be encapsulated within the entities.<br>
     <br>
     <div align="left">
       <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
       <!-- Images/SolutionTree/domain.png -->
-        <img src="images/SolutionTree/domain.png" alt="domain-layer" width="415" height="75">
+        <img src="images/SolutionTree/domain.png" alt="domain-layer">
       </a>
     </div>
 </details>
 
 <details> <summary>Application layer</summary>
+<br>
   <i>Public components</i>
   <br>
-  <li> Abstactions - interaces for Infrastructure layer (patter Repository) and for Services.</li>
+  <li> Abstactions - interfaces for the Infrastructure layer (pattern Repository) and Services.</li>
   <li> Features - Queries and Commands for pattern CQRS.</li>
-  <li> Extensions - here we have method for configure this layer for DI container.</li>
+  <li> Extensions - here we have a method for configuring this layer for DI container.</li>
   <br>
   <i>Internal components</i>
   <br>
-  <li> Wrappers - wrappers over awkward types.</li>
-  <li> Services - CQRS Handlers use it for get result.</li>
-  <li> Managers - internal services.</li>
-  <li> Helpers - bad practice, but this classes maked code more readable by grouping related functions and providing a clear purpose for the code.</li>
+  <li> Services - CQRS Handlers use it to get results.</li>
+  <li> Helpers - bad practice, but these classes made code more readable by grouping related functions and providing a clear purpose for the code.</li>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
     <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/application.png" alt="application-layer" width="415" height="250">
+      <img src="images/SolutionTree/application.png" alt="application-layer">
     </a>
   </div>
 </details>
 
 <details> <summary>Infrastructure layer</summary>
+<br>
   <i>Public components</i>
   <br>
-  <li> Contexts - data base contexts (EntityFramework).</li>
-  <li> Migrations - data base migrations (EntityFramework).</li>
-  <li> Repositories - implement pattern Reposity. </li>
-  <li> Extensions - here we have method for configure this layer for DI container.</li>
+  <li> Contexts - database contexts (EntityFramework).</li>
+  <li> Migrations - database migrations (EntityFramework).</li>
+  <li> Repositories - implement pattern Repository. </li>
+  <li> Extensions - here we have a method for configuring this layer for DI container.</li>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
     <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="415" height="114">
+      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer">
     </a>
   </div>
 </details>
 
 <details> <summary>Presentation layer</summary>
+<br>
   <i>Public components</i>
   <br>
   <li> wwwroot - have custom UI for Swagger.</li>
   <li> Controllers - connection between Application and Client(web, desktop, mobile).</li>
-  <li> Extensions - here we have method for configure DI container.</li>
+  <br>
+  <i>Internal components</i>
+  <br>
+  <li> Extensions - here we have the method for configuring DI container.</li>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
     <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="415" height="196">
+      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api">
+    </a>
+  </div>
+</details>
+
+<details> <summary>Shared project</summary>
+<br>
+  <i>Public components</i>
+  <br>
+    All things that need for shared between different layers.<br>
+  <br>
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
+    <!-- Images/SolutionTree/domain.png -->
+      <img src="images/SolutionTree/shared.png" alt="shared">
     </a>
   </div>
 </details>
@@ -207,7 +226,7 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-3. Add connection string to appsettings.json 
+3. Add a appsettings.json with connection string to DayzMapsLoader.Presentation.WebApi 
    ```json
      "ConnectionStrings": {
     "DefaultConnection": "Server = YourServer; DataBase=DayzMapLoader; User id= YourUserID; password= YourPassword; Integrated Security=True; TrustServerCertificate=True;"
@@ -236,7 +255,7 @@ You can create a fork and expand the repository, for example
 
 Take some techniques and approaches to your projects.
 
-And of course - to contribute to the development of the project, help with existing issues or create a new one, improve the algorithm or change something else!
+And of course - to contribute to the development of the project, help with existing issues or create a new one, improve the algorithm, or change something else!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -245,11 +264,11 @@ And of course - to contribute to the development of the project, help with exist
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Provide arhive(web) and byte array(desktop) with
+- [x] Provide archive(web) and byte array(desktop) with
     - [x] selected map
     - [x] selected map in parts
     - [x] all maps by specific provider
-- [ ] Option for select map
+- [ ] Options for select a map
     - [x] provider (GInfo e.g.)
     - [x] name (Chernarus e.g)
     - [ ] type
@@ -260,9 +279,9 @@ And of course - to contribute to the development of the project, help with exist
     - [ ] version
     - [ ] image quality
     - [ ] image extension
- - [ ] Client application (in process)
+ - [ ] Client application (in the process)
  - [ ] Hosting server and client
- - [ ] Improve performance - store images on the server and just download when choose something (e.g version map).
+ - [ ] Improve performance - store images on the server and just download them when changed something (e.g version map).
 
 See the [open issues](https://github.com/SaintZet/DayzMapsLoader/issues) for a full list of proposed features (and known issues).
 
@@ -273,7 +292,7 @@ See the [open issues](https://github.com/SaintZet/DayzMapsLoader/issues) for a f
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!

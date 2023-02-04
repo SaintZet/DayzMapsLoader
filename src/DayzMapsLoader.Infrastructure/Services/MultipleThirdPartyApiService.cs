@@ -1,10 +1,11 @@
-﻿using DayzMapsLoader.Application.Helpers;
-using DayzMapsLoader.Application.Wrappers;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Services;
 using DayzMapsLoader.Domain.Entities;
+using DayzMapsLoader.Shared.Wrappers;
+using SmartFormat;
 
-namespace DayzMapsLoader.Application.Managers;
+namespace DayzMapsLoader.Infrastructure.Services;
 
-internal class ExternalApiManager
+public class MultipleThirdPartyApiService : IMultipleThirdPartyApiService
 {
     private readonly HttpClient _httpClient = new();
 
@@ -13,14 +14,22 @@ internal class ExternalApiManager
         MapSize mapSize = ConvertZoomLevelRatioSize(zoom);
         MapParts mapParts = new(mapSize);
 
-        QueryBuilder queryBuilder = new(map, zoom);
+        string queryTemplate = map.MapProvider.UrlQueryTemplate;
 
-        int yReversed = mapSize.Width - 1;
-        for (int y = 0; y < mapSize.Width; y++)
+        int yReversed = mapSize.WidthPixels - 1;
+        for (int y = 0; y < mapSize.WidthPixels; y++)
         {
-            for (int x = 0; x < mapSize.Height; x++)
+            for (int x = 0; x < mapSize.HeightPixels; x++)
             {
-                string query = map.IsFirstQuadrant ? queryBuilder.BuildQuery(x, yReversed) : queryBuilder.BuildQuery(x, y);
+                var parameters = new
+                {
+                    Map = map,
+                    Zoom = zoom,
+                    X = x,
+                    Y = map.IsFirstQuadrant ? yReversed : y
+                };
+
+                string query = Smart.Format(queryTemplate, parameters);
 
                 var response = await _httpClient.GetAsync(query);
                 var data = await response.Content.ReadAsByteArrayAsync();

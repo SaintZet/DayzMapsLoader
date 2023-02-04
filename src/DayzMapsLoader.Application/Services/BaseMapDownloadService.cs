@@ -1,47 +1,36 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+using DayzMapsLoader.Application.Abstractions.Infrastructure.Services;
 using DayzMapsLoader.Application.Abstractions.Services;
-using DayzMapsLoader.Application.Enums;
-using DayzMapsLoader.Application.Managers;
-using DayzMapsLoader.Application.Wrappers;
 using DayzMapsLoader.Domain.Entities;
+using DayzMapsLoader.Shared.Constants;
+using DayzMapsLoader.Shared.Enums;
+using DayzMapsLoader.Shared.Wrappers;
 using System.Drawing.Imaging;
 
 namespace DayzMapsLoader.Application.Services;
 
-internal class BaseMapDownloadService : IBaseMapDownloadService
+internal abstract class BaseMapDownloadService
 {
     protected readonly IProvidedMapsRepository _providedMapsRepository;
+    protected readonly IMultipleThirdPartyApiService _thirdPartyApiService;
+    protected readonly IMapMergeService _mapMergeService;
 
-    protected readonly MapMergeManager _imageMergeManager;
-    protected readonly ExternalApiManager _externalApiManager;
-
-    private int _qualityMultiplier = 25;
-
-    public BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository)
+    public BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
     {
         _providedMapsRepository = providedMapsRepository;
+        _thirdPartyApiService = thirdPartyApiService;
 
-        _imageMergeManager = new MapMergeManager(new MapSize(256), _qualityMultiplier);
-        _externalApiManager = new ExternalApiManager();
-    }
-
-    public int QualityMultiplier
-    {
-        get => _qualityMultiplier;
-        set
-        {
-            _qualityMultiplier = value;
-            _imageMergeManager.DpiImprovementPercent = value;
-        }
+        var mapSize = new MapSize(MapImageConstants.ImageWidthPixels, MapImageConstants.ImageHeightPixels);
+        _mapMergeService = new MapMergeService(mapSize, MapImageConstants.ImageSizeImprovementPercent);
     }
 
     protected async Task<MemoryStream> GetMapInMemoryStreamAsync(ProvidedMap map, int zoom)
     {
-        var mapParts = await _externalApiManager.GetMapPartsAsync(map, zoom);
+        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
 
         Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 
-        var image = _imageMergeManager.Merge(mapParts, extension);
+        var image = _mapMergeService.Merge(mapParts, extension);
 
         var memoryStream = new MemoryStream();
 

@@ -1,6 +1,6 @@
-﻿namespace DayzMapsLoader.Application.Wrappers;
+﻿namespace DayzMapsLoader.Shared.Wrappers;
 
-internal record MapPart(byte[] Data)
+public record MapPart(byte[] Data)
 {
     public void Save(string pathToFile) => File.WriteAllBytes(pathToFile, Data);
     public Stream AsStream() => new MemoryStream(Data);

@@ -1,4 +1,5 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+using DayzMapsLoader.Application.Abstractions.Infrastructure.Services;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Domain.Entities;
 using System.IO.Compression;
@@ -7,8 +8,8 @@ namespace DayzMapsLoader.Application.Services;
 
 internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadArchiveService
 {
-    public MapDownloadArchiveService(IProvidedMapsRepository providedMapsRepository)
-        : base(providedMapsRepository) { }
+    public MapDownloadArchiveService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
+        : base(providedMapsRepository, thirdPartyApiService) { }
 
     public async Task<(byte[] data, string name)> DownloadMapImageArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
@@ -38,7 +39,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = await _externalApiManager.GetMapPartsAsync(map, zoom);
+        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
 
         int axisY = mapParts.Weight;
         int axisX = mapParts.Height;

@@ -1,6 +1,6 @@
 ﻿namespace DayzMapsLoader.Application.Abstractions.Services;
 
-internal interface IMapDownloadArchiveService : IBaseMapDownloadService
+internal interface IMapDownloadArchiveService
 {
     public Task<(byte[] data, string name)> DownloadMapImageArchiveAsync(int providerId, int mapID, int typeId, int zoom);
 
