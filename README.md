@@ -135,7 +135,6 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <i>Internal components</i>
   <br>
-  <li> Wrappers - wrappers over awkward types.</li>
   <li> Services - CQRS Handlers use it to get results.</li>
   <li> Helpers - bad practice, but these classes made code more readable by grouping related functions and providing a clear purpose for the code.</li>
   <br>
@@ -170,6 +169,9 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <li> wwwroot - have custom UI for Swagger.</li>
   <li> Controllers - connection between Application and Client(web, desktop, mobile).</li>
+  <br>
+  <i>Internal components</i>
+  <br>
   <li> Extensions - here we have the method for configuring DI container.</li>
   <br>
   <div align="left">
@@ -184,7 +186,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 <br>
   <i>Public components</i>
   <br>
-    All things that need for shared between different layers.
+    All things that need for shared between different layers.<br>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
