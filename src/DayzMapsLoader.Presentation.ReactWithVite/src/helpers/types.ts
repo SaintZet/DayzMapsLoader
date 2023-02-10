@@ -38,7 +38,7 @@ export interface ProvidedMap {
     imageExtension: string;
 }
 
-export type LoaderSelectorTypes = Array<MapProvider> | Array<MapType> | Array<Map> | Array<number>;
+export type LoaderTypes = Array<MapProvider> | Array<MapType> | Array<Map> | Array<number>;
 
 type ProviderWithChanges<T extends MapProvider> = {
     [K in keyof T & string as `${K}Provider`]: T[K]

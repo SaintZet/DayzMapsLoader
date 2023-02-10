@@ -1,5 +1,5 @@
 import {
-    LoaderSelectorTypes,
+    LoaderTypes,
     MappedMapType,
     MappedProvider,
     MapProvider,
@@ -10,7 +10,7 @@ import {
 } from "./types";
 
 
-export function interfaceMatcher(data: LoaderSelectorTypes): number {
+export function interfaceMatcher(data: LoaderTypes): number {
 
     if (isProviderArray(data)) return InterfaceMatcher.ProviderArray
 
@@ -23,24 +23,24 @@ export function interfaceMatcher(data: LoaderSelectorTypes): number {
     return InterfaceMatcher.Default;
 }
 
-function isProviderArray(item: LoaderSelectorTypes): item is MapProvider[] {
+function isProviderArray(item: LoaderTypes): item is MapProvider[] {
     if (!item) throw "Empty set in interface matcher";
     return "idProvider" in providerDecorator(item as MapProvider[])[0];
 }
 
-function isMapTypeArray(item: LoaderSelectorTypes): item is MapType[] {
+function isMapTypeArray(item: LoaderTypes): item is MapType[] {
     if (!item) throw "Empty set in interface matcher";
     return "idType" in typeDecorator(item as MapType[])[0];
 }
 
-function isZoomArray(item: LoaderSelectorTypes): item is ZoomLevelRatioSize[] {
+function isZoomArray(item: LoaderTypes): item is ZoomLevelRatioSize[] {
     if (!item) throw "Empty set in interface matcher";
-    return "width" in item[0];
+    return "width" in (item[0] as ZoomLevelRatioSize);
 }
 
-function isMapArray(item: LoaderSelectorTypes): item is Map[] {
+function isMapArray(item: LoaderTypes): item is Map[] {
     if (!item) throw "Empty set in interface matcher";
-    return "lastVersion" in item[0];
+    return "lastVersion" in (item[0] as Map);
 }
 
 function providerDecorator(data: MapProvider[]): MappedProvider[] {
