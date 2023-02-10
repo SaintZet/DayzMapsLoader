@@ -1,14 +1,12 @@
 import {Map, MapType} from "../../helpers/types";
+import {useContextStore} from "../../modules/DownloadMap/context/providedMapsContext";
 import LoaderSelector from "../../ui/DownloadMap/LoaderSelector";
 import {switchType} from "../../modules/DownloadMap/helpers/switchLoaderDataType";
-import React, {ReactNode} from "react";
+import React, {ReactNode, useMemo} from "react";
 
-interface MapTypeProps {
-    types: MapType[],
-}
-
-export default function SelectMapType(props: MapTypeProps) {
-    const types = props.types;
+export default function SelectMapType() {
+    const {providedMaps} = useContextStore();
+    const types = useMemo(() => providedMaps.map(x => x.mapType), [providedMaps]);
     const loaderSettings = {m: 3, width: 300};
     const menuItems: ReactNode = switchType(types);
 

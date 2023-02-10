@@ -3,8 +3,6 @@ import {
     LoaderTypes,
 } from "../../helpers/types";
 import React, {ReactNode} from "react";
-import {switchType} from "../../modules/DownloadMap/helpers/switchLoaderDataType";
-import {useContextStore} from "../../modules/DownloadMap/context/providedMapsContext";
 
 interface LoaderSelectorProps<T> {
     settings?: { m: number, width: number },
