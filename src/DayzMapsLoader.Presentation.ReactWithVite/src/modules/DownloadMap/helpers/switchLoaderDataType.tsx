@@ -1,6 +1,6 @@
 import {
     InterfaceMatcher,
-    LoaderSelectorTypes,
+    LoaderTypes,
     Map,
     MapProvider,
     MapType,
@@ -10,7 +10,7 @@ import React, {ReactNode} from "react";
 import {interfaceMatcher} from "../../../helpers/instanceOfMatcher";
 import {MenuItem} from "@mui/material";
 
-export function switchType<T extends LoaderSelectorTypes>(data: T): ReactNode {
+export function switchType<T extends LoaderTypes>(data: T): ReactNode {
     let a: Array<ReactNode> = [];
     switch (interfaceMatcher(data)) {
         case InterfaceMatcher.ProviderArray: {
