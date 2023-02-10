@@ -405,3 +405,4 @@ src/.idea
 src/DayzMapsLoader.Client.React/.idea
 src/DayzMapsLoader.Presentation.React/.idea
 src/DayzMapsLoader.Presentation.React/src/.idea
+.idea
