@@ -1,5 +1,5 @@
 import {MapProvider, ProvidedMap} from "../../../helpers/types";
-import {MapsProviderService, ProvidedMapsService} from "../api/providedMaps.services";
+import { ProvidedMapsService} from "../api/providedMaps.services";
 import React, {FC, PropsWithChildren, useContext, useMemo, useState} from "react";
 
 export const getProvidedMaps = await ProvidedMapsService.getAll().then(data => data.data);
@@ -34,4 +34,5 @@ export const DownloadMapProvider: FC<PropsWithChildren> = ({children}) => {
 interface ContextMembers {
     providedMaps: ProvidedMap[],
     selectedProvider: MapProvider | undefined,
+    setSelectedProvider: (provider: MapProvider) => void,
 }
