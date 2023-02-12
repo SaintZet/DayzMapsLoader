@@ -3,40 +3,39 @@ import {
     LoaderTypes,
     Map,
     MapProvider,
-    MapType,
+    MapType, SelectItem,
     ZoomLevelRatioSize
 } from "../../../helpers/types";
 import React, {ReactNode} from "react";
 import {interfaceMatcher} from "../../../helpers/instanceOfMatcher";
 import {MenuItem} from "@mui/material";
 
-export function switchType<T extends LoaderTypes>(data: T): ReactNode {
-    let a: Array<ReactNode> = [];
+export function getSelectItems<T extends LoaderTypes>(data: T): SelectItem<number>[] {
+    let items:SelectItem<number>[] =[];
     switch (interfaceMatcher(data)) {
         case InterfaceMatcher.ProviderArray: {
-            (data as MapProvider[]).map(provider => {
-                a.push(<MenuItem key={provider.name} value={provider.name}>{provider.name}</MenuItem>)
-            });
-            return a;
+            (data as MapProvider[]).forEach(provider =>
+                items.push({text: provider.name, value: provider.id})
+            );
+            break;
         }
         case InterfaceMatcher.MapTypeArray: {
-            (data as MapType[]).map(type => {
-                a.push(<MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>)
-            });
-            return;
+            (data as MapType[]).forEach(type =>
+                items.push({text: type.name, value: type.id})
+            );
+            break;
         }
         case InterfaceMatcher.MapArray: {
-            (data as Map[]).map(map => {
-                a.push(<MenuItem key={map.id} value={map.id}>{map.name}</MenuItem>)
-            });
-            return;
+            (data as Map[]).forEach(map =>
+                items.push({text: map.name, value: map.id}));
+            break;
         }
         case InterfaceMatcher.ZoomArray: {
-            (data as number[]).map(zoom => {
-                a.push(<MenuItem key={zoom} value={zoom}>{zoom}</MenuItem>)
+            (data as number[]).forEach(zoom => {
+                items.push({text: zoom.toString(), value: zoom});
             });
-            return;
+            break;
         }
     }
-    return <MenuItem key="no data" value="no data">no data</MenuItem>
+    return items;
 }
