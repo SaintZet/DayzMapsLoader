@@ -59,3 +59,8 @@ export enum InterfaceMatcher {
     "ProviderArray",
     "Default" ,
 }
+
+export interface SelectItem<T> {
+    text: string;
+    value: T;
+}
