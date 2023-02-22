@@ -7,7 +7,7 @@ import {
     ZoomLevelRatioSize
 } from "../../../helpers/types";
 import React, {ReactNode} from "react";
-import {interfaceMatcher} from "../../../helpers/instanceOfMatcher";
+import {interfaceMatcher} from "./instanceOfMatcher";
 import {MenuItem} from "@mui/material";
 
 export function getSelectItems<T extends LoaderTypes>(data: T): Set<SelectItem<number>> {

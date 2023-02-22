@@ -5,7 +5,7 @@ import {
     Map,
     InterfaceMatcher,
     Zoom
-} from "./types";
+} from "../../../helpers/types";
 
 
 export function interfaceMatcher(data: LoaderTypes): number {
