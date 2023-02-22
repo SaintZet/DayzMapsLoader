@@ -37,8 +37,11 @@ export interface ProvidedMap {
     version: string;
     imageExtension: string;
 }
+export interface Zoom{
+    zoom: number;
+}
 
-export type LoaderTypes = Array<MapProvider> | Array<MapType> | Array<Map> | Array<number>;
+export type LoaderTypes = Array<MapProvider> | Array<MapType> | Array<Map> | Array<Zoom>;
 
 type ProviderWithChanges<T extends MapProvider> = {
     [K in keyof T & string as `${K}Provider`]: T[K]
@@ -64,3 +67,6 @@ export interface SelectItem<T> {
     text: string;
     value: T;
 }
+
+
+export const defaultValue = -1;
