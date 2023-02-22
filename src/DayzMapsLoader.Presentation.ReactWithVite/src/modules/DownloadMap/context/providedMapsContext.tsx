@@ -13,18 +13,33 @@ export const DownloadMapContext = React.createContext<ContextMembers>({
 export const DownloadMapProvider: FC<PropsWithChildren> = ({children}) => {
 
     const providedMaps = getProvidedMaps;
-    const [selectedProvider, setSelectedProvider] = useState<MapProvider>();
+    const [selectedProvider, setSelectedProvider] = useState<number>();
+    const [selectedMap, setSelectedMap] = useState<number>();
+    const [selectedType, setSelectedType] = useState<number>();
+    const [selectedZoom, setSelectedZoom] = useState<number>();
 
     const value: ContextMembers = useMemo(
         () => ({
             providedMaps,
             selectedProvider,
-            setSelectedProvider
+            selectedMap,
+            selectedType,
+            selectedZoom,
+            setSelectedProvider,
+            setSelectedMap,
+            setSelectedType,
+            setSelectedZoom,
         }),
         [
             providedMaps,
             selectedProvider,
-            setSelectedProvider
+            selectedMap,
+            selectedType,
+            selectedZoom,
+            setSelectedProvider,
+            setSelectedMap,
+            setSelectedType,
+            setSelectedZoom,
         ]
     );
 
@@ -33,6 +48,14 @@ export const DownloadMapProvider: FC<PropsWithChildren> = ({children}) => {
 
 interface ContextMembers {
     providedMaps: ProvidedMap[],
-    selectedProvider: MapProvider | undefined,
-    setSelectedProvider: (provider: MapProvider) => void,
+    selectedProvider: number|undefined,
+    selectedMap: number | undefined,
+    selectedType: number | undefined,
+    selectedZoom: number | undefined,
+    setSelectedProvider: (provider: number | undefined) => void,
+    setSelectedMap: (map: number|undefined) => void,
+    setSelectedType: (map: number|undefined) => void,
+    setSelectedZoom: (map: number|undefined) => void,
+
+
 }
