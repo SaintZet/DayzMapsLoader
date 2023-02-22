@@ -1,4 +1,4 @@
 import React from "react";
-import DownloadMap from "../modules/DownloadMap/DownloadMap";
+import DownloadMapModule from "../modules/DownloadMap/DownloadMapModule";
 
-export const Download = () => <DownloadMap/>;
+export const Download = () => <DownloadMapModule/>;
