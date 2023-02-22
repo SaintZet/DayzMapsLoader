@@ -3,36 +3,37 @@ import {
     LoaderTypes,
     Map,
     MapProvider,
-    MapType, SelectItem,
+    MapType, SelectItem, Zoom,
     ZoomLevelRatioSize
 } from "../../../helpers/types";
 import React, {ReactNode} from "react";
 import {interfaceMatcher} from "../../../helpers/instanceOfMatcher";
 import {MenuItem} from "@mui/material";
 
-export function getSelectItems<T extends LoaderTypes>(data: T): SelectItem<number>[] {
-    let items:SelectItem<number>[] =[];
-    switch (interfaceMatcher(data)) {
+export function getSelectItems<T extends LoaderTypes>(data: T): Set<SelectItem<number>> {
+    let items:Set<SelectItem<number>> = new Set<SelectItem<number>>();
+    const matchValue = interfaceMatcher(data);
+    switch (matchValue) {
         case InterfaceMatcher.ProviderArray: {
             (data as MapProvider[]).forEach(provider =>
-                items.push({text: provider.name, value: provider.id})
+                items.add({text: provider.name, value: provider.id})
             );
             break;
         }
         case InterfaceMatcher.MapTypeArray: {
             (data as MapType[]).forEach(type =>
-                items.push({text: type.name, value: type.id})
+                items.add({text: type.name, value: type.id})
             );
             break;
         }
         case InterfaceMatcher.MapArray: {
             (data as Map[]).forEach(map =>
-                items.push({text: map.name, value: map.id}));
+                items.add({text: map.name, value: map.id}));
             break;
         }
         case InterfaceMatcher.ZoomArray: {
-            (data as number[]).forEach(zoom => {
-                items.push({text: zoom.toString(), value: zoom});
+            (data as Zoom[]).forEach(zoom => {
+                items.add({text: zoom.zoom.toString(), value: zoom.zoom});
             });
             break;
         }
