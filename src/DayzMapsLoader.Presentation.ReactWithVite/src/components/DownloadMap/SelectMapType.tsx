@@ -1,17 +1,53 @@
-import {Map, MapType} from "../../helpers/types";
+import {defaultValue, ProvidedMap, SelectItem} from "../../helpers/types";
 import {useContextStore} from "../../modules/DownloadMap/context/providedMapsContext";
-import LoaderSelector from "../../ui/DownloadMap/LoaderSelector";
-import {switchType} from "../../modules/DownloadMap/helpers/switchLoaderDataType";
-import React, {ReactNode, useMemo} from "react";
+import {Selector} from "../../ui/DownloadMap/LoaderSelector";
+import {getSelectItems} from "../../modules/DownloadMap/helpers/switchLoaderDataType";
+import React, {useEffect, useMemo} from "react";
+import * as yup from "yup";
+import {Select, SelectChangeEvent} from "@mui/material";
+import {useFormik} from "formik";
 
+interface Form {
+    typeId: number;
+}
+
+const formSchema = yup.object<Form>({
+    typeId: yup.number().required().min(0,'Choose map type').default(defaultValue),
+}).required()
 export default function SelectMapType() {
-    const {providedMaps} = useContextStore();
-    const types = useMemo(() => providedMaps.map(x => x.mapType), [providedMaps]);
-    const loaderSettings = {m: 3, width: 300};
-    const menuItems: ReactNode = switchType(types);
+    const {providedMaps, selectedProvider, selectedMap, setSelectedType} = useContextStore();
+    const types = [...new Map(
+        providedMaps.filter(x => x.mapProvider.id === selectedProvider && x.map.id === selectedMap)
+            .map(x => x.mapType).map(item => [item['name'], item])).values()];
+    const options: Set<SelectItem<number>> = getSelectItems(types);
 
+    const formikDefaultProps = useFormik({
+        initialValues: formSchema.cast({}) as Form,
+        enableReinitialize: true,
+        validationSchema: formSchema,
+        onSubmit: (form) => {
+        }
+    });
+    const onHandleChange = (event: SelectChangeEvent<number>) => {
+        const value = event.target.value as number;
+        setSelectedType(value);
+        formikDefaultProps.setFieldValue("typeId", value);
+    }
+
+    useEffect(() => {
+        if (selectedMap === defaultValue){
+            formikDefaultProps.resetForm();
+        }
+    }, [selectedMap])
     return (
-        <LoaderSelector menuItems={menuItems} className="Select map type" settings={loaderSettings}/>
+        <Selector<Form>
+            disabled={selectedMap === -1 || !selectedMap}
+            label="Type"
+            onHandleChange={onHandleChange}
+            {...formikDefaultProps}
+            controlName='typeId'
+            options={options}
+            showError
+        />
     );
-
 }
