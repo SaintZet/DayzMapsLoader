@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="libwebp_x64.dll">
+    <EmbeddedResource Include="Helpers\WebpDecoder\libwebp_x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CustomToolNamespace>libs</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="libwebp_x86.dll">
+    <EmbeddedResource Include="Helpers\WebpDecoder\libwebp_x86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
