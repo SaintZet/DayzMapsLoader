@@ -18,11 +18,11 @@ internal sealed class WebP : IDisposable
         if (_wasDllInstance)
             return;
 
-        string direcotory = Assembly.GetExecutingAssembly().Location;
-        direcotory = Path.GetDirectoryName(direcotory)!;
+        string assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+        string directory = Path.Combine(assemblyDirectory, "Helpers", "WebpDecoder");
 
-        LoadDllFile(direcotory, "libwebp_x64.dll");
-        LoadDllFile(direcotory, "libwebp_x86.dll");
+        LoadDllFile(directory, "libwebp_x64.dll");
+        LoadDllFile(directory, "libwebp_x86.dll");
 
         _wasDllInstance = true;
     }
