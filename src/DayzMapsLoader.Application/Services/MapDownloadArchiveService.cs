@@ -58,7 +58,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
                     var originalFileStream = new MemoryStream(image);
 
-                    pathToFile = Path.Combine($@"Horizontal_{y}", $"({x}.{y}).png");
+                    pathToFile = Path.Combine($@"Horizontal_{y}", $"({y}.{x}).png");
 
                     ZipArchiveEntry zipEntry = zipArchive.CreateEntry(pathToFile);
 
