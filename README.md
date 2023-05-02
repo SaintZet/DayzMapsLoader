@@ -213,7 +213,7 @@ This is an example of how to list things you need to use the software and how to
   ```
  * Dotnet ef
      ```sh
-     dotnet tool install --global dotnet-ef
+     dotnet tool install dotnet-ef -g
      ```
 
 ### Installation
@@ -234,7 +234,7 @@ This is an example of how to list things you need to use the software and how to
    ```
  4. At this point you can have EF create database and create schema from the migration .NET CLI:
      ```sh
-     dotnet ef database update
+     dotnet ef database update --startup-project ../DayzMapsLoader.Presentation.WebApi --project ../DayzMapsLoader.Infrastructure
      ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -319,7 +319,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACTS -->
 ## Contacts
 
-Chepets Serhii - [@LinkedIn](https://www.linkedin.com/in/serhii-chepets/) - chepets9685@gmail.com
+Chepets Serhii - [@LinkedIn](https://www.linkedin.com/in/serhii-chepets/) - serhii.chepets@gmail.com
 
 Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) - ytimchenko57@gmail.com
 
