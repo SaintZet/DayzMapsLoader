@@ -6,5 +6,5 @@ internal interface IMapDownloadImageService
 
     public Task<byte[,][]> DownloadMapImageInPartsAsync(int providerId, int mapID, int typeId, int zoom);
 
-    public Task<IEnumerable<byte[]>> DownloadAllMapImages(int providerId, int zoom);
+    public Task<IEnumerable<byte[]>> DownloadAllMapImagesAsync(int providerId, int zoom);
 }
