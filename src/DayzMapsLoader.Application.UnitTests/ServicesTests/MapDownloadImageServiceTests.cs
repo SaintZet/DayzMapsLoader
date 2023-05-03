@@ -1,10 +1,8 @@
 using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Extensions;
-using DayzMapsLoader.Application.Tests.ServicesTests;
-using DayzMapsLoader.Application.Tests.TestData.MapDownload;
+using DayzMapsLoader.Application.Tests.xUnit.TestData.MapDownload;
 using DayzMapsLoader.Infrastructure.Extensions;
-using DayzMapsLoader.Presentation.WebApi.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;

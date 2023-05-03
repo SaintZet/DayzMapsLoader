@@ -72,7 +72,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
     <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
-    <ProjectReference Include="..\DayzMapsLoader.Presentation.WebApi\DayzMapsLoader.Presentation.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

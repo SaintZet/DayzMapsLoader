@@ -10,7 +10,7 @@ namespace DayzMapsLoader.Application.UnitTests.InternalManagers;
 [SupportedOSPlatform("windows")]
 public class MapMergeServiceTests
 {
-    private const string _generalPathToTestData = "DayzMapsLoader.Application.Tests.TestData.MapMerge";
+    private const string _generalPathToTestData = "DayzMapsLoader.Application.Tests.xUnit.TestData.MapMerge";
 
     private const string _fullImageTemaplatePath = $"{_generalPathToTestData}.{{0}}.Original.{{0}}";
     private const string _partTemaplatePath = $"{_generalPathToTestData}.{{0}}.{{1}},{{2}}.{{0}}";

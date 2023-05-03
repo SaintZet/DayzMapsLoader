@@ -1,15 +1,14 @@
 ﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Extensions;
-using DayzMapsLoader.Application.Tests.TestData.MapDownload;
+using DayzMapsLoader.Application.Tests.xUnit.TestData.MapDownload;
 using DayzMapsLoader.Infrastructure.Extensions;
-using DayzMapsLoader.Presentation.WebApi.Extensions;
 using DayzMapsLoader.Shared.Wrappers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO.Compression;
 
-namespace DayzMapsLoader.Application.Tests.ServicesTests;
+namespace DayzMapsLoader.Application.Tests.xUnit.ServicesTests;
 
 public class MapDownloadArchiveServiceTests
 {

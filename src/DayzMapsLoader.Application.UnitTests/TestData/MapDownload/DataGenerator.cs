@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Application.Tests.TestData.MapDownload;
+﻿namespace DayzMapsLoader.Application.Tests.xUnit.TestData.MapDownload;
 
 internal static class DataGenerator
 {

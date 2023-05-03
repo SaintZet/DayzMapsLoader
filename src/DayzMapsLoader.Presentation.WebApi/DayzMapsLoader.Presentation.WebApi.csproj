@@ -25,10 +25,4 @@
     <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-		    <_Parameter1>DayzMapsLoader.Application.Tests</_Parameter1>
-	    </AssemblyAttribute>
-    </ItemGroup>
-
 </Project>
