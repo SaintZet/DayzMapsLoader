@@ -23,10 +23,17 @@ internal class MapMergeService : IMapMergeService
         _sizeImprovementPercent = sizeImprovementPercent;
     }
 
+    public static Bitmap WebpToBitmap(byte[] bytes)
+    {
+        using WebP webp = new();
+
+        return webp.Decode(bytes);
+    }
+
     public Bitmap Merge(MapParts source, ImageExtension extension)
     {
-        int resultWidth = _mapSize.WidthPixels;
-        int resultHeight = _mapSize.HeightPixels;
+        int resultWidth = _mapSize.Width;
+        int resultHeight = _mapSize.Height;
 
         if (_sizeImprovementPercent != 0)
         {
@@ -72,13 +79,6 @@ internal class MapMergeService : IMapMergeService
         }
 
         return result;
-    }
-
-    private static Bitmap WebpToBitmap(byte[] bytes)
-    {
-        using WebP webp = new();
-
-        return webp.Decode(bytes);
     }
 
     private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension)
