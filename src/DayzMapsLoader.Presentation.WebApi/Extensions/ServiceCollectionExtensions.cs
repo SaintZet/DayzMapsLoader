@@ -32,16 +32,5 @@ namespace DayzMapsLoader.Presentation.WebApi.Extensions
                     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                 });
-
-        public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            string conncection = configuration.GetConnectionString("DefaultConnection")!;
-
-            return services.AddDbContext<DayzMapLoaderContext>(
-                options => options
-                            .EnableSensitiveDataLogging()
-                            .UseSqlServer(conncection)
-                            );
-        }
     }
 }

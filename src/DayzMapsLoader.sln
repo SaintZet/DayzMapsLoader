@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Domain", "Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Infrastructure", "DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj", "{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.UnitTests", "DayzMapsLoader.Application.UnitTests\DayzMapsLoader.Application.UnitTests.csproj", "{307C23A6-D5EF-4DA0-8273-7340F1D60655}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.WebApi", "DayzMapsLoader.Presentation.WebApi\DayzMapsLoader.Presentation.WebApi.csproj", "{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.Shared", "DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj", "{3E4EEAAA-F142-48EB-9028-307C0A9D2323}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Shared", "DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj", "{3E4EEAAA-F142-48EB-9028-307C0A9D2323}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.Tests.xUnit", "DayzMapsLoader.Application.Tests.xUnit\DayzMapsLoader.Application.Tests.xUnit.csproj", "{7C86034E-FA1C-450C-884C-EA9732A0039F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{307C23A6-D5EF-4DA0-8273-7340F1D60655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{307C23A6-D5EF-4DA0-8273-7340F1D60655}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{307C23A6-D5EF-4DA0-8273-7340F1D60655}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{307C23A6-D5EF-4DA0-8273-7340F1D60655}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

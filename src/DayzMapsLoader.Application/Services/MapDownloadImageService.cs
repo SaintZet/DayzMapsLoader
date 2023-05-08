@@ -28,19 +28,14 @@ internal class MapDownloadImageService : BaseMapDownloadService, IMapDownloadIma
         return mapParts.GetRawMapParts();
     }
 
-    public async Task<IEnumerable<byte[]>> DownloadAllMapImages(int providerId, int zoom)
+    public async Task<IEnumerable<byte[]>> DownloadAllMapImagesAsync(int providerId, int zoom)
     {
-        List<byte[]> result = new();
-
         var providedMaps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
 
-        Parallel.ForEach(providedMaps, async map =>
-        {
-            var image = await DownloadMapImageAsync(providerId, map.Id, map.MapType.Id, zoom).ConfigureAwait(false);
+        var downloadTasks = providedMaps
+            .Select(async map => await DownloadMapImageAsync(providerId, map.Id, map.MapType.Id, zoom)
+            .ConfigureAwait(false));
 
-            result.Add(image);
-        });
-
-        return result;
+        return await Task.WhenAll(downloadTasks).ConfigureAwait(false);
     }
 }

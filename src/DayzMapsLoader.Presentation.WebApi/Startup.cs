@@ -17,8 +17,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApplicationLayer();
-        services.AddInfrastractureLayer();
-        services.AddDatabase(_configuration);
+        services.AddInfrastractureLayer(_configuration);
         services.AddControllers();
         services.AddSwagger();
         services.AddCors();
@@ -38,9 +37,6 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.UseCors(builder => builder.AllowAnyOrigin());
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

@@ -42,7 +42,7 @@
 
 <ItemGroup>
 	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-		<_Parameter1>DayzMapsLoader.Application.UnitTests</_Parameter1>
+		<_Parameter1>DayzMapsLoader.Application.Tests.xUnit</_Parameter1>
 	</AssemblyAttribute>
 </ItemGroup>
 
