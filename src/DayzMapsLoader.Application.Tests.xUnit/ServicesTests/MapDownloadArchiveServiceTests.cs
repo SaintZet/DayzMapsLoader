@@ -24,8 +24,7 @@ public class MapDownloadArchiveServiceTests
 
         IServiceCollection services = new ServiceCollection();
         services.AddApplicationLayer();
-        services.AddInfrastractureLayer();
-        services.AddDatabase(config);
+        services.AddInfrastractureLayer(config);
 
         var serviceProvider = services.BuildServiceProvider();
 
