@@ -4,9 +4,9 @@ using DayzMapsLoader.Presentation.Wpf.ViewModels;
 
 namespace DayzMapsLoader.Presentation.Wpf.Views;
 
-public partial class ListDetailsPage : Page
+public partial class ContentGridProvidersPage : Page
 {
-    public ListDetailsPage(ListDetailsViewModel viewModel)
+    public ContentGridProvidersPage(ContentGridProvidersViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;

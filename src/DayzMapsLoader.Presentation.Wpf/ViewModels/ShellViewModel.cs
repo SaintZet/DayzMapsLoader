@@ -22,6 +22,11 @@ public class ShellViewModel : ObservableObject
     private ICommand _loadedCommand;
     private ICommand _unloadedCommand;
 
+    public ShellViewModel(INavigationService navigationService)
+    {
+        _navigationService = navigationService;
+    }
+
     public HamburgerMenuItem SelectedMenuItem
     {
         get { return _selectedMenuItem; }
@@ -37,7 +42,12 @@ public class ShellViewModel : ObservableObject
     // TODO: Change the icons and titles for all HamburgerMenuItems here.
     public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
     {
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
+        new HamburgerMenuGlyphItem()
+        {
+            Label = Resources.ShellContentGridPage,
+            Glyph = "\uE8A5",
+            TargetPageType = typeof(ContentGridProvidersViewModel)
+        },
     };
 
     public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
@@ -54,11 +64,6 @@ public class ShellViewModel : ObservableObject
     public ICommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new RelayCommand(OnLoaded));
 
     public ICommand UnloadedCommand => _unloadedCommand ?? (_unloadedCommand = new RelayCommand(OnUnloaded));
-
-    public ShellViewModel(INavigationService navigationService)
-    {
-        _navigationService = navigationService;
-    }
 
     private void OnLoaded()
     {

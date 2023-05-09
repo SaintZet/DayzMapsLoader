@@ -16,8 +16,10 @@ public class PageService : IPageService
     public PageService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Configure<ListDetailsViewModel, ListDetailsPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<ContentGridProvidersViewModel, ContentGridProvidersPage>();
+        Configure<ContentGridMapsViewModel, ContentGridMapsPage>();
+        Configure<ContentGridMapDetailViewModel, ContentGridMapDetailPage>();
     }
 
     public Type GetPageType(string key)

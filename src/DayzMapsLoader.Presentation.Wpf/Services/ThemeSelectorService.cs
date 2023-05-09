@@ -21,8 +21,8 @@ public class ThemeSelectorService : IThemeSelectorService
     public void InitializeTheme()
     {
         // TODO: Mahapps.Metro supports syncronization with high contrast but you have to provide custom high contrast themes
-        // We've added basic high contrast dictionaries for Dark and Light themes
-        // Please complete these themes following the docs on https://mahapps.com/docs/themes/thememanager#creating-custom-themes
+        // We've added basic high contrast dictionaries for Dark and Light themes Please complete
+        // these themes following the docs on https://mahapps.com/docs/themes/thememanager#creating-custom-themes
         ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcDarkTheme), MahAppsLibraryThemeProvider.DefaultInstance));
         ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcLightTheme), MahAppsLibraryThemeProvider.DefaultInstance));
 
@@ -41,7 +41,7 @@ public class ThemeSelectorService : IThemeSelectorService
         {
             ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
             ThemeManager.Current.SyncTheme();
-            ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Blue", SystemParameters.HighContrast);
+            ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, $"{theme}.Blue", SystemParameters.HighContrast);
         }
 
         App.Current.Properties["Theme"] = theme.ToString();

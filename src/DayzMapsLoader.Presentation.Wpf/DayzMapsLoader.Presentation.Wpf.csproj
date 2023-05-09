@@ -16,7 +16,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\DayzMapsLoader.Presentation.Wpf.Core\DayzMapsLoader.Presentation.Wpf.Core.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
