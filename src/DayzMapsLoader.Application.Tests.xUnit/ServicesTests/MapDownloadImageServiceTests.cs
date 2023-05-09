@@ -18,14 +18,15 @@ public class MapDownloadImageServiceTests
 
     public MapDownloadImageServiceTests()
     {
+        IServiceCollection services = new ServiceCollection();
+        services.AddApplicationLayer();
+
         var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
-            .Build();
+        .Build();
 
-        IServiceCollection services = new ServiceCollection();
-        services.AddApplicationLayer();
-        services.AddInfrastractureLayer(config);
+        services.AddInfrastractureLayer(config.GetConnectionString("DefaultConnection")!);
 
         var serviceProvider = services.BuildServiceProvider();
 

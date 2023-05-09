@@ -7,17 +7,17 @@ namespace DayzMapsLoader.Presentation.WebApi;
 
 public class Startup
 {
-    private readonly IConfiguration _configuration;
+    private readonly IConfiguration _config;
 
     public Startup(IConfiguration configuration)
     {
-        _configuration = configuration;
+        _config = configuration;
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApplicationLayer();
-        services.AddInfrastractureLayer(_configuration);
+        services.AddInfrastractureLayer(_config.GetConnectionString("DefaultConnection")!);
         services.AddControllers();
         services.AddSwagger();
         services.AddCors();
