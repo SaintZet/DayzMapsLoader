@@ -69,9 +69,8 @@
                             Margin="{StaticResource SmallLeftTopMargin}">
 							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Type" />
 							<ComboBox ItemsSource="{Binding MapTypes}"
-                                    SelectedItem="{Binding SelectedMapType}"
+                                    SelectedItem="{Binding SelectedMapType, Mode = TwoWay}"
 									DisplayMemberPath="Name"
-									SelectedValuePath="Id"
                                     IsSynchronizedWithCurrentItem="True" />
 						</StackPanel>
 

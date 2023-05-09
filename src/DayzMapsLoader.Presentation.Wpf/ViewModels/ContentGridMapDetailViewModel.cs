@@ -45,7 +45,6 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
         ZoomLevels.Clear();
 
         Item = providedMap;
-        SelectedMapType = Item.MapType;
 
         var providedMapsByProviderId = await _sampleDataService.GetAllProvidedMapsByProviderIdAsync(providedMap.MapProvider.Id);
 
@@ -54,6 +53,9 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
             .Select(i => i.MapType)
             .ToList()
             .ForEach(item => MapTypes.Add(item));
+
+        SelectedMapType = MapTypes[0];
+        OnPropertyChanged(nameof(SelectedMapType));
     }
 
     public void OnNavigatedFrom()
