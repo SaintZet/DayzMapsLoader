@@ -31,5 +31,6 @@ public static class ServiceCollectionExtensions
         => services.AddDbContext<DayzMapLoaderContext>(
             options => options
                         .EnableSensitiveDataLogging()
-                        .UseSqlServer(dbConnection));
+                        .UseSqlServer(dbConnection),
+            ServiceLifetime.Transient);
 }

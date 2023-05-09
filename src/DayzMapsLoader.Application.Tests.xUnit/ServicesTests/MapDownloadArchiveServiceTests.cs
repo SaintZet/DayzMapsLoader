@@ -1,12 +1,13 @@
-﻿using Castle.Core.Configuration;
-using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
 using DayzMapsLoader.Application.Abstractions.Services;
 using DayzMapsLoader.Application.Extensions;
 using DayzMapsLoader.Application.Tests.xUnit.TestData.MapDownload;
 using DayzMapsLoader.Infrastructure.Extensions;
 using DayzMapsLoader.Shared.Wrappers;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using System.IO.Compression;
 
 namespace DayzMapsLoader.Application.Tests.xUnit.ServicesTests;
@@ -24,7 +25,7 @@ public class MapDownloadArchiveServiceTests
         var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
-        .Build();
+            .Build();
 
         services.AddInfrastractureLayer(config.GetConnectionString("DefaultConnection")!);
 

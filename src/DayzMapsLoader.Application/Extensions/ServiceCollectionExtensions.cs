@@ -8,6 +8,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         => services
+            .AddTransient<IFileService, FileService>()
             .AddTransient<IMapDownloadArchiveService, MapDownloadArchiveService>()
             .AddTransient<IMapDownloadImageService, MapDownloadImageService>();
 }
