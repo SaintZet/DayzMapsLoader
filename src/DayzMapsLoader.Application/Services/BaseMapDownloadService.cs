@@ -25,6 +25,16 @@ internal abstract class BaseMapDownloadService
     }
 
     protected async Task<MemoryStream> GetMapInMemoryStreamAsync(ProvidedMap map, int zoom)
+        => await GetMergedMapMemoryStream(map, zoom);
+
+    protected async Task<byte[]> GetMapInBytesAsync(ProvidedMap map, int zoom)
+    {
+        using MemoryStream memoryStream = await GetMergedMapMemoryStream(map, zoom);
+
+        return memoryStream.ToArray();
+    }
+
+    private async Task<MemoryStream> GetMergedMapMemoryStream(ProvidedMap map, int zoom)
     {
         var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
 

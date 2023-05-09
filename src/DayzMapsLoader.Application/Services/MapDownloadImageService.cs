@@ -14,16 +14,14 @@ internal class MapDownloadImageService : BaseMapDownloadService, IMapDownloadIma
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        using MemoryStream memoryStream = await GetMapInMemoryStreamAsync(map, zoom);
-
-        return memoryStream.ToArray();
+        return await GetMapInBytesAsync(map, zoom);
     }
 
     public async Task<byte[,][]> DownloadMapImageInPartsAsync(int providerId, int mapID, int typeId, int zoom)
     {
         ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
+        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom).ConfigureAwait(false); ;
 
         return mapParts.GetRawMapParts();
     }
@@ -32,9 +30,7 @@ internal class MapDownloadImageService : BaseMapDownloadService, IMapDownloadIma
     {
         var providedMaps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
 
-        var downloadTasks = providedMaps
-            .Select(async map => await DownloadMapImageAsync(providerId, map.Id, map.MapType.Id, zoom)
-            .ConfigureAwait(false));
+        var downloadTasks = providedMaps.Select(async map => await GetMapInBytesAsync(map, zoom).ConfigureAwait(false));
 
         return await Task.WhenAll(downloadTasks).ConfigureAwait(false);
     }
