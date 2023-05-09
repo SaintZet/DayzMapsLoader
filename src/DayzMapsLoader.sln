@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Shared", "Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.Tests.xUnit", "DayzMapsLoader.Application.Tests.xUnit\DayzMapsLoader.Application.Tests.xUnit.csproj", "{7C86034E-FA1C-450C-884C-EA9732A0039F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.Wpf", "DayzMapsLoader.Presentation.Wpf\DayzMapsLoader.Presentation.Wpf.csproj", "{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.Wpf.Core", "DayzMapsLoader.Presentation.Wpf.Core\DayzMapsLoader.Presentation.Wpf.Core.csproj", "{760225C0-33C9-4ADC-BEE2-62A29D1DE284}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760225C0-33C9-4ADC-BEE2-62A29D1DE284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760225C0-33C9-4ADC-BEE2-62A29D1DE284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760225C0-33C9-4ADC-BEE2-62A29D1DE284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760225C0-33C9-4ADC-BEE2-62A29D1DE284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
