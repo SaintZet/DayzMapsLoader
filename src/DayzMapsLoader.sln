@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core", "Dayz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core.Tests.xUnit", "DayzMapsLoader.Core.Tests.xUnit\DayzMapsLoader.Core.Tests.xUnit.csproj", "{084072CC-3F7E-4EE6-A316-89A773F9B639}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.DependencyInjection", "DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj", "{767D130F-C3EC-453E-A1DA-B3DA5F810609}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{767D130F-C3EC-453E-A1DA-B3DA5F810609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{767D130F-C3EC-453E-A1DA-B3DA5F810609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{767D130F-C3EC-453E-A1DA-B3DA5F810609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{767D130F-C3EC-453E-A1DA-B3DA5F810609}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

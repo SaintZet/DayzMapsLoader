@@ -1,25 +1,29 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
+
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
+
+using MediatR;
+
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
 
 public class ContentGridMapsViewModel : ObservableObject, INavigationAware
 {
     private readonly INavigationService _navigationService;
-    private readonly IProvidedMapsRepository _sampleDataService;
+    private readonly IMediator _mediator;
+
     private ICommand _navigateToDetailCommand;
     private int _selectedProviderId;
 
-    public ContentGridMapsViewModel(IProvidedMapsRepository sampleDataService, INavigationService navigationService)
+    public ContentGridMapsViewModel(IMediator mediator, INavigationService navigationService)
     {
-        _sampleDataService = sampleDataService;
+        _mediator = mediator;
         _navigationService = navigationService;
     }
 
@@ -34,7 +38,8 @@ public class ContentGridMapsViewModel : ObservableObject, INavigationAware
 
         Source.Clear();
 
-        var providedMaps = await _sampleDataService.GetAllProvidedMapsByProviderIdAsync(_selectedProviderId);
+        var query = new GetProvidedMapsByProviderIdQuery(_selectedProviderId);
+        var providedMaps = await _mediator.Send(query);
 
         providedMaps.GroupBy(x => x.Map.Name)
                              .Select(group => group.First())

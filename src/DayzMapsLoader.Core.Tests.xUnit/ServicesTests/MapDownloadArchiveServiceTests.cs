@@ -20,14 +20,8 @@ public class MapDownloadArchiveServiceTests
     public MapDownloadArchiveServiceTests()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddApplicationLayer();
-
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        services.AddInfrastractureLayer(config.GetConnectionString("DefaultConnection")!);
+        services.AddCoreLayer();
+        services.AddInfrastractureLayer();
 
         var serviceProvider = services.BuildServiceProvider();
 

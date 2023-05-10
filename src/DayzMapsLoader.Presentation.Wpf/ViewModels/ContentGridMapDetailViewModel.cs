@@ -1,21 +1,23 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-using CommunityToolkit.Mvvm.ComponentModel;
-
-using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
+
+using MediatR;
+
+using System.Collections.ObjectModel;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
 
 public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
 {
-    private readonly IProvidedMapsRepository _sampleDataService;
+    private readonly IMediator _mediator;
     private ProvidedMap _item;
 
-    public ContentGridMapDetailViewModel(IProvidedMapsRepository sampleDataService)
+    public ContentGridMapDetailViewModel(IMediator mediator)
     {
-        _sampleDataService = sampleDataService;
+        _mediator = mediator;
     }
 
     public ProvidedMap Item
@@ -46,7 +48,8 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
 
         Item = providedMap;
 
-        var providedMapsByProviderId = await _sampleDataService.GetAllProvidedMapsByProviderIdAsync(providedMap.MapProvider.Id);
+        var query = new GetProvidedMapsByProviderIdQuery(providedMap.MapProvider.Id);
+        var providedMapsByProviderId = await _mediator.Send(query);
 
         providedMapsByProviderId
             .Where(x => x.Map.Id == providedMap.Map.Id)
