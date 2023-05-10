@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Features.Maps.Queries;
-using DayzMapsLoader.Application.Features.ProvidedMaps.Queries;
+﻿using DayzMapsLoader.Core.Features.Maps.Queries;
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class MapsController : BaseController
     /// <summary>
     /// Retrieves a list of all available maps.
     /// </summary>
-    /// <response code="200">Returns a list of maps in json format.</response>
+    /// <response code="200"> Returns a list of maps in json format. </response>
     [HttpGet]
     [Route("get-all")]
     [Produces("application/json")]
@@ -31,7 +32,7 @@ public class MapsController : BaseController
     /// <summary>
     /// Get all maps provided by specific map.
     /// </summary>
-    /// <param name="mapId">Map ID.</param>
+    /// <param name="mapId"> Map ID. </param>
     [HttpGet]
     [Route("{mapId}/provided-maps")]
     [Produces("application/json")]

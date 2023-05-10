@@ -2,7 +2,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
 

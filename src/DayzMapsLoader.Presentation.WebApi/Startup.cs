@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Extensions;
+﻿using DayzMapsLoader.Core.Extensions;
 using DayzMapsLoader.Infrastructure.Extensions;
 using DayzMapsLoader.Presentation.WebApi.Extensions;
+
 using MediatR;
 
 namespace DayzMapsLoader.Presentation.WebApi;

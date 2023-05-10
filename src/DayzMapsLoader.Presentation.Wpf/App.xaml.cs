@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
-using DayzMapsLoader.Application.Extensions;
+using DayzMapsLoader.Core.Extensions;
 using DayzMapsLoader.Infrastructure.Extensions;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
@@ -18,7 +18,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace DayzMapsLoader.Presentation.Wpf;
 
-public partial class App : System.Windows.Application
+public partial class App : Application
 {
     private IHost _host;
 

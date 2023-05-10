@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DayzMapsLoader.Application\DayzMapsLoader.Application.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Core\DayzMapsLoader.Core.csproj" />
     <ProjectReference Include="..\DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj" />
   </ItemGroup>
 

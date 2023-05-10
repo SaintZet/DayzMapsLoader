@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
-using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
-using DayzMapsLoader.Application.Abstractions.Infrastructure.Services;
+﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
+using DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 using DayzMapsLoader.Infrastructure.Contexts;
 using DayzMapsLoader.Infrastructure.Repositories;
 using DayzMapsLoader.Infrastructure.Services;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DayzMapsLoader.Infrastructure.Extensions;
 
