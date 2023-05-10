@@ -1,4 +1,5 @@
 ﻿using DayzMapsLoader.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Extensions;
@@ -117,8 +118,6 @@ internal static class ModelBuilderExtensions
     {
         modelBuilder.Entity<ProvidedMap>()
             .HasData(
-
-        #region "Xam"
 
                 new
                 {
@@ -277,10 +276,6 @@ internal static class ModelBuilderExtensions
                     ImageExtension = "jpg",
                 },
 
-        #endregion "Xam"
-
-        #region "GInfo"
-
                 new
                 {
                     Id = 13,
@@ -437,8 +432,6 @@ internal static class ModelBuilderExtensions
                     Version = "1.1.0",
                     ImageExtension = "webp",
                 }
-
-                #endregion "GInfo"
 
              );
         return modelBuilder;

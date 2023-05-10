@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Features.MapProviders.Queries;
-using DayzMapsLoader.Application.Features.ProvidedMaps.Queries;
+﻿using DayzMapsLoader.Core.Features.MapProviders.Queries;
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class MapProvidersController : BaseController
     /// <summary>
     /// Retrieves a list of all available map providers.
     /// </summary>
-    /// <response code="200">Returns a list of map providers in json format.</response>
+    /// <response code="200"> Returns a list of map providers in json format. </response>
     [HttpGet]
     [Route("get-all")]
     [Produces("application/json")]
@@ -32,8 +33,9 @@ public class MapProvidersController : BaseController
     /// <summary>
     /// Get all maps provided by specific provider.
     /// </summary>
-    /// <param name="providerId">Provider ID.</param>
-    /// /// <response code="200">Returns a list of provided maps in json format.</response>
+    /// <param name="providerId"> Provider ID. </param>
+    /// ///
+    /// <response code="200"> Returns a list of provided maps in json format. </response>
     [HttpGet]
     [Route("{providerId}/provided-maps")]
     [Produces("application/json")]

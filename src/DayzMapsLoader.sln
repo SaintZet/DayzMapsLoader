@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application", "DayzMapsLoader.Application\DayzMapsLoader.Application.csproj", "{685C713D-4333-4286-9FB3-9D28DF97CA41}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Domain", "DayzMapsLoader.Domain\DayzMapsLoader.Domain.csproj", "{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Infrastructure", "DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj", "{35DA0B4C-E561-4858-BE3C-DAAB3C7BF4ED}"
@@ -13,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Shared", "DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj", "{3E4EEAAA-F142-48EB-9028-307C0A9D2323}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Application.Tests.xUnit", "DayzMapsLoader.Application.Tests.xUnit\DayzMapsLoader.Application.Tests.xUnit.csproj", "{7C86034E-FA1C-450C-884C-EA9732A0039F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.Wpf", "DayzMapsLoader.Presentation.Wpf\DayzMapsLoader.Presentation.Wpf.csproj", "{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core", "DayzMapsLoader.Core\DayzMapsLoader.Core.csproj", "{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core.Tests.xUnit", "DayzMapsLoader.Core.Tests.xUnit\DayzMapsLoader.Core.Tests.xUnit.csproj", "{084072CC-3F7E-4EE6-A316-89A773F9B639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{685C713D-4333-4286-9FB3-9D28DF97CA41}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA8911B-ED22-4426-AEAE-037CC2D4BECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,14 +39,18 @@ Global
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C86034E-FA1C-450C-884C-EA9732A0039F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084072CC-3F7E-4EE6-A316-89A773F9B639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

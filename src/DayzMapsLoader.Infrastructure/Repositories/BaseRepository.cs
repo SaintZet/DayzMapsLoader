@@ -1,5 +1,6 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Domain.Abstractions;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Repositories;
@@ -27,10 +28,8 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {
-        if (entity == null)
-        {
+        if (entity is null)
             throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
-        }
 
         try
         {
@@ -47,10 +46,8 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        if (entity == null)
-        {
+        if (entity is null)
             throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
-        }
 
         try
         {

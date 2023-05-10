@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Services;
+﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Shared.Wrappers;
+
 using SmartFormat;
 
 namespace DayzMapsLoader.Infrastructure.Services;

@@ -1,4 +1,5 @@
-﻿using DayzMapsLoader.Application.Features.MapArchive.Queries;
+﻿using DayzMapsLoader.Core.Features.MapArchive.Queries;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

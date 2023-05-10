@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
-using DayzMapsLoader.Application.Abstractions.Services;
+using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Models;
 
