@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
     <None Remove="TestData\MapMerge\jpg\0,0.jpg" />
     <None Remove="TestData\MapMerge\jpg\0,1.jpg" />
     <None Remove="TestData\MapMerge\jpg\1,0.jpg" />
@@ -25,14 +24,6 @@
     <None Remove="TestData\MapMerge\webp\1,0.webp" />
     <None Remove="TestData\MapMerge\webp\1,1.webp" />
     <None Remove="TestData\MapMerge\webp\Original.webp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -54,8 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="xunit" Version="2.4.2" />
@@ -71,6 +60,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DayzMapsLoader.Core\DayzMapsLoader.Core.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj" />
     <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
   </ItemGroup>
 

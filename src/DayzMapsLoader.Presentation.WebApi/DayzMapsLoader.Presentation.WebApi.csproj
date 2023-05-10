@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,28 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
+
+using DayzMapsLoader.Core.Features.MapProviders.Queries;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
+
+using MediatR;
+
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
 
 public class ContentGridProvidersViewModel : ObservableObject, INavigationAware
 {
     private readonly INavigationService _navigationService;
-    private readonly IMapProvidersRepository _mapProvidersRepository;
+    private readonly IMediator _mediator;
 
     private ICommand _navigateToDetailCommand;
 
-    public ContentGridProvidersViewModel(IMapProvidersRepository mapProvidersRepository, INavigationService navigationService)
+    public ContentGridProvidersViewModel(IMediator mediator, INavigationService navigationService)
     {
-        _mapProvidersRepository = mapProvidersRepository;
+        _mediator = mediator;
         _navigationService = navigationService;
     }
 
@@ -31,7 +34,8 @@ public class ContentGridProvidersViewModel : ObservableObject, INavigationAware
     {
         Source.Clear();
 
-        var providers = await _mapProvidersRepository.GetAllMapProvidersAsync();
+        var query = new GetMapProvidersQuery();
+        var providers = await _mediator.Send(query);
 
         foreach (var provider in providers)
         {

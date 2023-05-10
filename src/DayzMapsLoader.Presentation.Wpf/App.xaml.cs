@@ -3,15 +3,14 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
-using DayzMapsLoader.Core.Extensions;
-using DayzMapsLoader.Infrastructure.Extensions;
+using DayzMapsLoader.DependencyInjection;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
 using DayzMapsLoader.Presentation.Wpf.Models;
 using DayzMapsLoader.Presentation.Wpf.Services;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
 using DayzMapsLoader.Presentation.Wpf.Views;
-
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,14 +47,8 @@ public partial class App : Application
         services.AddHostedService<ApplicationHostService>();
 
         // Core Services
-        services.AddApplicationLayer();
-
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        services.AddInfrastractureLayer(config.GetConnectionString("DefaultConnection")!);
+        services.ConfigureApplication();
+        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
         // Services
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();

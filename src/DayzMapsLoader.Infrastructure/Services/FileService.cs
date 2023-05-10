@@ -1,9 +1,9 @@
-﻿using DayzMapsLoader.Core.Contracts.Services;
+﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 
 using Newtonsoft.Json;
 using System.Text;
 
-namespace DayzMapsLoader.Core.Services;
+namespace DayzMapsLoader.Infrastructure.Services;
 
 public class FileService : IFileService
 {

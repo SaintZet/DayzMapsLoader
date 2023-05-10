@@ -7,9 +7,8 @@ namespace DayzMapsLoader.Core.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
+    public static IServiceCollection AddCoreLayer(this IServiceCollection services)
         => services
-            .AddTransient<IFileService, FileService>()
             .AddTransient<IMapDownloadArchiveService, MapDownloadArchiveService>()
             .AddTransient<IMapDownloadImageService, MapDownloadImageService>();
 }

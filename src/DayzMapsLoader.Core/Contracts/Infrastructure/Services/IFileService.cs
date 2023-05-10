@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Core.Contracts.Services;
+﻿namespace DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 
 public interface IFileService
 {

@@ -1,10 +1,8 @@
 using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Core.Extensions;
 using DayzMapsLoader.Core.Tests.xUnit.TestData.MapDownload;
-using DayzMapsLoader.Infrastructure.Extensions;
+using DayzMapsLoader.DependencyInjection;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Drawing;
@@ -21,14 +19,7 @@ public class MapDownloadImageServiceTests
     public MapDownloadImageServiceTests()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddApplicationLayer();
-
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        services.AddInfrastractureLayer(config.GetConnectionString("DefaultConnection")!);
+        services.ConfigureApplication();
 
         var serviceProvider = services.BuildServiceProvider();
 
