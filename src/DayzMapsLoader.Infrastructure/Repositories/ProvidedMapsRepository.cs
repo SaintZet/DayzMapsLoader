@@ -1,7 +1,8 @@
-﻿using DayzMapsLoader.Application.Abstractions.Infrastructure.Repositories;
+﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Infrastructure.Contexts;
 using DayzMapsLoader.Infrastructure.Extensions;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Repositories
@@ -9,9 +10,7 @@ namespace DayzMapsLoader.Infrastructure.Repositories
     public class ProvidedMapsRepository : BaseRepository<ProvidedMap>, IProvidedMapsRepository
     {
         public ProvidedMapsRepository(DayzMapLoaderContext dayzMapLoaderContext)
-            : base(dayzMapLoaderContext)
-        {
-        }
+            : base(dayzMapLoaderContext) { }
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsAsync()
             => await GetAll()

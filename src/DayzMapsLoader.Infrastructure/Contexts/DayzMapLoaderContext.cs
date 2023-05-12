@@ -1,5 +1,6 @@
 ﻿using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Infrastructure.Extensions;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DayzMapsLoader.Infrastructure.Contexts;
@@ -10,8 +11,7 @@ public class DayzMapLoaderContext : DbContext
     { }
 
     public DayzMapLoaderContext(DbContextOptions<DayzMapLoaderContext> options)
-        : base(options)
-    { }
+        : base(options) { }
 
     public DbSet<Map> Maps { get; set; }
     public DbSet<MapProvider> MapProviders { get; set; }

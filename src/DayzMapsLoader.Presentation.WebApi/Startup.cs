@@ -1,24 +1,15 @@
-﻿using DayzMapsLoader.Application.Extensions;
-using DayzMapsLoader.Infrastructure.Extensions;
-using DayzMapsLoader.Presentation.WebApi.Extensions;
+﻿using DayzMapsLoader.Presentation.WebApi.Extensions;
+using DayzMapsLoader.DependencyInjection;
+
 using MediatR;
 
 namespace DayzMapsLoader.Presentation.WebApi;
 
 public class Startup
 {
-    private readonly IConfiguration _configuration;
-
-    public Startup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddApplicationLayer();
-        services.AddInfrastractureLayer();
-        services.AddDatabase(_configuration);
+        services.ConfigureApplication();
         services.AddControllers();
         services.AddSwagger();
         services.AddCors();
@@ -38,9 +29,6 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.UseCors(builder => builder.AllowAnyOrigin());
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

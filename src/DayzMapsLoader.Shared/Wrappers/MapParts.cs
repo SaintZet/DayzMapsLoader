@@ -7,8 +7,8 @@ public class MapParts
 
     public MapParts(MapSize size)
     {
-        _images = new MapPart[size.WidthPixels, size.HeightPixels];
-        _rawImages = new byte[size.WidthPixels, size.HeightPixels][];
+        _images = new MapPart[size.Width, size.Height];
+        _rawImages = new byte[size.Width, size.Height][];
     }
 
     public int Weight => _images.GetLength(0);

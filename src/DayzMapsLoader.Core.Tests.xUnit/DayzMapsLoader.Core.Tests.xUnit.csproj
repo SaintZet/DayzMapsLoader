@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\MapMerge\jpg\0,0.jpg" />
+    <None Remove="TestData\MapMerge\jpg\0,1.jpg" />
+    <None Remove="TestData\MapMerge\jpg\1,0.jpg" />
+    <None Remove="TestData\MapMerge\jpg\1,1.jpg" />
+    <None Remove="TestData\MapMerge\jpg\Original.jpg" />
+    <None Remove="TestData\MapMerge\png\0,0.png" />
+    <None Remove="TestData\MapMerge\png\0,1.png" />
+    <None Remove="TestData\MapMerge\png\1,0.png" />
+    <None Remove="TestData\MapMerge\png\1,1.png" />
+    <None Remove="TestData\MapMerge\png\Original.png" />
+    <None Remove="TestData\MapMerge\webp\0,0.webp" />
+    <None Remove="TestData\MapMerge\webp\0,1.webp" />
+    <None Remove="TestData\MapMerge\webp\1,0.webp" />
+    <None Remove="TestData\MapMerge\webp\1,1.webp" />
+    <None Remove="TestData\MapMerge\webp\Original.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\MapMerge\jpg\0,0.jpg" />
+    <EmbeddedResource Include="TestData\MapMerge\jpg\0,1.jpg" />
+    <EmbeddedResource Include="TestData\MapMerge\jpg\1,0.jpg" />
+    <EmbeddedResource Include="TestData\MapMerge\jpg\1,1.jpg" />
+    <EmbeddedResource Include="TestData\MapMerge\jpg\Original.jpg" />
+    <EmbeddedResource Include="TestData\MapMerge\png\0,0.png" />
+    <EmbeddedResource Include="TestData\MapMerge\png\0,1.png" />
+    <EmbeddedResource Include="TestData\MapMerge\png\1,0.png" />
+    <EmbeddedResource Include="TestData\MapMerge\png\1,1.png" />
+    <EmbeddedResource Include="TestData\MapMerge\png\Original.png" />
+    <EmbeddedResource Include="TestData\MapMerge\webp\0,0.webp" />
+    <EmbeddedResource Include="TestData\MapMerge\webp\0,1.webp" />
+    <EmbeddedResource Include="TestData\MapMerge\webp\1,0.webp" />
+    <EmbeddedResource Include="TestData\MapMerge\webp\1,1.webp" />
+    <EmbeddedResource Include="TestData\MapMerge\webp\Original.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DayzMapsLoader.Core\DayzMapsLoader.Core.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
