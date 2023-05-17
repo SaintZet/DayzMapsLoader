@@ -6,19 +6,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
-	<Grid>
-		<ScrollViewer
+    d:DesignHeight="500" d:DesignWidth="900">
+    <Grid>
+        <ScrollViewer
             x:Name="contentScroll"
             IsTabStop="True">
-			<StackPanel
+            <StackPanel
                 Margin="{StaticResource MediumLeftTopRightBottomMargin}">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<Grid
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid
                         Width="200"
                         Height="200"
                         Grid.Column="0"
@@ -26,65 +26,74 @@
                         Grid.RowSpan="3"
                         Background="{DynamicResource MahApps.Brushes.Gray10}"
                         VerticalAlignment="Top">
-						<!--Setup small ico-->
-						<!--<TextBlock
+                        <!--Setup small ico-->
+                        <!--<TextBlock
                             FontSize="40"
-                            Text="{Binding Item.Symbol}"
+                            Text="{Binding Map.Symbol}"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontFamily="Segoe MDL2 Assets" />-->
-					</Grid>
-					<StackPanel
+                    </Grid>
+                    <StackPanel
                         Grid.Column="1"
                         Grid.Row="0">
-						<TextBlock
+                        <TextBlock
                             Margin="{StaticResource SmallLeftMargin}"
                             Style="{StaticResource PageTitleStyle}"
-                            Text="{Binding Item.Map.Name}" />
-						<StackPanel
+                            Text="{Binding Map.Map.Name}" />
+                        <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author" />
-							<TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Item.Map.Author}" />
-						</StackPanel>
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.Author}" />
+                        </StackPanel>
 
-						<StackPanel
+                        <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author Link" />
-							<TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Item.Map.Link}" />
-						</StackPanel>
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author Link" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.Link}" />
+                        </StackPanel>
 
-						<StackPanel
+                        <StackPanel
 							Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Last Update" />
-							<TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Item.Map.LastUpdate}" />
-						</StackPanel>
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Last Update" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.LastUpdate}" />
+                        </StackPanel>
 
-						<StackPanel
+                        <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Version" />
-							<TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Item.Version}" />
-						</StackPanel>
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Version" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Version}" />
+                        </StackPanel>
 
-						<StackPanel
+                        <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Type" />
-							<ComboBox ItemsSource="{Binding MapTypes}"
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Type" />
+                            <ComboBox ItemsSource="{Binding MapTypes}"
                                     SelectedItem="{Binding SelectedMapType, Mode = TwoWay}"
 									DisplayMemberPath="Name"
                                     IsSynchronizedWithCurrentItem="True" />
-						</StackPanel>
+                        </StackPanel>
 
-						<StackPanel
+                        <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
-							<TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Zoom" />
-							<ComboBox ItemsSource="{Binding ZoomLevels}"
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Zoom" />
+                            <ComboBox ItemsSource="{Binding ZoomLevels}"
                                     SelectedItem="{Binding SelectedZoomLevel}"
                                     IsSynchronizedWithCurrentItem="True" />
-						</StackPanel>
-					</StackPanel>
-				</Grid>
+                        </StackPanel>
 
-				<!--<TextBlock
+                        <Button Margin="{StaticResource MediumTopMargin}"
+                                HorizontalAlignment="Right"
+                                Background="LightGreen"
+                                BorderThickness="2"
+                                BorderBrush="Black"
+                                Width="200"
+                                Content="Download"
+                                Command="{Binding DownloadMapCommand}" />
+                    </StackPanel>
+                </Grid>
+
+                <!--<TextBlock
                     Margin="{StaticResource MediumTopMargin}"
                     Style="{StaticResource SubtitleTextStyle}"
                     Text="Note 1" />
@@ -100,7 +109,7 @@
                     Margin="{StaticResource MediumBottomMargin}"
                     Style="{StaticResource BodyTextStyle}"
                     Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;" />-->
-			</StackPanel>
-		</ScrollViewer>
-	</Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

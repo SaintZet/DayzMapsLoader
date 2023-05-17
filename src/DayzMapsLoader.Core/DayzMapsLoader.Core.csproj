@@ -41,10 +41,4 @@
     <ProjectReference Include="..\DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj" />
   </ItemGroup>
 
-<ItemGroup>
-	<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-		<_Parameter1>DayzMapsLoader.Core.Tests.xUnit</_Parameter1>
-	</AssemblyAttribute>
-</ItemGroup>
-
 </Project>

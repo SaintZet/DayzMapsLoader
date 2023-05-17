@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core", "DayzMapsLoader.Core\DayzMapsLoader.Core.csproj", "{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core.Tests.xUnit", "DayzMapsLoader.Core.Tests.xUnit\DayzMapsLoader.Core.Tests.xUnit.csproj", "{084072CC-3F7E-4EE6-A316-89A773F9B639}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Tests.xUnit", "DayzMapsLoader.Core.Tests.xUnit\DayzMapsLoader.Tests.xUnit.csproj", "{084072CC-3F7E-4EE6-A316-89A773F9B639}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayzMapsLoader.DependencyInjection", "DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj", "{767D130F-C3EC-453E-A1DA-B3DA5F810609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.DependencyInjection", "DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj", "{767D130F-C3EC-453E-A1DA-B3DA5F810609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

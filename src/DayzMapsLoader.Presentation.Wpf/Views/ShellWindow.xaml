@@ -10,8 +10,8 @@
     xmlns:templateSelectors="clr-namespace:DayzMapsLoader.Presentation.Wpf.TemplateSelectors"
     Style="{StaticResource CustomMetroWindow}"
     mc:Ignorable="d"
-    MinWidth="500"
-    MinHeight="350"
+    MinWidth="700"
+    MinHeight="510"
     Title="{x:Static properties:Resources.AppDisplayName}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

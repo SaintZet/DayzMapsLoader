@@ -7,7 +7,7 @@ namespace DayzMapsLoader.Core.Features.MapProviders.Queries;
 
 public record GetMapProvidersQuery : IRequest<IEnumerable<MapProvider>>;
 
-public class GetMapProvidersHandler : IRequestHandler<GetMapProvidersQuery, IEnumerable<MapProvider>>
+internal class GetMapProvidersHandler : IRequestHandler<GetMapProvidersQuery, IEnumerable<MapProvider>>
 {
     private readonly IMapProvidersRepository _mapProvidersRepository;
 
