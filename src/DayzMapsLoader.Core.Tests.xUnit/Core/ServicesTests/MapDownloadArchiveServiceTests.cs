@@ -1,32 +1,31 @@
-﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
-using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Core.Extensions;
-using DayzMapsLoader.Core.Tests.xUnit.TestData.MapDownload;
-using DayzMapsLoader.Infrastructure.Extensions;
+﻿using DayzMapsLoader.Core.Contracts.Services;
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
+using DayzMapsLoader.DependencyInjection;
 using DayzMapsLoader.Shared.Wrappers;
+using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
 
-using Microsoft.Extensions.Configuration;
+using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using System.IO.Compression;
 
-namespace DayzMapsLoader.Core.Tests.xUnit.ServicesTests;
+namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
 
 public class MapDownloadArchiveServiceTests
 {
     private readonly IMapDownloadArchiveService _downloadArchiveService;
-    private readonly IProvidedMapsRepository _providedMapsRepository;
+    private readonly IMediator _mediator;
 
     public MapDownloadArchiveServiceTests()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddCoreLayer();
-        services.AddInfrastractureLayer();
+        services.ConfigureApplication();
 
         var serviceProvider = services.BuildServiceProvider();
 
         _downloadArchiveService = serviceProvider.GetRequiredService<IMapDownloadArchiveService>();
-        _providedMapsRepository = serviceProvider.GetRequiredService<IProvidedMapsRepository>();
+        _mediator = serviceProvider.GetRequiredService<IMediator>();
     }
 
     [Theory]
@@ -35,7 +34,8 @@ public class MapDownloadArchiveServiceTests
     public async Task DownloadMapImageArchiveAsync_ShouldReturnZipArchive(int providerId, int mapId, int typeId, int zoom)
     {
         // Arrange
-        var map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapId, typeId).ConfigureAwait(false);
+        var query = new GetProvidedMapsQueryByDetailsQuery(providerId, mapId, typeId);
+        var map = await _mediator.Send(query).ConfigureAwait(false);
         var expectedArchiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         // Act
@@ -64,7 +64,9 @@ public class MapDownloadArchiveServiceTests
     public async Task DownloadMapImagePartsArchiveAsync_ShouldReturnZipArchive(int providerId, int mapId, int typeId, int zoomLevel)
     {
         // Arrange
-        var map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapId, typeId).ConfigureAwait(false);
+        var query = new GetProvidedMapsQueryByDetailsQuery(providerId, mapId, typeId);
+        var map = await _mediator.Send(query).ConfigureAwait(false);
+
         var expectedArchiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoomLevel}.zip";
         var mapSize = MapSize.ConvertZoomLevelRatioSize(zoomLevel);
 
@@ -96,7 +98,9 @@ public class MapDownloadArchiveServiceTests
     public async Task DownloadAllMapsImagesArchiveAsync_ShouldReturnZipArchive(int providerId, int zoomLevel)
     {
         // Arrange
-        var maps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
+        var query = new GetProvidedMapsByProviderIdQuery(providerId);
+        var maps = await _mediator.Send(query).ConfigureAwait(false);
+
         var expectedArchiveName = $"{maps.First().MapProvider.Name}-{zoomLevel}.zip";
 
         // Act

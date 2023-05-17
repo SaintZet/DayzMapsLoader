@@ -13,7 +13,6 @@ public class Startup
         services.AddControllers();
         services.AddSwagger();
         services.AddCors();
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
     }
 
     public void Configure(IApplicationBuilder app)

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Core.UnitTests.InternalManagers;
+namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
 
 [SupportedOSPlatform("windows")]
 public class MapMergeServiceTests

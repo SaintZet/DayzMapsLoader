@@ -84,17 +84,11 @@ internal class MapMergeService : IMapMergeService
 
     private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension)
     {
-        switch (extension)
+        return extension switch
         {
-            case ImageExtension.png:
-            case ImageExtension.jpg:
-                return new Bitmap(mapPart.AsStream());
-
-            case ImageExtension.webp:
-                return WebpToBitmap(mapPart.Data);
-
-            default:
-                throw new NotImplementedException();
-        }
+            ImageExtension.png or ImageExtension.jpg => new Bitmap(mapPart.AsStream()),
+            ImageExtension.webp => WebpToBitmap(mapPart.Data),
+            _ => throw new NotImplementedException(),
+        };
     }
 }

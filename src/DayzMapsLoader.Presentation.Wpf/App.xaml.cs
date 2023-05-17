@@ -10,7 +10,7 @@ using DayzMapsLoader.Presentation.Wpf.Models;
 using DayzMapsLoader.Presentation.Wpf.Services;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
 using DayzMapsLoader.Presentation.Wpf.Views;
-using MediatR;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,7 +48,6 @@ public partial class App : Application
 
         // Core Services
         services.ConfigureApplication();
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
         // Services
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();
