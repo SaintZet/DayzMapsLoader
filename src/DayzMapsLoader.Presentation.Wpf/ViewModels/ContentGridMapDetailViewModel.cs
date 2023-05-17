@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
+using CommunityToolkit.Mvvm.Input;
+using DayzMapsLoader.Core.Features.MapArchive.Queries;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
@@ -7,34 +8,30 @@ using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
 using MediatR;
 
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
 
 public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly IMediator _mediator;
-    private ProvidedMap _item;
 
     public ContentGridMapDetailViewModel(IMediator mediator)
     {
         _mediator = mediator;
+        DownloadMapCommand = new RelayCommand(DownloadMap);
     }
 
-    public ProvidedMap Item
-    {
-        get { return _item; }
-        set
-        {
-            SetProperty(ref _item, value);
-            SetZoomLevel(value);
-        }
-    }
+    public ProvidedMap Map { get; set; }
 
-    public ObservableCollection<MapType> MapTypes { get; set; } = new();
+    public ICommand DownloadMapCommand { get; }
 
-    public MapType SelectedMapType { get; set; } = new();
+    public ObservableCollection<MapType> MapTypes { get; set; }
 
-    public ObservableCollection<int> ZoomLevels { get; set; } = new();
+    public MapType SelectedMapType { get; set; }
+
+    public ObservableCollection<int> ZoomLevels { get; set; }
 
     public int SelectedZoomLevel { get; set; }
 
@@ -43,19 +40,14 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
         if (parameter is not ProvidedMap providedMap)
             throw new ArgumentException("parameter is not correct!");
 
-        MapTypes.Clear();
-        ZoomLevels.Clear();
+        Map = providedMap;
+        OnPropertyChanged(nameof(MapTypes));
 
-        Item = providedMap;
+        ZoomLevels = GetZoomLevelsObservableCollection(Map.MaxMapLevel);
+        OnPropertyChanged(nameof(ZoomLevels));
 
-        var query = new GetProvidedMapsByProviderIdQuery(providedMap.MapProvider.Id);
-        var providedMapsByProviderId = await _mediator.Send(query);
-
-        providedMapsByProviderId
-            .Where(x => x.Map.Id == providedMap.Map.Id)
-            .Select(i => i.MapType)
-            .ToList()
-            .ForEach(item => MapTypes.Add(item));
+        MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.Map.Id);
+        OnPropertyChanged(nameof(MapTypes));
 
         SelectedMapType = MapTypes[0];
         OnPropertyChanged(nameof(SelectedMapType));
@@ -65,9 +57,36 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
     {
     }
 
-    private void SetZoomLevel(ProvidedMap value)
+    private static ObservableCollection<int> GetZoomLevelsObservableCollection(int maxValue)
     {
-        for (int i = 0; i < value.MaxMapLevel; i++)
-            ZoomLevels.Add(i);
+        var zoomLevels = new ObservableCollection<int>();
+        for (int i = 0; i < maxValue; i++)
+            zoomLevels.Add(i);
+
+        return zoomLevels;
+    }
+
+    private async Task<ObservableCollection<MapType>> GetMapTypesAsync(int mapProviderId, int mapId)
+    {
+        var query = new GetProvidedMapsByProviderIdQuery(mapProviderId);
+        var providedMapsByProviderId = await _mediator.Send(query);
+
+        var result = new ObservableCollection<MapType>();
+        providedMapsByProviderId
+            .Where(x => x.Map.Id == mapId)
+            .Select(i => i.MapType)
+            .ToList()
+            .ForEach(item => result.Add(item));
+
+        return result;
+    }
+
+    private async void DownloadMap()
+    {
+        var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
+        var (data, name) = await _mediator.Send(query);
+
+        string filePath = Path.Combine("D:\\Projects\\Test", name);
+        File.WriteAllBytes(filePath, data);
     }
 }
