@@ -2,7 +2,7 @@
 
 namespace DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 
-public interface IProvidedMapsRepository : IBaseRepository<ProvidedMap>
+internal interface IProvidedMapsRepository : IBaseRepository<ProvidedMap>
 {
     public Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsAsync();
 
