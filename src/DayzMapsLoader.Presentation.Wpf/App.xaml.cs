@@ -31,12 +31,14 @@ public partial class App : Application
 
     private async void OnStartup(object sender, StartupEventArgs e)
     {
-        var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        var appLocation = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
 
         _host = Host.CreateDefaultBuilder(e.Args)
-                .ConfigureAppConfiguration(c => c.SetBasePath(appLocation))
-                .ConfigureServices(ConfigureServices)
-                .Build();
+            .ConfigureAppConfiguration(c => 
+                c.SetBasePath(appLocation).AddJsonFile("appsettings.json"))
+            
+            .ConfigureServices(ConfigureServices)
+            .Build();
 
         await _host.StartAsync();
     }
