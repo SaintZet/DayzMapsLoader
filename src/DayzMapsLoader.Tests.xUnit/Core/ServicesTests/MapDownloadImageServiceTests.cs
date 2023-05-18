@@ -1,20 +1,22 @@
-using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Core.Tests.xUnit.TestData.MapDownload;
+using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.DependencyInjection;
+using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
+
+using MediatR;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Drawing;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Core.UnitTests.Services;
+namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
 
 [SupportedOSPlatform("windows")]
 public class MapDownloadImageServiceTests
 {
     private readonly IMapDownloadImageService _downloadImageService;
-    private readonly IProvidedMapsRepository _providedMapsRepository;
+    private readonly IMediator _mediator;
 
     public MapDownloadImageServiceTests()
     {
@@ -24,7 +26,7 @@ public class MapDownloadImageServiceTests
         var serviceProvider = services.BuildServiceProvider();
 
         _downloadImageService = serviceProvider.GetRequiredService<IMapDownloadImageService>();
-        _providedMapsRepository = serviceProvider.GetRequiredService<IProvidedMapsRepository>();
+        _mediator = serviceProvider.GetRequiredService<IMediator>();
     }
 
     [Theory]
@@ -101,7 +103,8 @@ public class MapDownloadImageServiceTests
     public async Task DownloadAllMapImagesAsync_ShouldReturnExpectedCount(int providerId, int zoomLevel)
     {
         //Arrange
-        var expectedCount = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId);
+        var query = new GetProvidedMapsByProviderIdQuery(providerId);
+        var expectedCount = await _mediator.Send(query).ConfigureAwait(false);
 
         //Act
         var images = await _downloadImageService.DownloadAllMapImagesAsync(providerId, zoomLevel);

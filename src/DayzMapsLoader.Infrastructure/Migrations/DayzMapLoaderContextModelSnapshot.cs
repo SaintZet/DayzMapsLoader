@@ -384,7 +384,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 8,
                             NameForProvider = "ChernarusPlus",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
@@ -397,7 +397,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 8,
                             NameForProvider = "ChernarusPlus",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
@@ -410,7 +410,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 8,
                             NameForProvider = "Livonia",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
@@ -423,7 +423,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 8,
                             NameForProvider = "Livonia",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
@@ -444,7 +444,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             ImageExtension = "jpg",
                             IsFirstQuadrant = true,
                             MapId = 3,
-                            MapProviderId = 1,
+                            MapProviderId = 2,
                             MapTypeForProvider = "Sat",
                             MapTypeId = 2,
                             MaxMapLevel = 7,

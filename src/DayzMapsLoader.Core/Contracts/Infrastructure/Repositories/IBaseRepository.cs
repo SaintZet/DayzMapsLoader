@@ -1,6 +1,6 @@
 ﻿namespace DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 
-public interface IBaseRepository<TEntity> where TEntity : class, new()
+internal interface IBaseRepository<TEntity> where TEntity : class, new()
 {
     IQueryable<TEntity> GetAll();
 

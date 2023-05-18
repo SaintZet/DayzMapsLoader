@@ -6,12 +6,12 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.Versioning;
 
-namespace DayzMapsLoader.Core.UnitTests.InternalManagers;
+namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
 
 [SupportedOSPlatform("windows")]
 public class MapMergeServiceTests
 {
-    private const string _generalPathToTestData = "DayzMapsLoader.Core.Tests.xUnit.TestData.MapMerge";
+    private const string _generalPathToTestData = "DayzMapsLoader.Tests.xUnit.Core.TestData.MapMerge";
 
     private const string _fullImageTemaplatePath = $"{_generalPathToTestData}.{{0}}.Original.{{0}}";
     private const string _partTemaplatePath = $"{_generalPathToTestData}.{{0}}.{{1}},{{2}}.{{0}}";
