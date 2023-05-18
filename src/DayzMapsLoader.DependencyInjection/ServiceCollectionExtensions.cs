@@ -10,6 +10,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureApplication(this IServiceCollection services)
         => services
             .AddCoreLayer()
-            .AddInfrastractureLayer()
+            .AddInfrastructureLayer()
             .AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 }
