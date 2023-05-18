@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddDatabase(this IServiceCollection services)
     {
         var pathToConfig = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
-        
+
         var config = new ConfigurationBuilder()
             .SetBasePath(pathToConfig)
             .AddJsonFile("appsettings.json")
@@ -49,17 +49,17 @@ public static class ServiceCollectionExtensions
             .EnableSensitiveDataLogging()
             .UseSqlServer(dbConnection)
             .Options;
-        
+
         using (var dbContext = new DayzMapLoaderContext(dbContextOptions))
             EnsureDatabaseUpdated(dbContext);
-        
+
         return services.AddDbContext<DayzMapLoaderContext>(
                 options => options
                             .EnableSensitiveDataLogging()
                             .UseSqlServer(dbConnection),
                 ServiceLifetime.Transient);
     }
-    
+
     private static void EnsureDatabaseUpdated(DbContext dbContext)
     {
         var appliedMigrations = dbContext.GetService<IHistoryRepository>()
