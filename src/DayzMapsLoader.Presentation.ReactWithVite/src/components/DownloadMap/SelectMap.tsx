@@ -21,11 +21,11 @@ export default function SelectMap() {
         providedMaps.filter(x => x.mapProvider.id === selectedProvider)
             .map(x => x.map).map(item => [item['name'], item])).values()];
     const options: Set<SelectItem<number>> = getSelectItems(maps);
-
+    
     const formikDefaultProps = useFormik({
         initialValues: formSchema.cast({value: -1}) as Form,
         validationSchema: formSchema,
-        onSubmit: (form) => {
+        onSubmit: () => {
         }
     });
     const onHandleChange = (event: SelectChangeEvent<number>) => {

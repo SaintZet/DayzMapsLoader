@@ -7,7 +7,7 @@ namespace DayzMapsLoader.Infrastructure.Repositories;
 
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity, new()
 {
-    protected readonly DbContext _dbContext;
+    private readonly DbContext _dbContext;
 
     public BaseRepository(DbContext dayzMapLoaderContext)
     {
