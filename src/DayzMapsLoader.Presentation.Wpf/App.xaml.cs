@@ -1,9 +1,9 @@
 ﻿using System.IO;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
 using DayzMapsLoader.DependencyInjection;
+
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
 using DayzMapsLoader.Presentation.Wpf.Models;
@@ -34,9 +34,10 @@ public partial class App : Application
         var appLocation = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
 
         _host = Host.CreateDefaultBuilder(e.Args)
-            .ConfigureAppConfiguration(c => 
-                c.SetBasePath(appLocation).AddJsonFile("appsettings.json"))
-            
+            .ConfigureAppConfiguration(c =>
+                c.SetBasePath(appLocation)
+                    .AddJsonFile("appsettings.json"))
+
             .ConfigureServices(ConfigureServices)
             .Build();
 
