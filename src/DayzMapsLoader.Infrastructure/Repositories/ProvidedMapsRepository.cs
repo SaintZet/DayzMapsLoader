@@ -14,24 +14,34 @@ namespace DayzMapsLoader.Infrastructure.Repositories
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsAsync()
             => await GetAll()
-            .IncludeDetails(true)
+            .IncludeDetails()
             .ToListAsync();
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByMapIdAsync(int mapId)
             => await GetAll()
-            .IncludeDetails(true)
+            .IncludeDetails()
             .Where(x => x.Map.Id == mapId)
             .ToListAsync();
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByProviderIdAsync(int providerId)
             => await GetAll()
-            .IncludeDetails(true)
+            .IncludeDetails()
             .Where(x => x.MapProvider.Id == providerId)
             .ToListAsync();
 
         public async Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId)
         => (await GetAll()
-            .IncludeDetails(true)
+            .IncludeDetails()
             .FirstOrDefaultAsync(x => x.MapProvider.Id == providerId && x.Map.Id == mapID && x.MapType.Id == typeId))!;
+
+        public async Task<IEnumerable<Map>> GetMapsByProviderId(int providerId)
+            => await GetAll()
+                .IncludeDetails()
+                .Where(x => x.MapProvider.Id == providerId)
+                .Select(x => x.Map)
+                .Distinct()
+                .ToListAsync();
+
+
     }
 }
