@@ -2,8 +2,8 @@
 using System.Windows;
 using System.Windows.Threading;
 
-using DayzMapsLoader.DependencyInjection;
-
+using DayzMapsLoader.Core.Extensions;
+using DayzMapsLoader.Infrastructure.Extensions;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
 using DayzMapsLoader.Presentation.Wpf.Models;
@@ -11,46 +11,31 @@ using DayzMapsLoader.Presentation.Wpf.Services;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
 using DayzMapsLoader.Presentation.Wpf.Views;
 
+using MediatR;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace DayzMapsLoader.Presentation.Wpf;
 
-public partial class App : Application
+public partial class App
 {
     private IHost _host;
-
-    public App()
-    {
-    }
 
     public T GetService<T>()
             where T : class
         => _host.Services.GetService(typeof(T)) as T;
 
-    private async void OnStartup(object sender, StartupEventArgs e)
-    {
-        var appLocation = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
-
-        _host = Host.CreateDefaultBuilder(e.Args)
-            .ConfigureAppConfiguration(c =>
-                c.SetBasePath(appLocation)
-                    .AddJsonFile("appsettings.json"))
-
-            .ConfigureServices(ConfigureServices)
-            .Build();
-
-        await _host.StartAsync();
-    }
-
-    private void ConfigureServices(HostBuilderContext context, IServiceCollection services)
+    private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
     {
         // App Host
         services.AddHostedService<ApplicationHostService>();
 
         // Core Services
-        services.ConfigureApplication();
+        services.AddCoreLayer();
+        services.AddInfrastructureLayer(context.Configuration.GetConnectionString("DefaultConnection")!);
+        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
         // Services
         services.AddSingleton<IApplicationInfoService, ApplicationInfoService>();
@@ -78,6 +63,20 @@ public partial class App : Application
 
         // Configuration
         services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
+    }
+
+    private async void OnStartup(object sender, StartupEventArgs e)
+    {
+        var appLocation = Directory.GetCurrentDirectory();
+        var configPath = Path.Combine(appLocation!, "appsettings.json");
+
+        _host = Host.CreateDefaultBuilder(e.Args)
+            .ConfigureAppConfiguration((_, config) =>
+                config.AddJsonFile(configPath, optional: false, reloadOnChange: true))
+            .ConfigureServices(ConfigureServices)
+            .Build();
+
+        await _host.StartAsync();
     }
 
     private async void OnExit(object sender, ExitEventArgs e)

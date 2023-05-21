@@ -13,8 +13,8 @@ public class MapMergeServiceTests
 {
     private const string _generalPathToTestData = "DayzMapsLoader.Tests.xUnit.Core.TestData.MapMerge";
 
-    private const string _fullImageTemaplatePath = $"{_generalPathToTestData}.{{0}}.Original.{{0}}";
-    private const string _partTemaplatePath = $"{_generalPathToTestData}.{{0}}.{{1}},{{2}}.{{0}}";
+    private const string _fullImageTemplatePath = $"{_generalPathToTestData}.{{0}}.Original.{{0}}";
+    private const string _partTemplatePath = $"{_generalPathToTestData}.{{0}}.{{1}},{{2}}.{{0}}";
 
     private const int _imageCountVertical = 2;
     private const int _imageCountHorizontal = 2;
@@ -42,18 +42,18 @@ public class MapMergeServiceTests
     public void Test_MergeImage_ShouldProduceExpectedResult(ImageExtension extension)
     {
         // Arrange
-        Bitmap originalImage = GetOriginalImage(extension);
+        var originalImage = GetOriginalImage(extension);
 
         var mapSize = new MapSize(originalImage.Height, originalImage.Width);
         var imageMerger = new MapMergeService(mapSize, _sizeImprovementPercent);
 
         var imageParts = new MapParts(new MapSize(_imageCountHorizontal, _imageCountVertical));
 
-        for (int y = 0; y < _imageCountVertical; y++)
+        for (var y = 0; y < _imageCountVertical; y++)
         {
-            for (int x = 0; x < _imageCountHorizontal; x++)
+            for (var x = 0; x < _imageCountHorizontal; x++)
             {
-                string fileName = string.Format(_partTemaplatePath, extension.ToString(), y, x);
+                var fileName = string.Format(_partTemplatePath, extension.ToString(), y, x);
 
                 var bytes = GetByteArrayFromEmbeddedResource(fileName);
 
@@ -74,7 +74,7 @@ public class MapMergeServiceTests
 
     private static Bitmap GetOriginalImage(ImageExtension extension)
     {
-        string originalImagePath = string.Format(_fullImageTemaplatePath, extension.ToString());
+        var originalImagePath = string.Format(_fullImageTemplatePath, extension.ToString());
 
         if (extension == ImageExtension.webp)
         {
@@ -90,9 +90,9 @@ public class MapMergeServiceTests
 
     private static byte[] GetByteArrayFromEmbeddedResource(string fileName)
     {
-        using Stream myStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName)!;
+        using var myStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName)!;
 
-        byte[] byteArray = new byte[myStream!.Length];
+        var byteArray = new byte[myStream!.Length];
 
         myStream.Read(byteArray, 0, byteArray.Length);
 
@@ -107,9 +107,9 @@ public class MapMergeServiceTests
         }
 
         //Sizes are the same so start comparing pixels
-        for (int x = 0; x < bmp1.Width; x++)
+        for (var x = 0; x < bmp1.Width; x++)
         {
-            for (int y = 0; y < bmp1.Height; y++)
+            for (var y = 0; y < bmp1.Height; y++)
             {
                 var bmp1Pixel = bmp1.GetPixel(x, y);
                 var bmp2Pixel = bmp2.GetPixel(x, y);
@@ -125,7 +125,5 @@ public class MapMergeServiceTests
     }
 
     private static double CompareColors(Color a, Color b)
-    {
-        return Math.Abs((Math.Abs(a.R - b.R) + Math.Abs(a.G - b.G) + Math.Abs(a.B - b.B)) / (255.0 * 3));
-    }
+        => Math.Abs((Math.Abs(a.R - b.R) + Math.Abs(a.G - b.G) + Math.Abs(a.B - b.B)) / (255.0 * 3));
 }

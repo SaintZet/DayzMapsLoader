@@ -1,7 +1,7 @@
 using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
-using DayzMapsLoader.DependencyInjection;
 using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
+using DayzMapsLoader.Tests.xUnit.Extensions;
 
 using MediatR;
 
@@ -20,10 +20,7 @@ public class MapDownloadImageServiceTests
 
     public MapDownloadImageServiceTests()
     {
-        IServiceCollection services = new ServiceCollection();
-        services.ConfigureApplication();
-
-        var serviceProvider = services.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().BuildCollection();
 
         _downloadImageService = serviceProvider.GetRequiredService<IMapDownloadImageService>();
         _mediator = serviceProvider.GetRequiredService<IMediator>();
@@ -136,13 +133,9 @@ public class MapDownloadImageServiceTests
         }
 
         public override int GetHashCode()
-        {
-            return HashCode.Combine(Width, Height, HorizontalResolution, VerticalResolution);
-        }
+            => HashCode.Combine(Width, Height, HorizontalResolution, VerticalResolution);
 
         public override string ToString()
-        {
-            return $"Width: {Width}, Height: {Height}, HorizontalResolution: {HorizontalResolution}, VerticalResolution: {VerticalResolution}";
-        }
+            => $"Width: {Width}, Height: {Height}, HorizontalResolution: {HorizontalResolution}, VerticalResolution: {VerticalResolution}";
     }
 }
