@@ -70,11 +70,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DayzMapsLoader.DependencyInjection\DayzMapsLoader.DependencyInjection.csproj" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
+    <ProjectReference Include="..\DayzMapsLoader.Core\DayzMapsLoader.Core.csproj" />
+    <ProjectReference Include="..\DayzMapsLoader.Infrastructure\DayzMapsLoader.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
