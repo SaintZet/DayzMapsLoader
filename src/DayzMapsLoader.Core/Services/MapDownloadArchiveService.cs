@@ -81,24 +81,22 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
     {
         var maps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
 
-        using MemoryStream compressedFileStream = new();
-
-        foreach (var map in maps)
+        using var compressedFileStream = new MemoryStream();
+        using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
-            using var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false);
+            foreach (var map in maps)
+            {
+                var fileName = $"{map.Map.Name}.jpg";
+                var zipEntry = zipArchive.CreateEntry(fileName);
 
-            string fileName = $"{map.Map.Name}.jpg";
-            ZipArchiveEntry zipEntry = zipArchive.CreateEntry(fileName);
-
-            using MemoryStream originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
-            originalFileStream.Seek(0, SeekOrigin.Begin);
-
-            using Stream zipEntryStream = zipEntry.Open();
-            originalFileStream.CopyTo(zipEntryStream);
+                using var entryStream = zipEntry.Open();
+                var bytes = await GetMapInBytesAsync(map, zoom);
+                entryStream.Write(bytes, 0, bytes.Length);
+            }
         }
 
-        byte[] archiveData = compressedFileStream.ToArray();
-        string archiveName = $"{maps.First().MapProvider.Name}-{zoom}.zip";
+        var archiveData = compressedFileStream.ToArray();
+        var archiveName = $"{maps.First().MapProvider.Name}-{zoom}.zip";
 
         return (archiveData, archiveName);
     }
