@@ -12,10 +12,10 @@ public class GetMapsTests
     {
         // Arrange
         var expectedMaps = new List<Map>
-            {
-                new Map { Id = 1, Name = "Map 1" },
-                new Map { Id = 2, Name = "Map 2" },
-            };
+        {
+            new Map { Id = 1, Name = "Map 1" },
+            new Map { Id = 2, Name = "Map 2" },
+        };
 
         var repositoryMock = new Mock<IMapsRepository>();
         repositoryMock.Setup(r => r.GetAllMapsAsync()).ReturnsAsync(expectedMaps);
@@ -31,5 +31,30 @@ public class GetMapsTests
         Assert.NotNull(result);
         Assert.Equal(expectedMaps.Count, result.Count());
         Assert.Equal(expectedMaps.Select(m => m.Id), result.Select(m => m.Id));
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public async Task Handle_ValidRequest_ReturnMap()
+    {
+        // Arrange
+        var expectedMap = new List<Map> { new Map { Id = 1, Name = "Map 1" } };
+
+        var repositoryMock = new Mock<IMapsRepository>();
+        repositoryMock.Setup(r => r.GetAllMapsAsync()).ReturnsAsync(expectedMap);
+
+        var handler = new GetMapsHandler(repositoryMock.Object);
+        var query = new GetMapsQuery();
+        var cancellationToken = CancellationToken.None;
+        
+        // Act
+        var result = await handler.Handle(query, cancellationToken);
+        
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(expectedMap.Count, result.Count());
+        Assert.Equal(expectedMap.Select(m => m.Id), result.Select(m => m.Id));
+
+
     }
 }
