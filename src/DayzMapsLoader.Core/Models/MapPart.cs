@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Shared.Wrappers;
+﻿namespace DayzMapsLoader.Core.Models;
 
 public record MapPart(byte[] Data)
 {

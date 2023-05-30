@@ -1,5 +1,5 @@
-﻿using DayzMapsLoader.Domain.Entities;
-using DayzMapsLoader.Shared.Wrappers;
+﻿using DayzMapsLoader.Core.Models;
+using DayzMapsLoader.Domain.Entities;
 
 namespace DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 

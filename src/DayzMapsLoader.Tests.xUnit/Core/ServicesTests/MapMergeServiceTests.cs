@@ -1,6 +1,6 @@
 ﻿using DayzMapsLoader.Core.Services;
-using DayzMapsLoader.Shared.Enums;
-using DayzMapsLoader.Shared.Wrappers;
+using DayzMapsLoader.Core.Enums;
+using DayzMapsLoader.Core.Models;
 
 using System.Drawing;
 using System.Reflection;
@@ -30,7 +30,7 @@ public class MapMergeServiceTests
 
     public static IEnumerable<object[]> GetTestData()
     {
-        foreach (ImageExtension extension in (ImageExtension[])Enum.GetValues(typeof(ImageExtension)))
+        foreach (var extension in (ImageExtension[])Enum.GetValues(typeof(ImageExtension)))
         {
             yield return new object[] { extension };
         }

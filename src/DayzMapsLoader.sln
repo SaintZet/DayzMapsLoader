@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.WebApi", "DayzMapsLoader.Presentation.WebApi\DayzMapsLoader.Presentation.WebApi.csproj", "{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Shared", "DayzMapsLoader.Shared\DayzMapsLoader.Shared.csproj", "{3E4EEAAA-F142-48EB-9028-307C0A9D2323}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Presentation.Wpf", "DayzMapsLoader.Presentation.Wpf\DayzMapsLoader.Presentation.Wpf.csproj", "{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayzMapsLoader.Core", "DayzMapsLoader.Core\DayzMapsLoader.Core.csproj", "{B2E05867-45A0-41BC-9DA5-ADEAFB33C386}"
@@ -35,10 +33,6 @@ Global
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CCBCBA3-44FF-4E85-9872-5C4DA8BC430F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E4EEAAA-F142-48EB-9028-307C0A9D2323}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FAE5865-EFB7-4F4D-94D8-81F6B21B5F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
