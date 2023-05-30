@@ -6,7 +6,6 @@ using DayzMapsLoader.Infrastructure.Repositories;
 using DayzMapsLoader.Infrastructure.Services;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -16,11 +15,11 @@ namespace DayzMapsLoader.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services, string dbConnection)
         => services
             .AddRepositories()
             .AddServices()
-            .AddDatabase();
+            .AddDatabase(dbConnection);
 
     private static IServiceCollection AddRepositories(this IServiceCollection services)
         => services
@@ -34,17 +33,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<IMultipleThirdPartyApiService, MultipleThirdPartyApiService>()
             .AddTransient<IFileService, FileService>();
 
-    private static IServiceCollection AddDatabase(this IServiceCollection services)
+    private static IServiceCollection AddDatabase(this IServiceCollection services, string dbConnection)
     {
-        var pathToConfig = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
-
-        var config = new ConfigurationBuilder()
-            .SetBasePath(pathToConfig)
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        var dbConnection = config.GetConnectionString("DefaultConnection")!;
-
         var dbContextOptions = new DbContextOptionsBuilder<DayzMapLoaderContext>()
             .EnableSensitiveDataLogging()
             .UseSqlServer(dbConnection)

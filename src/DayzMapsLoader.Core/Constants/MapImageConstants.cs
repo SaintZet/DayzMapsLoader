@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Shared.Constants;
+﻿namespace DayzMapsLoader.Core.Constants;
 
 public static class MapImageConstants
 {

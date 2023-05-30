@@ -1,4 +1,4 @@
-﻿namespace DayzMapsLoader.Shared.Enums;
+﻿namespace DayzMapsLoader.Core.Enums;
 
 public enum ImageExtension
 {

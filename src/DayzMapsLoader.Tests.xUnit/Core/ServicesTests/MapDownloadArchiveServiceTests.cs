@@ -1,8 +1,9 @@
 ﻿using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
-using DayzMapsLoader.DependencyInjection;
-using DayzMapsLoader.Shared.Wrappers;
+using DayzMapsLoader.Core.Models;
+
 using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
+using DayzMapsLoader.Tests.xUnit.Extensions;
 
 using MediatR;
 
@@ -19,10 +20,7 @@ public class MapDownloadArchiveServiceTests
 
     public MapDownloadArchiveServiceTests()
     {
-        IServiceCollection services = new ServiceCollection();
-        services.ConfigureApplication();
-
-        var serviceProvider = services.BuildServiceProvider();
+        var serviceProvider = new ServiceCollection().BuildCollection();
 
         _downloadArchiveService = serviceProvider.GetRequiredService<IMapDownloadArchiveService>();
         _mediator = serviceProvider.GetRequiredService<IMediator>();

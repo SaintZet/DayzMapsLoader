@@ -1,18 +1,23 @@
 namespace DayzMapsLoader.Presentation.WebApi;
 
-public class Program
+public static class Program
 {
     public static async Task Main(string[] args)
     {
-        var host = CreateHostBuilder(args).Build();
-        await host.RunAsync();
+        var pathConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(pathConfigPath)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        await CreateHostBuilder(args, configuration).Build().RunAsync();
     }
 
-    private static IHostBuilder CreateHostBuilder(string[] args)
+    private static IHostBuilder CreateHostBuilder(string[] args, IConfiguration configuration)
         => Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStaticWebAssets();
                 webBuilder.UseStartup<Startup>();
+                webBuilder.UseConfiguration(configuration);
             });
 }
