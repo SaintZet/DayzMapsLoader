@@ -1,8 +1,8 @@
 ﻿using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Helpers;
 using DayzMapsLoader.Core.Helpers.WebpDecoder;
-using DayzMapsLoader.Shared.Enums;
-using DayzMapsLoader.Shared.Wrappers;
+using DayzMapsLoader.Core.Enums;
+using DayzMapsLoader.Core.Models;
 
 using System.Drawing;
 using System.Drawing.Imaging;

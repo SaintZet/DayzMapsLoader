@@ -1,6 +1,7 @@
 ﻿using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
-using DayzMapsLoader.Shared.Wrappers;
+using DayzMapsLoader.Core.Models;
+
 using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
 using DayzMapsLoader.Tests.xUnit.Extensions;
 
