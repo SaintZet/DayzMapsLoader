@@ -13,9 +13,9 @@ internal abstract class BaseMapDownloadService
 {
     protected readonly IProvidedMapsRepository _providedMapsRepository;
     protected readonly IMultipleThirdPartyApiService _thirdPartyApiService;
-    protected readonly IMapMergeService _mapMergeService;
+    private readonly IMapMergeService _mapMergeService;
 
-    public BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
+    protected BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
     {
         _providedMapsRepository = providedMapsRepository;
         _thirdPartyApiService = thirdPartyApiService;
@@ -29,7 +29,7 @@ internal abstract class BaseMapDownloadService
 
     protected async Task<byte[]> GetMapInBytesAsync(ProvidedMap map, int zoom)
     {
-        using MemoryStream memoryStream = await GetMergedMapMemoryStream(map, zoom);
+        using var memoryStream = await GetMergedMapMemoryStream(map, zoom);
 
         return memoryStream.ToArray();
     }
