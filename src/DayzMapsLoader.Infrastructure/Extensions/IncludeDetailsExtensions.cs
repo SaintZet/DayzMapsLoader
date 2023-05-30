@@ -6,7 +6,7 @@ namespace DayzMapsLoader.Infrastructure.Extensions;
 
 internal static class IncludeDetailsExtensions
 {
-    public static IQueryable<ProvidedMap> IncludeDetails(this IQueryable<ProvidedMap> queryable, bool include = true)
+    public static IQueryable<ProvidedMap>? IncludeDetails(this IQueryable<ProvidedMap>? queryable, bool include = true)
     {
         if (!include)
             return queryable;

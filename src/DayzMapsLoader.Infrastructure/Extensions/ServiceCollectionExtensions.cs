@@ -21,19 +21,19 @@ public static class ServiceCollectionExtensions
             .AddServices()
             .AddDatabase(dbConnection);
 
-    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    internal static IServiceCollection AddRepositories(this IServiceCollection services)
         => services
             .AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>))
             .AddTransient<IMapProvidersRepository, MapProvidersRepository>()
             .AddTransient<IMapsRepository, MapsRepository>()
             .AddTransient<IProvidedMapsRepository, ProvidedMapsRepository>();
 
-    private static IServiceCollection AddServices(this IServiceCollection services)
+    internal static IServiceCollection AddServices(this IServiceCollection services)
         => services
             .AddTransient<IMultipleThirdPartyApiService, MultipleThirdPartyApiService>()
             .AddTransient<IFileService, FileService>();
 
-    private static IServiceCollection AddDatabase(this IServiceCollection services, string dbConnection)
+    internal static IServiceCollection AddDatabase(this IServiceCollection services, string dbConnection)
     {
         var dbContextOptions = new DbContextOptionsBuilder<DayzMapLoaderContext>()
             .EnableSensitiveDataLogging()
@@ -50,7 +50,7 @@ public static class ServiceCollectionExtensions
                 ServiceLifetime.Transient);
     }
 
-    private static void EnsureDatabaseUpdated(DbContext dbContext)
+    internal static void EnsureDatabaseUpdated(DbContext dbContext)
     {
         var appliedMigrations = dbContext.GetService<IHistoryRepository>()
             .GetAppliedMigrations()
