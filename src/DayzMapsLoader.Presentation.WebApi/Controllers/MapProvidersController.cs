@@ -29,22 +29,5 @@ public class MapProvidersController : BaseController
 
         return Ok(mapProviders);
     }
-
-    /// <summary>
-    /// Get all maps provided by specific provider.
-    /// </summary>
-    /// <param name="providerId"> Provider ID. </param>
-    /// ///
-    /// <response code="200"> Returns a list of provided maps in json format. </response>
-    [HttpGet]
-    [Route("{providerId}/provided-maps")]
-    [Produces("application/json")]
-    [ProducesResponseType(typeof(IEnumerable<ProvidedMap>), 200)]
-    public async Task<ActionResult<IEnumerable<ProvidedMap>>> GetProvidedMapsByProviderId(int providerId)
-    {
-        var query = new GetProvidedMapsByProviderIdQuery(providerId);
-        var maps = await _mediator.Send(query);
-
-        return Ok(maps);
-    }
+    
 }

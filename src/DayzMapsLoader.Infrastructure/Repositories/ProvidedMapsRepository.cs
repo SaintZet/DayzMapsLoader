@@ -30,8 +30,20 @@ namespace DayzMapsLoader.Infrastructure.Repositories
                     .ToListAsync();
 
         public async Task<ProvidedMap> GetProvidedMapAsync(int providerId, int mapID, int typeId)
-        => (await (GetAll()
-                .IncludeDetails() ?? throw new InvalidOperationException())
-                .FirstOrDefaultAsync(x => x.MapProvider.Id == providerId && x.Map.Id == mapID && x.MapType.Id == typeId))!;
+            => (await (GetAll()
+                    .IncludeDetails() ?? throw new InvalidOperationException())
+                    .FirstOrDefaultAsync(x => 
+                        x.MapProvider.Id == providerId && 
+                        x.Map.Id == mapID && 
+                        x.MapType.Id == typeId)
+                    )!;
+        
+        public async Task<IEnumerable<Map>> GetMapsByProviderId(int providerId)
+            => await (GetAll()
+                    .IncludeDetails() ?? throw new InvalidOperationException())
+                    .Where(x => x.MapProvider.Id == providerId)
+                    .Select(x => x.Map)
+                    .Distinct()
+                    .ToListAsync();
     }
 }

@@ -30,16 +30,16 @@ public class MapsController : BaseController
     }
 
     /// <summary>
-    /// Get all maps provided by specific map.
+    /// Get maps by specific provider.
     /// </summary>
-    /// <param name="mapId"> Map ID. </param>
+    /// <param name="providerId"> Provider ID. </param>
     [HttpGet]
-    [Route("{mapId}/provided-maps")]
+    [Route("{providerId}/maps")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(IEnumerable<ProvidedMap>), 200)]
-    public async Task<ActionResult<IEnumerable<ProvidedMap>>> GetProvidedMapsByMapId(int mapId)
+    [ProducesResponseType(typeof(IEnumerable<Map>), 200)]
+    public async Task<ActionResult<IEnumerable<Map>>> GetMapsByProviderId(int providerId)
     {
-        var query = new GetProvidedMapsByMapIdQuery(mapId);
+        var query = new GetMapsByProviderId(providerId);
         var maps = await _mediator.Send(query);
 
         return Ok(maps);
