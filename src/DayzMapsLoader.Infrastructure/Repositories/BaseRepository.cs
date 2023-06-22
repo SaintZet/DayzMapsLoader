@@ -31,17 +31,13 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         if (entity is null)
             throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
 
-        try
-        {
-            await _dbContext.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+        if (entity.Id != 0 && await _dbContext.Set<TEntity>().AnyAsync(e => e.Id == entity.Id))
+            throw new InvalidOperationException($"Entity with ID {entity.Id} already exists in the database");
 
-            return entity;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
-        }
+        await _dbContext.Set<TEntity>().AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+
+        return entity;
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
@@ -59,6 +55,29 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         catch (Exception ex)
         {
             throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
+        }
+    }
+    public async Task DeleteAsync(TEntity entity)
+    {
+        if (entity is null)
+            throw new ArgumentNullException($"{nameof(DeleteAsync)} entity must not be null");
+
+        try
+        {
+            var existingEntity = await _dbContext.Set<TEntity>().FindAsync(entity.Id);
+            if (existingEntity != null)
+            {
+                _dbContext.Remove(existingEntity);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception($"Entity with ID {entity.Id} does not exist in the database.");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Entity could not be deleted: {ex.Message}");
         }
     }
 }

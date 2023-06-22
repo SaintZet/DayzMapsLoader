@@ -14,8 +14,8 @@ public class GetProvidedMapsTests
         var providedMapsRepositoryMock = new Mock<IProvidedMapsRepository>();
         var expectedProvidedMaps = new List<ProvidedMap>
         {
-            new ProvidedMap { Id = 1, NameForProvider = "Map 1" },
-            new ProvidedMap { Id = 2, NameForProvider = "Map 2" },
+            new() { Id = 1, NameForProvider = "Map 1" },
+            new() { Id = 2, NameForProvider = "Map 2" },
         };
         providedMapsRepositoryMock.Setup(repo => repo.GetAllProvidedMapsAsync()).ReturnsAsync(expectedProvidedMaps);
 

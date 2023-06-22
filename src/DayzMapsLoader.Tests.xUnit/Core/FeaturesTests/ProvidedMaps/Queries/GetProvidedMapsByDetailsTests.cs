@@ -11,9 +11,9 @@ public class GetProvidedMapsByDetailsTests
     public async Task Handle_ValidRequest_ReturnsProvidedMap()
     {
         // Arrange
-        var providerId = 1;
-        var mapId = 2;
-        var typeId = 3;
+        const int providerId = 1;
+        const int mapId = 2;
+        const int typeId = 3;
 
         var expectedMap = new ProvidedMap
         {

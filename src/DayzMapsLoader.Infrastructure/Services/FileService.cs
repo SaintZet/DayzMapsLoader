@@ -20,10 +20,11 @@ public class FileService : IFileService
 
     public void Save<T>(string folderPath, string fileName, T content)
     {
+        if (content == null)
+            throw new ArgumentNullException(nameof(content), "Content cannot be null.");
+
         if (!Directory.Exists(folderPath))
-        {
             Directory.CreateDirectory(folderPath);
-        }
 
         var fileContent = JsonConvert.SerializeObject(content);
         File.WriteAllText(Path.Combine(folderPath, fileName), fileContent, Encoding.UTF8);

@@ -11,12 +11,12 @@ public class GetProvidedMapsByMapIdTests
     public async Task Handle_ValidRequest_ReturnsListOfProvidedMaps()
     {
         // Arrange
-        var mapId = 1;
+        const int mapId = 1;
 
         var expectedMaps = new List<ProvidedMap>
             {
-                new ProvidedMap { Id = 1, NameForProvider = "Map 1" },
-                new ProvidedMap { Id = 2, NameForProvider = "Map 2" },
+                new() { Id = 1, NameForProvider = "Map 1" },
+                new() { Id = 2, NameForProvider = "Map 2" },
             };
 
         var repositoryMock = new Mock<IProvidedMapsRepository>();

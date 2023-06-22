@@ -10,8 +10,8 @@ public class GetMapImagePartsArchiveTests
     public async Task Handle_ValidRequest_ReturnsImageDataAndName()
     {
         // Arrange
-        var expectedImageData = new byte[] { /* Image data bytes */ };
-        var expectedImageName = "map_image_parts_archive.zip";
+        const string expectedImageName = "map_image_parts_archive.zip";
+        var expectedImageData = Array.Empty<byte>();
 
         var mapDownloaderMock = new Mock<IMapDownloadArchiveService>();
         mapDownloaderMock

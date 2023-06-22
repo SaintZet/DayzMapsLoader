@@ -63,7 +63,7 @@ namespace DayzMapsLoader.Tests.xUnit.Infrastructure.ExtensionsTests
         {
             // Arrange
             var services = new ServiceCollection();
-            var dbConnection = Extensions.ServiceCollectionExtensions.GetConnectionString();
+            var dbConnection = ServiceCollectionExtensions.GetConnectionString();
 
             // Act
             services.AddDatabase(dbConnection);
@@ -77,7 +77,7 @@ namespace DayzMapsLoader.Tests.xUnit.Infrastructure.ExtensionsTests
         }
 
         [Fact]
-        [Trait("Category", "Unit")]
+        [Trait("Category", "Integration")]
         public void EnsureDatabaseUpdated_ShouldNotApplyMigrations_WhenNoPendingMigrationsExist()
         {
             // Arrange
@@ -103,7 +103,7 @@ namespace DayzMapsLoader.Tests.xUnit.Infrastructure.ExtensionsTests
             dbContextMock.SetupGet(db => db.Database).Returns(databaseFacadeMock.Object);
 
             // Act
-            ServiceCollectionExtensions.EnsureDatabaseUpdated(dbContextMock.Object);
+            DayzMapsLoader.Infrastructure.Extensions.ServiceCollectionExtensions.EnsureDatabaseUpdated(dbContextMock.Object);
 
             // Assert
             databaseFacadeMock.Verify(db => db.EnsureDeleted(), Times.Never);

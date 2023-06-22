@@ -6,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayzMapsLoader.Tests.xUnit.Extensions;
+namespace DayzMapsLoader.Tests.xUnit;
 
 internal static class ServiceCollectionExtensions
 {

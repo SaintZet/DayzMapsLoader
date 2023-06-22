@@ -1,7 +1,6 @@
 using DayzMapsLoader.Domain.Entities;
 using DayzMapsLoader.Infrastructure.Contexts;
 using DayzMapsLoader.Infrastructure.Extensions;
-using DayzMapsLoader.Tests.xUnit.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 
