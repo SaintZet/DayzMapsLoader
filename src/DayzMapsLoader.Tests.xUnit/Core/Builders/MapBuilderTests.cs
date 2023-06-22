@@ -1,20 +1,15 @@
-﻿using DayzMapsLoader.Core.Builders;
+﻿using System.Drawing;
+using System.Runtime.Versioning;
+using DayzMapsLoader.Core.Builders;
 using DayzMapsLoader.Core.Enums;
 using DayzMapsLoader.Core.Models;
+using DayzMapsLoader.Tests.xUnit.Core.TestData.Images;
 
-using System.Drawing;
-using System.Reflection;
-using System.Runtime.Versioning;
-
-namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
+namespace DayzMapsLoader.Tests.xUnit.Core.Builders;
 
 [SupportedOSPlatform("windows")]
-public class MapMergeServiceTests
+public class MapBuilderTests
 {
-    private const string _generalPathToTestData = "DayzMapsLoader.Tests.xUnit.Core.TestData.MapMerge";
-
-    private const string _fullImageTemplatePath = $"{_generalPathToTestData}.{{0}}.Original.{{0}}";
-    private const string _partTemplatePath = $"{_generalPathToTestData}.{{0}}.{{1}},{{2}}.{{0}}";
 
     private const int _imageCountVertical = 2;
     private const int _imageCountHorizontal = 2;
@@ -42,10 +37,10 @@ public class MapMergeServiceTests
     public void Test_MergeImage_ShouldProduceExpectedResult(ImageExtension extension)
     {
         // Arrange
-        var originalImage = GetOriginalImage(extension);
+        var originalImage = ImageDataProvider.GetOriginalImage(extension);
 
         var mapSize = new MapSize(originalImage.Height, originalImage.Width);
-        var imageMerger = new MapBuilder(mapSize, _sizeImprovementPercent);
+        var mapBuilder = new MapBuilder(mapSize, _sizeImprovementPercent);
 
         var imageParts = new MapParts(new MapSize(_imageCountHorizontal, _imageCountVertical));
 
@@ -53,9 +48,7 @@ public class MapMergeServiceTests
         {
             for (var x = 0; x < _imageCountHorizontal; x++)
             {
-                var fileName = string.Format(_partTemplatePath, extension.ToString(), y, x);
-
-                var bytes = GetByteArrayFromEmbeddedResource(fileName);
+                var bytes = ImageDataProvider.GetByteArrayFromEmbeddedResource(extension.ToString(), x , y);
 
                 var imagePart = new MapPart(bytes);
 
@@ -64,39 +57,12 @@ public class MapMergeServiceTests
         }
 
         //Act
-        var resultBitmap = imageMerger.Build(imageParts, extension);
+        var resultBitmap = mapBuilder.Build(imageParts, extension);
 
         //Assert
         var resultCompare = Compare(originalImage, resultBitmap);
 
         Assert.Equal(BitmapCompareResult.CompareOk, resultCompare);
-    }
-
-    private static Bitmap GetOriginalImage(ImageExtension extension)
-    {
-        var originalImagePath = string.Format(_fullImageTemplatePath, extension.ToString());
-
-        if (extension == ImageExtension.webp)
-        {
-            var webP = GetByteArrayFromEmbeddedResource(originalImagePath);
-
-            return MapBuilder.WebpToBitmap(webP);
-        }
-
-        var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(originalImagePath)!;
-
-        return new Bitmap(stream);
-    }
-
-    private static byte[] GetByteArrayFromEmbeddedResource(string fileName)
-    {
-        using var myStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName)!;
-
-        var byteArray = new byte[myStream!.Length];
-
-        myStream.Read(byteArray, 0, byteArray.Length);
-
-        return byteArray;
     }
 
     private static BitmapCompareResult Compare(Bitmap bmp1, Bitmap bmp2)

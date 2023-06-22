@@ -5,16 +5,16 @@ using MediatR;
 
 namespace DayzMapsLoader.Core.Features.Maps.Queries;
 
-public record GetMapsByProviderId(int ProviderId) : IRequest<IEnumerable<Map>>;
+public record GetMapsByProviderIdQuery(int ProviderId) : IRequest<IEnumerable<Map>>;
 
-internal class GetMapsByProviderIdHandler : IRequestHandler<GetMapsByProviderId, IEnumerable<Map>>
+internal class GetMapsByProviderIdHandler : IRequestHandler<GetMapsByProviderIdQuery, IEnumerable<Map>>
 {
     private readonly IProvidedMapsRepository _providedMapsRepository;
 
     public GetMapsByProviderIdHandler(IProvidedMapsRepository providedMapsRepository)
         => _providedMapsRepository = providedMapsRepository;
 
-    public async Task<IEnumerable<Map>> Handle(GetMapsByProviderId request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Map>> Handle(GetMapsByProviderIdQuery request, CancellationToken cancellationToken)
         => await _providedMapsRepository
             .GetMapsByProviderId(request.ProviderId);
 }

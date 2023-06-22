@@ -3,7 +3,7 @@ using System;
 
 namespace DayzMapsLoader.Domain.Entities;
 
-public class Map : IEntity
+public sealed class Map : IEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
