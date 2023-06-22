@@ -2,13 +2,10 @@
 
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Core.Models;
-
 using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
-using DayzMapsLoader.Tests.xUnit.Extensions;
 
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-
 using System.IO.Compression;
 
 namespace DayzMapsLoader.Tests.xUnit.Core.ServicesTests;
@@ -49,7 +46,7 @@ public class MapDownloadArchiveServiceTests
         var entry = archive.Entries[0];
         Assert.Equal($"{map.Map.Name}.jpg", entry.Name);
 
-        using var entryStream = entry.Open();
+        await using var entryStream = entry.Open();
         using var memoryStream = new MemoryStream();
         await entryStream.CopyToAsync(memoryStream);
         var imageData = memoryStream.ToArray();
@@ -82,7 +79,7 @@ public class MapDownloadArchiveServiceTests
         {
             Assert.StartsWith("Horizontal_", entry.FullName); // assert that the entry is located in the correct folder
 
-            using var entryStream = entry.Open();
+            await using var entryStream = entry.Open();
             using var memoryStream = new MemoryStream();
             await entryStream.CopyToAsync(memoryStream);
             var imageData = memoryStream.ToArray();
@@ -117,7 +114,7 @@ public class MapDownloadArchiveServiceTests
             var entry = archive.GetEntry(entryName);
             Assert.NotNull(entry);
 
-            using var entryStream = entry.Open();
+            await using var entryStream = entry.Open();
             using var memoryStream = new MemoryStream();
             await entryStream.CopyToAsync(memoryStream);
             var imageData = memoryStream.ToArray();

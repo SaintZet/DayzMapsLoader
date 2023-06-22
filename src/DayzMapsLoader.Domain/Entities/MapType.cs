@@ -2,7 +2,7 @@
 
 namespace DayzMapsLoader.Domain.Entities;
 
-public class MapType : IEntity
+public sealed class MapType : IEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

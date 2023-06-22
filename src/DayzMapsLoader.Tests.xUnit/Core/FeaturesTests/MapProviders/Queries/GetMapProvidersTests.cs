@@ -13,8 +13,8 @@ public class GetMapProvidersTests
         // Arrange
         var expectedMapProviders = new List<MapProvider>
             {
-                new MapProvider { Id = 1, Name = "Provider 1" },
-                new MapProvider { Id = 2, Name = "Provider 2" },
+                new() { Id = 1, Name = "Provider 1" },
+                new() { Id = 2, Name = "Provider 2" },
             };
 
         var repositoryMock = new Mock<IMapProvidersRepository>();

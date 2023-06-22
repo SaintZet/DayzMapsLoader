@@ -10,11 +10,13 @@ public class GetAllMapsImagesArchiveTests
     public async Task Handle_ValidRequest_ReturnsImageDataAndName()
     {
         // Arrange
-        var expectedImageData = new byte[] { /* Image data bytes */ };
-        var expectedImageName = "map_archive.zip";
+        const string expectedImageName = "map_archive.zip";
+        var expectedImageData = Array.Empty<byte>();
 
         var serviceMock = new Mock<IMapDownloadArchiveService>();
-        serviceMock.Setup(s => s.DownloadAllMapsImagesArchiveAsync(It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync((expectedImageData, expectedImageName));
+        serviceMock.Setup(s => 
+                s.DownloadAllMapsImagesArchiveAsync(It.IsAny<int>(), It.IsAny<int>())
+            ).ReturnsAsync((expectedImageData, expectedImageName));
 
         var handler = new GetAllMapsImagesArchiveHandler(serviceMock.Object);
         var query = new GetAllMapsImagesArchiveQuery(ProviderId: 1, Zoom: 2);

@@ -13,15 +13,15 @@ public class MultipleThirdPartyApiService : IMultipleThirdPartyApiService
 
     public async Task<MapParts> GetMapPartsAsync(ProvidedMap map, int zoom)
     {
-        MapSize mapSize = MapSize.ConvertZoomLevelRatioSize(zoom);
-        MapParts mapParts = new(mapSize);
+        var mapSize = MapSize.ConvertZoomLevelRatioSize(zoom);
+        var mapParts = new MapParts(mapSize);
 
-        string queryTemplate = map.MapProvider.UrlQueryTemplate;
+        var queryTemplate = map.MapProvider.UrlQueryTemplate;
 
-        int yReversed = mapSize.Width - 1;
-        for (int y = 0; y < mapSize.Width; y++)
+        var yReversed = mapSize.Width - 1;
+        for (var y = 0; y < mapSize.Width; y++)
         {
-            for (int x = 0; x < mapSize.Height; x++)
+            for (var x = 0; x < mapSize.Height; x++)
             {
                 var parameters = new
                 {
@@ -31,7 +31,7 @@ public class MultipleThirdPartyApiService : IMultipleThirdPartyApiService
                     Y = map.IsFirstQuadrant ? yReversed : y
                 };
 
-                string query = Smart.Format(queryTemplate, parameters);
+                var query = Smart.Format(queryTemplate, parameters);
 
                 var response = await _httpClient.GetAsync(query);
                 var data = await response.Content.ReadAsByteArrayAsync();

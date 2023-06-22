@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Core.Features.MapArchive.Queries;
+using DayzMapsLoader.Core.Features.MapArchive.Queries;
 using DayzMapsLoader.Domain.Contracts.Services;
 
 namespace DayzMapsLoader.Tests.xUnit.Core.FeaturesTests.MapArchive.Queries;
@@ -10,8 +10,8 @@ public class GetMapImageArchiveTest
     public async Task Handle_ValidRequest_ReturnsImageDataAndName()
     {
         // Arrange
-        var expectedImageData = new byte[] { /* Image data bytes */ };
-        var expectedImageName = "map_image_archive.zip";
+        const string expectedImageName = "map_image_archive.zip";
+        var expectedImageData = Array.Empty<byte>();
 
         var serviceMock = new Mock<IMapDownloadArchiveService>();
         serviceMock.Setup(s => s.DownloadMapImageArchiveAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))

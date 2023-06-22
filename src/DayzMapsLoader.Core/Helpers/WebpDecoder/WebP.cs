@@ -128,6 +128,14 @@ internal sealed class WebP : IDisposable
                 pinnedWebP.Free();
         }
     }
+    
+    
+    public static Bitmap RawWebpToBitmap(byte[] bytes)
+    {
+        using WebP webp = new();
+
+        return webp.Decode(bytes);
+    }
 
     public void Dispose()
     {

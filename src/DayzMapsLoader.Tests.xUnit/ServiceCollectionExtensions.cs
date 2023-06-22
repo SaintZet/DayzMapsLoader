@@ -6,11 +6,21 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DayzMapsLoader.Tests.xUnit.Extensions;
+namespace DayzMapsLoader.Tests.xUnit;
 
 internal static class ServiceCollectionExtensions
 {
     public static IServiceProvider BuildCollection(this IServiceCollection services)
+    {
+        var connectionString = GetConnectionString();
+        services.AddCoreLayer();
+        services.AddInfrastructureLayer(connectionString);
+        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+        return services.BuildServiceProvider();
+    }
+
+    public static string GetConnectionString()
     {
         var pathConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "Properties");
         var configuration = new ConfigurationBuilder()
@@ -18,10 +28,6 @@ internal static class ServiceCollectionExtensions
             .AddJsonFile("appsettings.json")
             .Build();
 
-        services.AddCoreLayer();
-        services.AddInfrastructureLayer(configuration.GetConnectionString("DefaultConnection")!);
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-
-        return services.BuildServiceProvider();
+        return configuration.GetConnectionString("DefaultConnection")!;
     }
 }

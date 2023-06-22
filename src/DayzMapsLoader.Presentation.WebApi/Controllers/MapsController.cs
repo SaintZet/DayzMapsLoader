@@ -39,7 +39,7 @@ public class MapsController : BaseController
     [ProducesResponseType(typeof(IEnumerable<Map>), 200)]
     public async Task<ActionResult<IEnumerable<Map>>> GetMapsByProviderId(int providerId)
     {
-        var query = new GetMapsByProviderId(providerId);
+        var query = new GetMapsByProviderIdQuery(providerId);
         var maps = await _mediator.Send(query);
 
         return Ok(maps);

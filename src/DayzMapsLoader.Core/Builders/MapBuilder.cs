@@ -76,14 +76,7 @@ internal class MapBuilder : IMapBuilder
         extension switch
         {
             ImageExtension.png or ImageExtension.jpg => new Bitmap(mapPart.AsStream()),
-            ImageExtension.webp => WebpToBitmap(mapPart.Data),
+            ImageExtension.webp => WebP.RawWebpToBitmap(mapPart.Data),
             _ => throw new NotImplementedException(),
         };
-    
-    public static Bitmap WebpToBitmap(byte[] bytes)
-    {
-        using WebP webp = new();
-
-        return webp.Decode(bytes);
-    }
 }

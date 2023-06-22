@@ -7,4 +7,6 @@ internal interface IBaseRepository<TEntity> where TEntity : class, new()
     Task<TEntity> AddAsync(TEntity entity);
 
     Task<TEntity> UpdateAsync(TEntity entity);
+    
+    Task DeleteAsync(TEntity entity);
 }
