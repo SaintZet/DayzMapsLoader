@@ -1,4 +1,5 @@
-﻿using DayzMapsLoader.Core.Contracts.Services;
+﻿using DayzMapsLoader.Domain.Contracts.Services;
+
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Core.Models;
 
@@ -6,7 +7,6 @@ using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
 using DayzMapsLoader.Tests.xUnit.Extensions;
 
 using MediatR;
-
 using Microsoft.Extensions.DependencyInjection;
 
 using System.IO.Compression;

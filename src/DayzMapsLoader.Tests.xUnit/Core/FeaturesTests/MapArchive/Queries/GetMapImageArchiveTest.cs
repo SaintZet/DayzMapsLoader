@@ -1,10 +1,5 @@
-﻿using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Core.Features.MapArchive.Queries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DayzMapsLoader.Core.Features.MapArchive.Queries;
+using DayzMapsLoader.Domain.Contracts.Services;
 
 namespace DayzMapsLoader.Tests.xUnit.Core.FeaturesTests.MapArchive.Queries;
 

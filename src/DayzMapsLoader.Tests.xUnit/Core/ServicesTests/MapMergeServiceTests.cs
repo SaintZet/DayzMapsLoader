@@ -1,4 +1,4 @@
-﻿using DayzMapsLoader.Core.Services;
+﻿using DayzMapsLoader.Core.Builders;
 using DayzMapsLoader.Core.Enums;
 using DayzMapsLoader.Core.Models;
 
@@ -45,7 +45,7 @@ public class MapMergeServiceTests
         var originalImage = GetOriginalImage(extension);
 
         var mapSize = new MapSize(originalImage.Height, originalImage.Width);
-        var imageMerger = new MapMergeService(mapSize, _sizeImprovementPercent);
+        var imageMerger = new MapBuilder(mapSize, _sizeImprovementPercent);
 
         var imageParts = new MapParts(new MapSize(_imageCountHorizontal, _imageCountVertical));
 
@@ -64,7 +64,7 @@ public class MapMergeServiceTests
         }
 
         //Act
-        var resultBitmap = imageMerger.Merge(imageParts, extension);
+        var resultBitmap = imageMerger.Build(imageParts, extension);
 
         //Assert
         var resultCompare = Compare(originalImage, resultBitmap);
@@ -80,7 +80,7 @@ public class MapMergeServiceTests
         {
             var webP = GetByteArrayFromEmbeddedResource(originalImagePath);
 
-            return MapMergeService.WebpToBitmap(webP);
+            return MapBuilder.WebpToBitmap(webP);
         }
 
         var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(originalImagePath)!;

@@ -1,6 +1,5 @@
-﻿using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Core.Services;
-
+﻿using DayzMapsLoader.Core.Services;
+using DayzMapsLoader.Domain.Contracts.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DayzMapsLoader.Core.Extensions;

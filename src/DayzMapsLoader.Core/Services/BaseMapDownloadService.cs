@@ -1,6 +1,7 @@
-﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
+﻿using DayzMapsLoader.Core.Builders;
+using DayzMapsLoader.Core.Contracts.Builders;
+using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Core.Contracts.Infrastructure.Services;
-using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Constants;
 using DayzMapsLoader.Core.Enums;
 using DayzMapsLoader.Core.Models;
@@ -15,7 +16,8 @@ internal abstract class BaseMapDownloadService
 {
     protected readonly IProvidedMapsRepository _providedMapsRepository;
     protected readonly IMultipleThirdPartyApiService _thirdPartyApiService;
-    private readonly IMapMergeService _mapMergeService;
+    
+    private readonly IMapBuilder _mapBuilder;
 
     protected BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
     {
@@ -23,7 +25,7 @@ internal abstract class BaseMapDownloadService
         _thirdPartyApiService = thirdPartyApiService;
 
         var mapSize = new MapSize(MapImageConstants.ImageWidthPixels, MapImageConstants.ImageHeightPixels);
-        _mapMergeService = new MapMergeService(mapSize, MapImageConstants.ImageSizeImprovementPercent);
+        _mapBuilder = new MapBuilder(mapSize, MapImageConstants.ImageSizeImprovementPercent);
     }
 
     protected async Task<MemoryStream> GetMapInMemoryStreamAsync(ProvidedMap map, int zoom)
@@ -42,7 +44,7 @@ internal abstract class BaseMapDownloadService
 
         Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
 
-        var image = _mapMergeService.Merge(mapParts, extension);
+        var image = _mapBuilder.Build(mapParts, extension);
 
         var memoryStream = new MemoryStream();
 
