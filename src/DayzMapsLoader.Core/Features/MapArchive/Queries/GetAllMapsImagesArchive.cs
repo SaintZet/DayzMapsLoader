@@ -1,5 +1,4 @@
-﻿using DayzMapsLoader.Core.Contracts.Services;
-
+﻿using DayzMapsLoader.Domain.Contracts.Services;
 using MediatR;
 
 namespace DayzMapsLoader.Core.Features.MapArchive.Queries;

@@ -1,6 +1,9 @@
+using DayzMapsLoader.Domain.Contracts.Services;
+
 using System.Diagnostics.CodeAnalysis;
 using DayzMapsLoader.Core.Contracts.Services;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
+
 using DayzMapsLoader.Tests.xUnit.Core.TestData.MapDownload;
 
 using MediatR;
