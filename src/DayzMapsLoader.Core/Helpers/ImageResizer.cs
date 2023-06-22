@@ -13,15 +13,13 @@ internal static class ImageResizer
 
         resizedPicture.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-        using (Graphics graphics = Graphics.FromImage(resizedPicture))
-        {
-            graphics.SetSettings();
+        using var graphics = Graphics.FromImage(resizedPicture);
+        graphics.SetSettings();
 
-            using ImageAttributes wrapMode = new();
-            wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+        using ImageAttributes wrapMode = new();
+        wrapMode.SetWrapMode(WrapMode.TileFlipXY);
 
-            graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-        }
+        graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
 
         return resizedPicture;
     }

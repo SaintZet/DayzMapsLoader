@@ -15,7 +15,7 @@ public class MapSize
     {
         int height = 1, weight = 1;
 
-        for (int i = 0; i < zoomLevel; i++)
+        for (var i = 0; i < zoomLevel; i++)
         {
             height *= 2;
             weight *= 2;

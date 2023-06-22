@@ -1,7 +1,7 @@
 ﻿using DayzMapsLoader.Core.Contracts.Infrastructure.Repositories;
 using DayzMapsLoader.Core.Contracts.Infrastructure.Services;
-using DayzMapsLoader.Core.Contracts.Services;
-using DayzMapsLoader.Domain.Entities;
+
+using DayzMapsLoader.Domain.Contracts.Services;
 
 using System.IO.Compression;
 
@@ -20,59 +20,55 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
-            string fileName = $"{map.Map.Name}.jpg";
-            ZipArchiveEntry zipEntry = zipArchive.CreateEntry(fileName);
+            var fileName = $"{map.Map.Name}.jpg";
+            var zipEntry = zipArchive.CreateEntry(fileName);
 
-            using MemoryStream originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
+            using var originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
             originalFileStream.Seek(0, SeekOrigin.Begin);
 
-            using Stream zipEntryStream = zipEntry.Open();
-            originalFileStream.CopyTo(zipEntryStream);
+            await using var zipEntryStream = zipEntry.Open();
+            await originalFileStream.CopyToAsync(zipEntryStream);
         }
 
-        byte[] archiveData = compressedFileStream.ToArray();
-        string archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
+        var archiveData = compressedFileStream.ToArray();
+        var archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         return (archiveData, archiveName);
     }
 
     public async Task<(byte[] data, string name)> DownloadMapImagePartsArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
-        ProvidedMap map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
+        var map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
         var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
 
-        int axisY = mapParts.Weight;
-        int axisX = mapParts.Height;
-
-        string pathToFile;
+        var axisY = mapParts.Weight;
+        var axisX = mapParts.Height;
 
         using MemoryStream compressedFileStream = new();
 
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
-            for (int y = 0; y < axisY; y++)
+            for (var y = 0; y < axisY; y++)
             {
-                for (int x = 0; x < axisX; x++)
+                for (var x = 0; x < axisX; x++)
                 {
                     var image = mapParts.GetPartOfMap(x, y).Data;
-
                     var originalFileStream = new MemoryStream(image);
 
-                    pathToFile = Path.Combine($@"Horizontal_{y}", $"({y}.{x}).png");
-
-                    ZipArchiveEntry zipEntry = zipArchive.CreateEntry(pathToFile);
+                    var pathToFile = Path.Combine($@"Horizontal_{y}", $"({y}.{x}).png");
+                    var zipEntry = zipArchive.CreateEntry(pathToFile);
 
                     originalFileStream.Seek(0, SeekOrigin.Begin);
 
-                    using Stream zipEntryStream = zipEntry.Open();
+                    await using var zipEntryStream = zipEntry.Open();
                     originalFileStream.CopyTo(zipEntryStream);
                 }
             }
         }
 
-        byte[] archiveData = compressedFileStream.ToArray();
-        string archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
+        var archiveData = compressedFileStream.ToArray();
+        var archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         return (archiveData, archiveName);
     }
@@ -89,9 +85,9 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
                 var fileName = $"{map.Map.Name}.jpg";
                 var zipEntry = zipArchive.CreateEntry(fileName);
 
-                using var entryStream = zipEntry.Open();
+                await using var entryStream = zipEntry.Open();
                 var bytes = await GetMapInBytesAsync(map, zoom);
-                entryStream.Write(bytes, 0, bytes.Length);
+                await entryStream.WriteAsync(bytes);
             }
         }
 
