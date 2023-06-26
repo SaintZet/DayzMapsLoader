@@ -4,7 +4,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
+using DayzMapsLoader.Presentation.Wpf.ViewModels.MultipleDownload;
+using DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 using DayzMapsLoader.Presentation.Wpf.Views;
+using DayzMapsLoader.Presentation.Wpf.Views.MultipleDownload;
+using DayzMapsLoader.Presentation.Wpf.Views.SingleDownload;
 
 namespace DayzMapsLoader.Presentation.Wpf.Services;
 
@@ -17,9 +21,13 @@ public class PageService : IPageService
     {
         _serviceProvider = serviceProvider;
         Configure<SettingsViewModel, SettingsPage>();
-        Configure<ContentGridProvidersViewModel, ContentGridProvidersPage>();
-        Configure<ContentGridMapsViewModel, ContentGridMapsPage>();
-        Configure<ContentGridMapDetailViewModel, ContentGridMapDetailPage>();
+        
+        Configure<SingleDownloadProvidersViewModel, SingleDownloadProvidersPage>();
+        Configure<SingleDownloadMapsViewModel, SingleDownloadMapsPage>();
+        Configure<SingleDownloadMapDetailViewModel, SingleDownloadMapDetailPage>();
+        
+        Configure<MultipleDownloadProvidersViewModel, MultipleDownloadProvidersPage>();
+        Configure<MultipleDownloadMapDetailViewModel, MultipleDownloadMapDetailPage>();
     }
 
     public Type GetPageType(string key)

@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
@@ -8,12 +11,9 @@ using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
 
 using MediatR;
 
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+namespace DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 
-namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
-
-public class ContentGridMapsViewModel : ObservableObject, INavigationAware
+public class SingleDownloadMapsViewModel : ObservableObject, INavigationAware
 {
     private readonly INavigationService _navigationService;
     private readonly IMediator _mediator;
@@ -21,7 +21,7 @@ public class ContentGridMapsViewModel : ObservableObject, INavigationAware
     private ICommand _navigateToDetailCommand;
     private int _selectedProviderId;
 
-    public ContentGridMapsViewModel(IMediator mediator, INavigationService navigationService)
+    public SingleDownloadMapsViewModel(IMediator mediator, INavigationService navigationService)
     {
         _mediator = mediator;
         _navigationService = navigationService;
@@ -53,6 +53,6 @@ public class ContentGridMapsViewModel : ObservableObject, INavigationAware
 
     private void NavigateToDetail(ProvidedMap map)
     {
-        _navigationService.NavigateTo(typeof(ContentGridMapDetailViewModel).FullName, map);
+        _navigationService.NavigateTo(typeof(SingleDownloadMapDetailViewModel).FullName, map);
     }
 }

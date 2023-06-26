@@ -2,7 +2,7 @@
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
-
+using DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 using Microsoft.Extensions.Hosting;
 
 namespace DayzMapsLoader.Presentation.Wpf.Services;
@@ -79,7 +79,7 @@ public class ApplicationHostService : IHostedService
             _shellWindow = _serviceProvider.GetService(typeof(IShellWindow)) as IShellWindow;
             _navigationService.Initialize(_shellWindow.GetNavigationFrame());
             _shellWindow.ShowWindow();
-            _navigationService.NavigateTo(typeof(ContentGridProvidersViewModel).FullName);
+            _navigationService.NavigateTo(typeof(SingleDownloadProvidersViewModel).FullName);
             await Task.CompletedTask;
         }
     }

@@ -1,5 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using DayzMapsLoader.Core.Features.MapArchive.Queries;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
@@ -7,17 +12,13 @@ using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
 
 using MediatR;
 
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows.Input;
+namespace DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 
-namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
-
-public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
+public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly IMediator _mediator;
 
-    public ContentGridMapDetailViewModel(IMediator mediator)
+    public SingleDownloadMapDetailViewModel(IMediator mediator)
     {
         _mediator = mediator;
         DownloadMapCommand = new RelayCommand(DownloadMap);
@@ -60,7 +61,7 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
     private static ObservableCollection<int> GetZoomLevelsObservableCollection(int maxValue)
     {
         var zoomLevels = new ObservableCollection<int>();
-        for (int i = 0; i < maxValue; i++)
+        for (var i = 0; i < maxValue; i++)
             zoomLevels.Add(i);
 
         return zoomLevels;
@@ -86,7 +87,7 @@ public class ContentGridMapDetailViewModel : ObservableObject, INavigationAware
         var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
         var (data, name) = await _mediator.Send(query);
 
-        string filePath = Path.Combine("D:\\Projects\\Test", name);
-        File.WriteAllBytes(filePath, data);
+        var filePath = Path.Combine("C:\\Users\\s.chepets\\RiderProjects\\Test output", name);
+        await File.WriteAllBytesAsync(filePath, data);
     }
 }

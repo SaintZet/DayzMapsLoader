@@ -6,7 +6,8 @@ using CommunityToolkit.Mvvm.Input;
 
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Properties;
-
+using DayzMapsLoader.Presentation.Wpf.ViewModels.MultipleDownload;
+using DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 using MahApps.Metro.Controls;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
@@ -44,9 +45,15 @@ public class ShellViewModel : ObservableObject
     {
         new HamburgerMenuGlyphItem()
         {
-            Label = Resources.ShellContentGridPage,
+            Label = Resources.ShellSingleDownloadPage,
             Glyph = "\uE8A5",
-            TargetPageType = typeof(ContentGridProvidersViewModel)
+            TargetPageType = typeof(SingleDownloadProvidersViewModel)
+        },
+        new HamburgerMenuGlyphItem()
+        {
+            Label = Resources.ShellMultipleDownloadPage,
+            Glyph = "\uE8A5",
+            TargetPageType = typeof(MultipleDownloadProvidersViewModel)
         },
     };
 

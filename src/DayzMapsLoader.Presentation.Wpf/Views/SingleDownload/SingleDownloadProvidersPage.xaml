@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="DayzMapsLoader.Presentation.Wpf.Views.ContentGridProvidersPage"
+    x:Class="DayzMapsLoader.Presentation.Wpf.Views.SingleDownload.SingleDownloadProvidersPage"
     Style="{DynamicResource MahApps.Styles.Page}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

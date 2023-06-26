@@ -6,11 +6,15 @@ using DayzMapsLoader.Core.Extensions;
 using DayzMapsLoader.Infrastructure.Extensions;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
+using DayzMapsLoader.Presentation.Wpf.Extensions;
 using DayzMapsLoader.Presentation.Wpf.Models;
 using DayzMapsLoader.Presentation.Wpf.Services;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
+using DayzMapsLoader.Presentation.Wpf.ViewModels.MultipleDownload;
+using DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 using DayzMapsLoader.Presentation.Wpf.Views;
-
+using DayzMapsLoader.Presentation.Wpf.Views.MultipleDownload;
+using DayzMapsLoader.Presentation.Wpf.Views.SingleDownload;
 using MediatR;
 
 using Microsoft.Extensions.Configuration;
@@ -52,14 +56,8 @@ public partial class App
         services.AddTransient<SettingsViewModel>();
         services.AddTransient<SettingsPage>();
 
-        services.AddTransient<ContentGridProvidersViewModel>();
-        services.AddTransient<ContentGridProvidersPage>();
-
-        services.AddTransient<ContentGridMapsViewModel>();
-        services.AddTransient<ContentGridMapsPage>();
-
-        services.AddTransient<ContentGridMapDetailViewModel>();
-        services.AddTransient<ContentGridMapDetailPage>();
+        services.AddSingleDownloadPageGroup();
+        services.AddMultipleDownloadPageGroup();
 
         // Configuration
         services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
@@ -68,7 +66,7 @@ public partial class App
     private async void OnStartup(object sender, StartupEventArgs e)
     {
         var appLocation = Directory.GetCurrentDirectory();
-        var configPath = Path.Combine(appLocation!, "appsettings.json");
+        var configPath = Path.Combine(appLocation!, "Properties", "appsettings.json");
 
         _host = Host.CreateDefaultBuilder(e.Args)
             .ConfigureAppConfiguration((_, config) =>

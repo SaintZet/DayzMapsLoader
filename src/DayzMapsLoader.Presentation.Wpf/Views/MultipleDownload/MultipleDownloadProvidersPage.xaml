@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="DayzMapsLoader.Presentation.Wpf.Views.ContentGridMapsPage"
+    x:Class="DayzMapsLoader.Presentation.Wpf.Views.MultipleDownload.MultipleDownloadProvidersPage"
     Style="{DynamicResource MahApps.Styles.Page}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,7 +17,7 @@
                 Height="160"
                 Background="{DynamicResource MahApps.Brushes.Gray10}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource MediumLeftTopRightBottomMargin}">
-                    <!--Set map ico-->
+                    <!--Set provider map ico-->
                     <!--<TextBlock
                         FontSize="24"
                         Text="{Binding Symbol}"
@@ -27,7 +27,7 @@
                         Margin="{StaticResource XXSmallTopMargin}"
                         HorizontalAlignment="Center"
                         Style="{StaticResource BodyTextStyle}"
-                        Text="{Binding Map.Name}" />
+                        Text="{Binding Name}" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -41,7 +41,7 @@
         <TextBlock
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
-            Text="{x:Static properties:Resources.ContentGridMapsPageTitle}" />
+            Text="{x:Static properties:Resources.ContentGridProvidersPageTitle}" />
         <ListView
             Grid.Row="1"
             Margin="{StaticResource SmallLeftMargin}"
