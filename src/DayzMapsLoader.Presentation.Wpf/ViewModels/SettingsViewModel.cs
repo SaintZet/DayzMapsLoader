@@ -16,7 +16,7 @@ public class SettingsViewModel : ObservableObject, INavigationAware
 {
     private readonly AppConfig _appConfig;
     private readonly IThemeSelectorService _themeSelectorService;
-    private readonly ISaveArchiveService _saveArchiveService;
+    private readonly IDownloadArchiveService _downloadArchiveService;
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
     
@@ -61,13 +61,13 @@ public class SettingsViewModel : ObservableObject, INavigationAware
     public SettingsViewModel(
         IOptions<AppConfig> appConfig, 
         IThemeSelectorService themeSelectorService,
-        ISaveArchiveService saveArchiveService,
+        IDownloadArchiveService downloadArchiveService,
         ISystemService systemService, 
         IApplicationInfoService applicationInfoService)
     {
         _appConfig = appConfig.Value;
         _themeSelectorService = themeSelectorService;
-        _saveArchiveService = saveArchiveService;
+        _downloadArchiveService = downloadArchiveService;
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
     }
@@ -76,8 +76,8 @@ public class SettingsViewModel : ObservableObject, INavigationAware
     {
         VersionDescription = $"{Properties.Resources.AppDisplayName} - {_applicationInfoService.GetVersion()}";
         Theme = _themeSelectorService.GetCurrentTheme();
-        SaveOption = _saveArchiveService.GetCurrentSaveOption();
-        DefaultPathToSave = _saveArchiveService.GetDefaultPathToSave();
+        SaveOption = _downloadArchiveService.GetCurrentSaveOption();
+        DefaultPathToSave = _downloadArchiveService.GetDefaultPathToSave();
     }
 
     public void OnNavigatedFrom()
@@ -93,14 +93,14 @@ public class SettingsViewModel : ObservableObject, INavigationAware
     private void OnSetSaveOption(string saveOption)
     {
         var option = (ArchiveSaveOptions)Enum.Parse(typeof(ArchiveSaveOptions), saveOption);
-        _saveArchiveService.SetSaveOption(option);
+        _downloadArchiveService.SetSaveOption(option);
     }
 
     private void OnSetDefaultPathToSave()
     {
         var path = _systemService.OpenFolderDialog(DefaultPathToSave);
         DefaultPathToSave = path;
-        _saveArchiveService.SetDefaultPathToSave(path);
+        _downloadArchiveService.SetDefaultPathToSave(path);
     }
     
     private void OnPrivacyStatement()

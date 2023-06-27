@@ -1,8 +1,9 @@
 using DayzMapsLoader.Presentation.Wpf.Models;
+using MediatR;
 
 namespace DayzMapsLoader.Presentation.Wpf.Contracts.Services
 {
-    public interface ISaveArchiveService
+    public interface IDownloadArchiveService
     {
         void SetSaveOption(ArchiveSaveOptions option);
         
@@ -12,6 +13,6 @@ namespace DayzMapsLoader.Presentation.Wpf.Contracts.Services
 
         string GetDefaultPathToSave();
 
-        string GetPathToSave();
+        Task DownloadArchive(IRequest<(byte[] data, string name)> request);
     }
 }

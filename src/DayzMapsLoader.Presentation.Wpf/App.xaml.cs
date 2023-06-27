@@ -46,7 +46,7 @@ public partial class App
         services.AddSingleton<ISystemService, SystemService>();
         services.AddSingleton<IPersistAndRestoreService, PersistAndRestoreService>();
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-        services.AddSingleton<ISaveArchiveService, SaveArchiveService>();
+        services.AddSingleton<IDownloadArchiveService, DownloadArchiveService>();
         services.AddSingleton<IPageService, PageService>();
         services.AddSingleton<INavigationService, NavigationService>();
 

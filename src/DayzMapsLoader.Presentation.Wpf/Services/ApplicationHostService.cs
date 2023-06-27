@@ -13,7 +13,7 @@ public class ApplicationHostService : IHostedService
     private readonly INavigationService _navigationService;
     private readonly IPersistAndRestoreService _persistAndRestoreService;
     private readonly IThemeSelectorService _themeSelectorService;
-    private readonly ISaveArchiveService _saveArchiveService;
+    private readonly IDownloadArchiveService _downloadArchiveService;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private IShellWindow _shellWindow;
     private bool _isInitialized;
@@ -23,14 +23,14 @@ public class ApplicationHostService : IHostedService
         IEnumerable<IActivationHandler> activationHandlers,
         INavigationService navigationService,
         IThemeSelectorService themeSelectorService,
-        ISaveArchiveService saveArchiveService,
+        IDownloadArchiveService downloadArchiveService,
         IPersistAndRestoreService persistAndRestoreService)
     {
         _serviceProvider = serviceProvider;
         _activationHandlers = activationHandlers;
         _navigationService = navigationService;
         _themeSelectorService = themeSelectorService;
-        _saveArchiveService = saveArchiveService;
+        _downloadArchiveService = downloadArchiveService;
         _persistAndRestoreService = persistAndRestoreService;
     }
 

@@ -1,13 +1,19 @@
+using System.IO;
+using DayzMapsLoader.Domain.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Models;
+using MediatR;
 
 namespace DayzMapsLoader.Presentation.Wpf.Services
 {
-    public class SaveArchiveService : ISaveArchiveService
+    public class DownloadArchiveService : IDownloadArchiveService
     {
+        private readonly IMediator _mediator;
         private readonly ISystemService _systemService;
-        public SaveArchiveService(ISystemService systemService)
+        
+        public DownloadArchiveService(IMediator mediator, ISystemService systemService)
         {
+            _mediator = mediator;
             _systemService = systemService;
         }
         
@@ -40,8 +46,33 @@ namespace DayzMapsLoader.Presentation.Wpf.Services
 
             return path;
         }
-
-        public string GetPathToSave()
+        
+        public async Task DownloadArchive(IRequest<(byte[] data, string name)> request)
+        {
+            var filePath = GetPathToSave();
+            try
+            {
+                _systemService.HasWriteAccessAsync(filePath);
+            
+                var (file, fileName) = await _mediator.Send(request);
+            
+                await File.WriteAllBytesAsync(Path.Combine(filePath, fileName), file);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _systemService.ShowErrorDialog("Access error: " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                _systemService.ShowErrorDialog("I/O error: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _systemService.ShowErrorDialog("Core error: " + ex.Message);
+            }
+        } 
+        
+        private string GetPathToSave()
         {
             var defaultPath = GetDefaultPathToSave();
 
