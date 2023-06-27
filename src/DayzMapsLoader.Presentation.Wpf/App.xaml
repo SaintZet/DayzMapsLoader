@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="/Styles/ListView.xaml" />
                 <ResourceDictionary Source="/Styles/MetroWindow.xaml" />
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
+                <ResourceDictionary Source="/Styles/TextBox.xaml" />
                  <!--
                 MahApps.Metro resource dictionaries.
                 Learn more about using MahApps.Metro at https://mahapps.com/

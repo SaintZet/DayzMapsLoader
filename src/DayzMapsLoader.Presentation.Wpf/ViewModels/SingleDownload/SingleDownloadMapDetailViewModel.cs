@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using DayzMapsLoader.Core.Features.MapArchive.Queries;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
+using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
 
 using MediatR;
@@ -17,10 +18,15 @@ namespace DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly IMediator _mediator;
+    private readonly ISaveArchiveService _saveArchiveService;
+    private readonly ISystemService _systemService;
 
-    public SingleDownloadMapDetailViewModel(IMediator mediator)
+    public SingleDownloadMapDetailViewModel(IMediator mediator, ISaveArchiveService saveArchiveService, ISystemService systemService)
     {
         _mediator = mediator;
+        _saveArchiveService = saveArchiveService;
+        _systemService = systemService;
+        
         DownloadMapCommand = new RelayCommand(DownloadMap);
     }
 
@@ -31,6 +37,17 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
     public ObservableCollection<MapType> MapTypes { get; set; }
 
     public MapType SelectedMapType { get; set; }
+    
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get { return _isBusy; }
+        set
+        {
+            _isBusy = value;
+            OnPropertyChanged();
+        }
+    }
 
     public ObservableCollection<int> ZoomLevels { get; set; }
 
@@ -84,10 +101,29 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
 
     private async void DownloadMap()
     {
+        var filePath = _saveArchiveService.GetPathToSave();
+        try
+        {
+            _systemService.HasWriteAccessAsync(filePath);
+        }
+        catch (Exception ex)
+        {
+            _systemService.ShowErrorDialog("Error: " + ex.Message);
+            return;
+        }
+        
         var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
-        var (data, name) = await _mediator.Send(query);
-
-        var filePath = Path.Combine("C:\\Users\\s.chepets\\RiderProjects\\Test output", name);
-        await File.WriteAllBytesAsync(filePath, data);
+        IsBusy = true;
+        var (file, fileName) = await _mediator.Send(query);
+        IsBusy = false;
+        
+        try
+        {
+            await File.WriteAllBytesAsync(Path.Combine(filePath, fileName), file);
+        }
+        catch (Exception ex)
+        {
+            _systemService.ShowErrorDialog("Error: " + ex.Message);
+        }
     }
 }

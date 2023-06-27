@@ -5,9 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="clr-namespace:DayzMapsLoader.Presentation.Wpf.Converters"
+    xmlns:properties="clr-namespace:DayzMapsLoader.Presentation.Wpf.Properties"
     mc:Ignorable="d"
     d:DesignHeight="500" d:DesignWidth="900">
-    <Grid>
+    <Page.Resources>
+        <converters:BooleanToCursorConverter x:Key="BooleanToCursorConverter" />
+    </Page.Resources>
+    <Grid Cursor="{Binding IsBusy, Converter={StaticResource BooleanToCursorConverter}}">
         <ScrollViewer
             x:Name="contentScroll"
             IsTabStop="True">
@@ -84,15 +89,14 @@
 
                         <Button Margin="{StaticResource MediumTopMargin}"
                                 HorizontalAlignment="Right"
-                                Background="LightGreen"
                                 BorderThickness="2"
                                 BorderBrush="Black"
-                                Width="200"
-                                Content="Download"
+                                Width="150"
+                                Content="{x:Static properties:Resources.Download}"
                                 Command="{Binding DownloadMapCommand}" />
                     </StackPanel>
                 </Grid>
-
+                
                 <!--<TextBlock
                     Margin="{StaticResource MediumTopMargin}"
                     Style="{StaticResource SubtitleTextStyle}"

@@ -87,6 +87,15 @@ namespace DayzMapsLoader.Presentation.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download DayZ maps in high resolution. Open source project..
         /// </summary>
         public static string SettingsPageAboutText {
@@ -105,11 +114,29 @@ namespace DayzMapsLoader.Presentation.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ask where to save.
+        /// </summary>
+        public static string SettingsPageChooseAskAboutSave {
+            get {
+                return ResourceManager.GetString("SettingsPageChooseAskAboutSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Theme.
         /// </summary>
         public static string SettingsPageChooseThemeText {
             get {
                 return ResourceManager.GetString("SettingsPageChooseThemeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Path to Save.
+        /// </summary>
+        public static string SettingsPageDefaultPathTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageDefaultPathTitle", resourceCulture);
             }
         }
         
@@ -132,6 +159,15 @@ namespace DayzMapsLoader.Presentation.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Always.
+        /// </summary>
+        public static string SettingsPageRadioButtonAlways {
+            get {
+                return ResourceManager.GetString("SettingsPageRadioButtonAlways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         public static string SettingsPageRadioButtonDarkTheme {
@@ -150,11 +186,29 @@ namespace DayzMapsLoader.Presentation.Wpf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save to default path.
+        /// </summary>
+        public static string SettingsPageRadioButtonSaveToDefault {
+            get {
+                return ResourceManager.GetString("SettingsPageRadioButtonSaveToDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         public static string SettingsPageRadioButtonWindowsDefaultTheme {
             get {
                 return ResourceManager.GetString("SettingsPageRadioButtonWindowsDefaultTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SettingsPageSaveTitle {
+            get {
+                return ResourceManager.GetString("SettingsPageSaveTitle", resourceCulture);
             }
         }
         

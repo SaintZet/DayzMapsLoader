@@ -168,4 +168,22 @@
   <data name="ShellMultipleDownloadPage" xml:space="preserve">
     <value>Multiple download</value>
   </data>
+  <data name="SettingsPageSaveTitle" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SettingsPageChooseAskAboutSave" xml:space="preserve">
+    <value>Ask where to save</value>
+  </data>
+  <data name="SettingsPageRadioButtonAlways" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="SettingsPageRadioButtonSaveToDefault" xml:space="preserve">
+    <value>Save to default path</value>
+  </data>
+  <data name="SettingsPageDefaultPathTitle" xml:space="preserve">
+    <value>Default Path to Save</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
 </root>

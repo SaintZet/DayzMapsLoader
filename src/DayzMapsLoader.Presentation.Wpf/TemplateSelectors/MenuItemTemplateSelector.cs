@@ -11,18 +11,11 @@ public class MenuItemTemplateSelector : DataTemplateSelector
 
     public DataTemplate ImageDataTemplate { get; set; }
 
-    public override DataTemplate SelectTemplate(object item, DependencyObject container)
-    {
-        if (item is HamburgerMenuGlyphItem)
+    public override DataTemplate SelectTemplate(object item, DependencyObject container) =>
+        item switch
         {
-            return GlyphDataTemplate;
-        }
-
-        if (item is HamburgerMenuImageItem)
-        {
-            return ImageDataTemplate;
-        }
-
-        return base.SelectTemplate(item, container);
-    }
+            HamburgerMenuGlyphItem => GlyphDataTemplate,
+            HamburgerMenuImageItem => ImageDataTemplate,
+            _ => base.SelectTemplate(item, container)
+        };
 }

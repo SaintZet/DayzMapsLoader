@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.IO;
+using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,22 +12,39 @@ using Microsoft.Extensions.Options;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels;
 
-// TODO: Change the URL for your privacy policy in the appsettings.json file, currently set to https://YourPrivacyUrlGoesHere
 public class SettingsViewModel : ObservableObject, INavigationAware
 {
     private readonly AppConfig _appConfig;
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly ISaveArchiveService _saveArchiveService;
     private readonly ISystemService _systemService;
     private readonly IApplicationInfoService _applicationInfoService;
+    
     private AppTheme _theme;
+    private ArchiveSaveOptions _saveOption;
+    
+    private string _defaultPathToSave;
     private string _versionDescription;
+    
     private ICommand _setThemeCommand;
+    private ICommand _setSaveOptionCommand;
+    private ICommand _setDefaultPathToSave;
     private ICommand _privacyStatementCommand;
 
     public AppTheme Theme
     {
         get { return _theme; }
         set { SetProperty(ref _theme, value); }
+    }
+    public ArchiveSaveOptions SaveOption
+    {
+        get { return _saveOption; }
+        set { SetProperty(ref _saveOption, value); }
+    }
+    public string DefaultPathToSave
+    {
+        get { return _defaultPathToSave; }
+        set { SetProperty(ref _defaultPathToSave, value);  }
     }
 
     public string VersionDescription
@@ -35,14 +53,21 @@ public class SettingsViewModel : ObservableObject, INavigationAware
         set { SetProperty(ref _versionDescription, value); }
     }
 
-    public ICommand SetThemeCommand => _setThemeCommand ?? (_setThemeCommand = new RelayCommand<string>(OnSetTheme));
+    public ICommand SetThemeCommand => _setThemeCommand ??= new RelayCommand<string>(OnSetTheme);
+    public ICommand SetSaveOptionCommand => _setSaveOptionCommand ??= new RelayCommand<string>(OnSetSaveOption);
+    public ICommand SetDefaultPathToSave => _setDefaultPathToSave ??= new RelayCommand(OnSetDefaultPathToSave);
+    public ICommand PrivacyStatementCommand => _privacyStatementCommand ??= new RelayCommand(OnPrivacyStatement);
 
-    public ICommand PrivacyStatementCommand => _privacyStatementCommand ?? (_privacyStatementCommand = new RelayCommand(OnPrivacyStatement));
-
-    public SettingsViewModel(IOptions<AppConfig> appConfig, IThemeSelectorService themeSelectorService, ISystemService systemService, IApplicationInfoService applicationInfoService)
+    public SettingsViewModel(
+        IOptions<AppConfig> appConfig, 
+        IThemeSelectorService themeSelectorService,
+        ISaveArchiveService saveArchiveService,
+        ISystemService systemService, 
+        IApplicationInfoService applicationInfoService)
     {
         _appConfig = appConfig.Value;
         _themeSelectorService = themeSelectorService;
+        _saveArchiveService = saveArchiveService;
         _systemService = systemService;
         _applicationInfoService = applicationInfoService;
     }
@@ -51,6 +76,8 @@ public class SettingsViewModel : ObservableObject, INavigationAware
     {
         VersionDescription = $"{Properties.Resources.AppDisplayName} - {_applicationInfoService.GetVersion()}";
         Theme = _themeSelectorService.GetCurrentTheme();
+        SaveOption = _saveArchiveService.GetCurrentSaveOption();
+        DefaultPathToSave = _saveArchiveService.GetDefaultPathToSave();
     }
 
     public void OnNavigatedFrom()
@@ -62,7 +89,20 @@ public class SettingsViewModel : ObservableObject, INavigationAware
         var theme = (AppTheme)Enum.Parse(typeof(AppTheme), themeName);
         _themeSelectorService.SetTheme(theme);
     }
+    
+    private void OnSetSaveOption(string saveOption)
+    {
+        var option = (ArchiveSaveOptions)Enum.Parse(typeof(ArchiveSaveOptions), saveOption);
+        _saveArchiveService.SetSaveOption(option);
+    }
 
+    private void OnSetDefaultPathToSave()
+    {
+        var path = _systemService.OpenFolderDialog(DefaultPathToSave);
+        DefaultPathToSave = path;
+        _saveArchiveService.SetDefaultPathToSave(path);
+    }
+    
     private void OnPrivacyStatement()
         => _systemService.OpenInWebBrowser(_appConfig.PrivacyStatement);
 }
