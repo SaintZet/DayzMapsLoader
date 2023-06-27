@@ -56,11 +56,9 @@
                             Style="{StaticResource PageTitleStyle}"
                             Text="{Binding Provider.Name}" />
 
-                        <StackPanel
-                            Margin="{StaticResource SmallLeftTopMargin}">
+                        <StackPanel Margin="{StaticResource SmallLeftTopMargin}">
                             <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author Link" />
                             <TextBlock
-                                Margin="{StaticResource SmallTopMargin}"
                                 AutomationProperties.Name="{Binding Text, ElementName=Link}">
                                 <Hyperlink
                                     Command="{Binding LinkCommand}"
