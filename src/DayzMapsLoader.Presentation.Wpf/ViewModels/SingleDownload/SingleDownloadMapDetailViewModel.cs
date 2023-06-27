@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,38 +17,53 @@ namespace DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly IMediator _mediator;
-    private readonly ISaveArchiveService _saveArchiveService;
-    private readonly ISystemService _systemService;
-
-    public SingleDownloadMapDetailViewModel(IMediator mediator, ISaveArchiveService saveArchiveService, ISystemService systemService)
+    private readonly IDownloadArchiveService _downloadArchiveService;
+    
+    private ICommand _downloadMapCommand;
+    
+    private ProvidedMap _map;
+    private MapType _selectedMapType;
+    private ObservableCollection<MapType> _mapTypes;
+    private ObservableCollection<int> _zoomLevels;
+    private bool _isBusy;
+    
+    public SingleDownloadMapDetailViewModel(IMediator mediator, IDownloadArchiveService downloadArchiveService)
     {
         _mediator = mediator;
-        _saveArchiveService = saveArchiveService;
-        _systemService = systemService;
-        
-        DownloadMapCommand = new RelayCommand(DownloadMap);
+        _downloadArchiveService = downloadArchiveService;
     }
 
-    public ProvidedMap Map { get; set; }
-
-    public ICommand DownloadMapCommand { get; }
-
-    public ObservableCollection<MapType> MapTypes { get; set; }
-
-    public MapType SelectedMapType { get; set; }
+    public ICommand DownloadMapCommand => _downloadMapCommand ??= new RelayCommand(DownloadMap);
     
-    private bool _isBusy;
+    public ProvidedMap Map
+    {
+        get => _map;
+        set => SetProperty(ref _map, value);
+    }
+
+    public MapType SelectedMapType 
+    {
+        get => _selectedMapType;
+        set => SetProperty(ref _selectedMapType, value);
+    }
+    
+    public ObservableCollection<MapType> MapTypes
+    {
+        get => _mapTypes;
+        set => SetProperty(ref _mapTypes, value);
+    }
+
+    public ObservableCollection<int> ZoomLevels
+    {
+        get => _zoomLevels;
+        set => SetProperty(ref _zoomLevels, value);
+    }
+    
     public bool IsBusy
     {
-        get { return _isBusy; }
-        set
-        {
-            _isBusy = value;
-            OnPropertyChanged();
-        }
+        get => _isBusy;
+        set => SetProperty(ref _isBusy, value);
     }
-
-    public ObservableCollection<int> ZoomLevels { get; set; }
 
     public int SelectedZoomLevel { get; set; }
 
@@ -59,16 +73,9 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
             throw new ArgumentException("parameter is not correct!");
 
         Map = providedMap;
-        OnPropertyChanged(nameof(MapTypes));
-
-        ZoomLevels = GetZoomLevelsObservableCollection(Map.MaxMapLevel);
-        OnPropertyChanged(nameof(ZoomLevels));
-
         MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.Map.Id);
-        OnPropertyChanged(nameof(MapTypes));
-
         SelectedMapType = MapTypes[0];
-        OnPropertyChanged(nameof(SelectedMapType));
+        ZoomLevels = GetZoomLevelsObservableCollection(Map.MaxMapLevel);
     }
 
     public void OnNavigatedFrom()
@@ -101,29 +108,15 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
 
     private async void DownloadMap()
     {
-        var filePath = _saveArchiveService.GetPathToSave();
-        try
-        {
-            _systemService.HasWriteAccessAsync(filePath);
-        }
-        catch (Exception ex)
-        {
-            _systemService.ShowErrorDialog("Error: " + ex.Message);
-            return;
-        }
-        
-        var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
         IsBusy = true;
-        var (file, fileName) = await _mediator.Send(query);
-        IsBusy = false;
-        
         try
         {
-            await File.WriteAllBytesAsync(Path.Combine(filePath, fileName), file);
+            var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
+            await _downloadArchiveService.DownloadArchive(query);
         }
-        catch (Exception ex)
+        finally
         {
-            _systemService.ShowErrorDialog("Error: " + ex.Message);
+            IsBusy = false;
         }
     }
 }

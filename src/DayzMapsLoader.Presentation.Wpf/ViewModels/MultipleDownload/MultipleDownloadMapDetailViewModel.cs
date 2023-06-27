@@ -1,12 +1,15 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows.Input;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using DayzMapsLoader.Core.Features.MapArchive.Queries;
 using DayzMapsLoader.Core.Features.ProvidedMaps.Queries;
 using DayzMapsLoader.Domain.Entities;
+using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.ViewModels;
+
 using MediatR;
 
 namespace DayzMapsLoader.Presentation.Wpf.ViewModels.MultipleDownload;
@@ -14,20 +17,40 @@ namespace DayzMapsLoader.Presentation.Wpf.ViewModels.MultipleDownload;
 public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationAware
 {
     private readonly IMediator _mediator;
+    private readonly IDownloadArchiveService _downloadArchiveService;
 
-    public MultipleDownloadMapDetailViewModel(IMediator mediator)
+    private ICommand _downloadMapsCommand;
+
+    private MapProvider _provider;
+    private ObservableCollection<int>  _zoomLevels;
+    private int _selectedZoomLevel;
+    private bool _isBusy;
+    
+    public MultipleDownloadMapDetailViewModel(IMediator mediator, IDownloadArchiveService downloadArchiveService)
     {
         _mediator = mediator;
-        DownloadMapsCommand = new RelayCommand(DownloadMaps);
+        _downloadArchiveService = downloadArchiveService;
     }
 
-    public MapProvider Provider { get; set; }
+    public ICommand DownloadMapsCommand => _downloadMapsCommand ??= new RelayCommand(DownloadMaps);
 
-    public ICommand DownloadMapsCommand { get; }
+    public MapProvider Provider
+    {
+        get => _provider;
+        set => SetProperty(ref _provider, value);
+    }
 
-    public ObservableCollection<int> ZoomLevels { get; set; }
+    public ObservableCollection<int> ZoomLevels
+    {
+        get => _zoomLevels;
+        set => SetProperty(ref _zoomLevels, value);
+    }
 
-    public int SelectedZoomLevel { get; set; }
+    public int SelectedZoomLevel
+    {
+        get => _selectedZoomLevel;
+        set => SetProperty(ref _selectedZoomLevel, value);
+    }
 
     public async void OnNavigatedTo(object parameter)
     {
@@ -45,7 +68,6 @@ public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationA
         maxCommonLevel = mapsByProviderId.All(obj => obj.MaxMapLevel >= maxCommonLevel) ? maxCommonLevel : 0; 
         
         ZoomLevels = GetZoomLevelsObservableCollection(maxCommonLevel);
-        OnPropertyChanged(nameof(ZoomLevels));
     }
 
     public void OnNavigatedFrom()
@@ -60,13 +82,24 @@ public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationA
 
         return zoomLevels;
     }
+    
+    public bool IsBusy
+    {
+        get => _isBusy;
+        set => SetProperty(ref _isBusy, value);
+    }
 
     private async void DownloadMaps()
     {
-        var query = new GetAllMapsImagesArchiveQuery(Provider.Id, SelectedZoomLevel);
-        var (data, name) = await _mediator.Send(query);
-
-        var filePath = Path.Combine("C:\\Users\\s.chepets\\RiderProjects\\Test output", name);
-        await File.WriteAllBytesAsync(filePath, data);
+        IsBusy = true;
+        try
+        {
+            var request = new GetAllMapsImagesArchiveQuery(Provider.Id, SelectedZoomLevel);
+            await _downloadArchiveService.DownloadArchive(request);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

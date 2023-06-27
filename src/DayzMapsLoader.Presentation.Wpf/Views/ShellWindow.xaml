@@ -10,7 +10,7 @@
     xmlns:templateSelectors="clr-namespace:DayzMapsLoader.Presentation.Wpf.TemplateSelectors"
     Style="{StaticResource CustomMetroWindow}"
     mc:Ignorable="d"
-    MinWidth="700" MaxWidth="700"
+    MinWidth="680" MaxWidth="680"
     MinHeight="580" MaxHeight="580"
     WindowStartupLocation="CenterScreen"
     Title="{x:Static properties:Resources.AppDisplayName}">
@@ -25,7 +25,7 @@
     <controls:MetroWindow.LeftWindowCommands>
         <controls:WindowCommands>
             <Button
-                Width="{Binding ElementName=hamburgerMenu, Path=CompactPaneLength}"
+                Width="{Binding ElementName=HamburgerMenu, Path=CompactPaneLength}"
                 AutomationProperties.Name="{x:Static properties:Resources.ShellGoBackButton}"
                 ToolTip="{x:Static properties:Resources.ShellGoBackButton}"
                 Command="{Binding GoBackCommand}">
@@ -93,7 +93,7 @@
     </controls:MetroWindow.Resources>
     <controls:MetroWindow.Content>
         <controls:HamburgerMenu
-            x:Name="hamburgerMenu"
+            x:Name="HamburgerMenu"
             HamburgerButtonName="{x:Static properties:Resources.ShellHamburgerButtonName}"
             IsPaneOpen="False"
             DisplayMode="CompactInline"
@@ -107,7 +107,7 @@
             ItemTemplateSelector="{StaticResource MenuItemTemplateSelector}">
             <controls:HamburgerMenu.Content>
                 <Frame
-                    x:Name="shellFrame"
+                    x:Name="ShellFrame"
                     Grid.Row="1"
                     NavigationUIVisibility="Hidden"
                     Focusable="False" />

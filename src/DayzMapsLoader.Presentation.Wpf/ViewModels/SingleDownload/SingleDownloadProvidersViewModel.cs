@@ -28,7 +28,7 @@ public class SingleDownloadProvidersViewModel : ObservableObject, INavigationAwa
 
     public ICommand NavigateToDetailCommand => _navigateToDetailCommand ??= new RelayCommand<MapProvider>(NavigateToDetail);
 
-    public ObservableCollection<MapProvider> Source { get; } = new ObservableCollection<MapProvider>();
+    public ObservableCollection<MapProvider> Source { get; } = new();
 
     public async void OnNavigatedTo(object parameter)
     {

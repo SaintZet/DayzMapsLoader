@@ -40,37 +40,37 @@ public class ShellViewModel : ObservableObject
         set { SetProperty(ref _selectedOptionsMenuItem, value); }
     }
 
-    // TODO: Change the icons and titles for all HamburgerMenuItems here.
-    public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+    // Change the icons and titles for all HamburgerMenuItems here.
+    public IEnumerable<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
     {
-        new HamburgerMenuGlyphItem()
+        new HamburgerMenuGlyphItem
         {
             Label = Resources.ShellSingleDownloadPage,
-            Glyph = "\uE8A5",
+            Glyph = "\uE896",
             TargetPageType = typeof(SingleDownloadProvidersViewModel)
         },
-        new HamburgerMenuGlyphItem()
+        new HamburgerMenuGlyphItem
         {
             Label = Resources.ShellMultipleDownloadPage,
-            Glyph = "\uE8A5",
+            Glyph = "\uE81E",
             TargetPageType = typeof(MultipleDownloadProvidersViewModel)
         },
     };
 
-    public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+    public IEnumerable<HamburgerMenuItem> OptionMenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
     {
-        new HamburgerMenuGlyphItem() { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
+        new HamburgerMenuGlyphItem { Label = Resources.ShellSettingsPage, Glyph = "\uE713", TargetPageType = typeof(SettingsViewModel) }
     };
 
-    public RelayCommand GoBackCommand => _goBackCommand ?? (_goBackCommand = new RelayCommand(OnGoBack, CanGoBack));
+    public RelayCommand GoBackCommand => _goBackCommand ??= new RelayCommand(OnGoBack, CanGoBack);
 
-    public ICommand MenuItemInvokedCommand => _menuItemInvokedCommand ?? (_menuItemInvokedCommand = new RelayCommand(OnMenuItemInvoked));
+    public ICommand MenuItemInvokedCommand => _menuItemInvokedCommand ??= new RelayCommand(OnMenuItemInvoked);
 
-    public ICommand OptionsMenuItemInvokedCommand => _optionsMenuItemInvokedCommand ?? (_optionsMenuItemInvokedCommand = new RelayCommand(OnOptionsMenuItemInvoked));
+    public ICommand OptionsMenuItemInvokedCommand => _optionsMenuItemInvokedCommand ??= new RelayCommand(OnOptionsMenuItemInvoked);
 
-    public ICommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new RelayCommand(OnLoaded));
+    public ICommand LoadedCommand => _loadedCommand ??= new RelayCommand(OnLoaded);
 
-    public ICommand UnloadedCommand => _unloadedCommand ?? (_unloadedCommand = new RelayCommand(OnUnloaded));
+    public ICommand UnloadedCommand => _unloadedCommand ??= new RelayCommand(OnUnloaded);
 
     private void OnLoaded()
     {

@@ -14,7 +14,6 @@
     </Page.Resources>
     <Grid Cursor="{Binding IsBusy, Converter={StaticResource BooleanToCursorConverter}}">
         <ScrollViewer
-            x:Name="contentScroll"
             IsTabStop="True">
             <StackPanel
                 Margin="{StaticResource MediumLeftTopRightBottomMargin}">
@@ -27,21 +26,31 @@
                         Width="200"
                         Height="200"
                         Grid.Column="0"
-                        Grid.Row="0"
                         Grid.RowSpan="3"
                         Background="{DynamicResource MahApps.Brushes.Gray10}"
                         VerticalAlignment="Top">
-                        <!--Setup small ico-->
-                        <!--<TextBlock
-                            FontSize="40"
-                            Text="{Binding Map.Symbol}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            FontFamily="Segoe MDL2 Assets" />-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+        
+                            <TextBlock Text="Image will be latter" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource BodyTextStyle}"/>
+        
+                            <!-- Остальное содержимое из DataTemplate -->
+                            <!-- <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource MediumLeftTopRightBottomMargin}"> -->
+                            <!--     <Image Width="64" Height="64" Source="{Binding ImagePath}" /> -->
+                            <!--     <TextBlock Margin="{StaticResource XXSmallTopMargin}" HorizontalAlignment="Center" Style="{StaticResource BodyTextStyle}" Text="{Binding Name}" /> -->
+                            <!-- </StackPanel> -->
+                        </Grid>
                     </Grid>
                     <StackPanel
                         Grid.Column="1"
-                        Grid.Row="0">
+                        Grid.Row="0"
+                        Margin="{StaticResource SmallLeftMargin}">
                         <TextBlock
                             Margin="{StaticResource SmallLeftMargin}"
                             Style="{StaticResource PageTitleStyle}"
@@ -96,23 +105,6 @@
                                 Command="{Binding DownloadMapCommand}" />
                     </StackPanel>
                 </Grid>
-                
-                <!--<TextBlock
-                    Margin="{StaticResource MediumTopMargin}"
-                    Style="{StaticResource SubtitleTextStyle}"
-                    Text="Note 1" />
-                <TextBlock
-                    Style="{StaticResource BodyTextStyle}"
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;" />
-
-                <TextBlock
-                    Margin="{StaticResource MediumTopMargin}"
-                    Style="{StaticResource SubtitleTextStyle}"
-                    Text="Note 2" />
-                <TextBlock
-                    Margin="{StaticResource MediumBottomMargin}"
-                    Style="{StaticResource BodyTextStyle}"
-                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis hendrerit nulla, vel molestie libero. In nec ultricies magna, ultricies molestie ipsum. Mauris non dignissim velit. Etiam malesuada blandit mauris eu maximus. Quisque ornare, felis nec scelerisque mollis, risus dolor posuere magna, in gravida quam mi id nisi. Nullam mattis consequat ex. Cras nulla neque, dictum ac urna et, vestibulum feugiat ex. Pellentesque malesuada accumsan ligula, vel fringilla lacus facilisis sit amet. Proin convallis tempor arcu, ac placerat libero pretium ut. Praesent hendrerit nisl at lobortis viverra. Fusce vitae velit odio. Nam ut tortor sed purus finibus sollicitudin quis at ante. Ut sodales dolor vel eros mollis suscipit. Donec eu nulla id urna ultricies consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;" />-->
             </StackPanel>
         </ScrollViewer>
     </Grid>

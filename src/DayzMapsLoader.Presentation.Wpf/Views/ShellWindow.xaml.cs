@@ -16,7 +16,7 @@ public partial class ShellWindow : MetroWindow, IShellWindow
     }
 
     public Frame GetNavigationFrame()
-        => shellFrame;
+        => ShellFrame;
 
     public void ShowWindow()
         => Show();

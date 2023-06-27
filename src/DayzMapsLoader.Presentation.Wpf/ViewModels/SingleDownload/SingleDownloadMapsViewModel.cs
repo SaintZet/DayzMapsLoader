@@ -29,7 +29,7 @@ public class SingleDownloadMapsViewModel : ObservableObject, INavigationAware
 
     public ICommand NavigateToDetailCommand => _navigateToDetailCommand ??= new RelayCommand<ProvidedMap>(NavigateToDetail);
 
-    public ObservableCollection<ProvidedMap> Source { get; } = new ObservableCollection<ProvidedMap>();
+    public ObservableCollection<ProvidedMap> Source { get; } = new();
 
     public async void OnNavigatedTo(object parameter)
     {
