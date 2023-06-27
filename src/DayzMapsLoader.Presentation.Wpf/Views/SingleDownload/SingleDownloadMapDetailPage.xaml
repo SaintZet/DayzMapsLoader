@@ -35,7 +35,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
         
-                            <TextBlock Text="Image will be latter" 
+                            <TextBlock Text="Image will be later" 
                                        HorizontalAlignment="Center" 
                                        VerticalAlignment="Center"
                                        Style="{StaticResource BodyTextStyle}"/>
