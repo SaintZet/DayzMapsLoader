@@ -18,22 +18,25 @@ public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationA
 {
     private readonly IMediator _mediator;
     private readonly IDownloadArchiveService _downloadArchiveService;
+    private readonly ISystemService _systemService;
 
     private ICommand _downloadMapsCommand;
+    private ICommand _linkCommand;
 
     private MapProvider _provider;
     private ObservableCollection<int>  _zoomLevels;
     private int _selectedZoomLevel;
     private bool _isBusy;
     
-    public MultipleDownloadMapDetailViewModel(IMediator mediator, IDownloadArchiveService downloadArchiveService)
+    public MultipleDownloadMapDetailViewModel(IMediator mediator, IDownloadArchiveService downloadArchiveService, ISystemService systemService)
     {
         _mediator = mediator;
         _downloadArchiveService = downloadArchiveService;
+        _systemService = systemService;
     }
 
     public ICommand DownloadMapsCommand => _downloadMapsCommand ??= new RelayCommand(DownloadMaps);
-
+    public ICommand LinkCommand => _linkCommand ??= new RelayCommand(OnLinkCommand);
     public MapProvider Provider
     {
         get => _provider;
@@ -102,4 +105,7 @@ public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationA
             IsBusy = false;
         }
     }
+    
+    private void OnLinkCommand()
+        => _systemService.OpenInWebBrowser(_provider.Link);
 }

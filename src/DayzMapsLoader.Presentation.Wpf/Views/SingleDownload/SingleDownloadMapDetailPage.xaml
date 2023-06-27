@@ -64,7 +64,18 @@
                         <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
                             <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author Link" />
-                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.Link}" />
+                            <TextBlock
+                                Margin="{StaticResource SmallTopMargin}"
+                                AutomationProperties.Name="{Binding Text, ElementName=Link}">
+                                <Hyperlink
+                                    Command="{Binding LinkCommand}"
+                                    AutomationProperties.Name="{Binding Text, ElementName=Link}">
+                                    <TextBlock
+                                        x:Name="Link"
+                                        Style="{StaticResource BodyTextStyle}"
+                                        Text="{Binding Map.Map.Link}" />
+                                </Hyperlink>
+                            </TextBlock>
                         </StackPanel>
 
                         <StackPanel
