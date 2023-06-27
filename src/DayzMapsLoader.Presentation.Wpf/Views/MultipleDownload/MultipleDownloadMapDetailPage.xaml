@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="DayzMapsLoader.Presentation.Wpf.Views.MultipleDownload.MultipleDownloadMapDetailPage"
+    Style="{DynamicResource MahApps.Styles.Page}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:properties="clr-namespace:DayzMapsLoader.Presentation.Wpf.Properties"
+    xmlns:converters="clr-namespace:DayzMapsLoader.Presentation.Wpf.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="500" d:DesignWidth="900">
+    <Page.Resources>
+        <converters:BooleanToCursorConverter x:Key="BooleanToCursorConverter" />
+    </Page.Resources>
+    <Grid Cursor="{Binding IsBusy, Converter={StaticResource BooleanToCursorConverter}}">
+        <ScrollViewer
+            IsTabStop="True">
+            <StackPanel
+                Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid
+                        Width="200"
+                        Height="200"
+                        Grid.Column="0"
+                        Grid.RowSpan="3"
+                        Background="{DynamicResource MahApps.Brushes.Gray10}"
+                        VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <!-- <RowDefinition Height="Auto"/> -->
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+        
+                            <TextBlock Text="Image will be latter" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource BodyTextStyle}"/>
+        
+                            <!-- Остальное содержимое из DataTemplate -->
+                            <!-- <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{StaticResource MediumLeftTopRightBottomMargin}"> -->
+                            <!--     <Image Width="64" Height="64" Source="{Binding ImagePath}" /> -->
+                            <!--     <TextBlock Margin="{StaticResource XXSmallTopMargin}" HorizontalAlignment="Center" Style="{StaticResource BodyTextStyle}" Text="{Binding Name}" /> -->
+                            <!-- </StackPanel> -->
+                        </Grid>
+                    </Grid>
+                    <StackPanel
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Margin="{StaticResource SmallLeftMargin}">
+                        <TextBlock
+                            Margin="{StaticResource SmallLeftMargin}"
+                            Style="{StaticResource PageTitleStyle}"
+                            Text="{Binding Provider.Name}" />
+
+                        <StackPanel
+                            Margin="{StaticResource SmallLeftTopMargin}">
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author Link" />
+                            <TextBlock
+                                Margin="{StaticResource SmallTopMargin}"
+                                AutomationProperties.Name="{Binding Text, ElementName=Link}">
+                                <Hyperlink
+                                    Command="{Binding LinkCommand}"
+                                    AutomationProperties.Name="{Binding Text, ElementName=Link}">
+                                    <TextBlock
+                                        x:Name="Link"
+                                        Style="{StaticResource BodyTextStyle}"
+                                        Text="{Binding Provider.Link}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel
+                            Margin="{StaticResource SmallLeftTopMargin}">
+                            <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Map Zoom" />
+                            <ComboBox ItemsSource="{Binding ZoomLevels}"
+                                    SelectedItem="{Binding SelectedZoomLevel}"
+                                    IsSynchronizedWithCurrentItem="True" />
+                        </StackPanel>
+
+                        <Button Margin="{StaticResource MediumTopMargin}"
+                                HorizontalAlignment="Right"
+                                BorderThickness="2"
+                                BorderBrush="Black"
+                                Width="150"
+                                Content="{x:Static properties:Resources.Download}"
+                                Command="{Binding DownloadMapsCommand}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

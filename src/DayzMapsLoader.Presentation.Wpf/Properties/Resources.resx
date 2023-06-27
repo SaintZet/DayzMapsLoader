@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ShellContentGridPage" xml:space="preserve">
-    <value>Download single</value>
+  <data name="ShellSingleDownloadPage" xml:space="preserve">
+    <value>Single download</value>
   </data>
   <data name="ContentGridMapsPageTitle" xml:space="preserve">
     <value>Select map</value>
@@ -164,5 +164,26 @@
   </data>
   <data name="ContentGridProvidersPageTitle" xml:space="preserve">
     <value>Select provider</value>
+  </data>
+  <data name="ShellMultipleDownloadPage" xml:space="preserve">
+    <value>Multiple download</value>
+  </data>
+  <data name="SettingsPageSaveTitle" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SettingsPageChooseAskAboutSave" xml:space="preserve">
+    <value>Ask where to save</value>
+  </data>
+  <data name="SettingsPageRadioButtonAlways" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="SettingsPageRadioButtonSaveToDefault" xml:space="preserve">
+    <value>Save to default path</value>
+  </data>
+  <data name="SettingsPageDefaultPathTitle" xml:space="preserve">
+    <value>Default Path to Save</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
   </data>
 </root>

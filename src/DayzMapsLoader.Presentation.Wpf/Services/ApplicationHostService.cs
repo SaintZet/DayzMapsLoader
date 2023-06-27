@@ -2,7 +2,7 @@
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 using DayzMapsLoader.Presentation.Wpf.Contracts.Views;
 using DayzMapsLoader.Presentation.Wpf.ViewModels;
-
+using DayzMapsLoader.Presentation.Wpf.ViewModels.SingleDownload;
 using Microsoft.Extensions.Hosting;
 
 namespace DayzMapsLoader.Presentation.Wpf.Services;
@@ -13,16 +13,24 @@ public class ApplicationHostService : IHostedService
     private readonly INavigationService _navigationService;
     private readonly IPersistAndRestoreService _persistAndRestoreService;
     private readonly IThemeSelectorService _themeSelectorService;
+    private readonly IDownloadArchiveService _downloadArchiveService;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private IShellWindow _shellWindow;
     private bool _isInitialized;
 
-    public ApplicationHostService(IServiceProvider serviceProvider, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService, IPersistAndRestoreService persistAndRestoreService)
+    public ApplicationHostService(
+        IServiceProvider serviceProvider,
+        IEnumerable<IActivationHandler> activationHandlers,
+        INavigationService navigationService,
+        IThemeSelectorService themeSelectorService,
+        IDownloadArchiveService downloadArchiveService,
+        IPersistAndRestoreService persistAndRestoreService)
     {
         _serviceProvider = serviceProvider;
         _activationHandlers = activationHandlers;
         _navigationService = navigationService;
         _themeSelectorService = themeSelectorService;
+        _downloadArchiveService = downloadArchiveService;
         _persistAndRestoreService = persistAndRestoreService;
     }
 
@@ -57,9 +65,7 @@ public class ApplicationHostService : IHostedService
     private async Task StartupAsync()
     {
         if (!_isInitialized)
-        {
             await Task.CompletedTask;
-        }
     }
 
     private async Task HandleActivationAsync()
@@ -67,9 +73,7 @@ public class ApplicationHostService : IHostedService
         var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle());
 
         if (activationHandler != null)
-        {
             await activationHandler.HandleAsync();
-        }
 
         await Task.CompletedTask;
 
@@ -79,7 +83,7 @@ public class ApplicationHostService : IHostedService
             _shellWindow = _serviceProvider.GetService(typeof(IShellWindow)) as IShellWindow;
             _navigationService.Initialize(_shellWindow.GetNavigationFrame());
             _shellWindow.ShowWindow();
-            _navigationService.NavigateTo(typeof(ContentGridProvidersViewModel).FullName);
+            _navigationService.NavigateTo(typeof(SingleDownloadProvidersViewModel).FullName);
             await Task.CompletedTask;
         }
     }

@@ -12,7 +12,8 @@
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
     <Page.Resources>
-        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="models:AppTheme" />
+        <converters:EnumToBooleanConverter x:Key="ThemeEnumToBooleanConverter" EnumType="models:AppTheme" />
+        <converters:EnumToBooleanConverter x:Key="SaveOptionsEnumToBooleanConverter" EnumType="models:ArchiveSaveOptions" />
     </Page.Resources>
     <ScrollViewer>
         <Grid Margin="{StaticResource SmallTopBottomMargin}">
@@ -41,7 +42,7 @@
                             GroupName="AppTheme"
                             Content="{x:Static properties:Resources.SettingsPageRadioButtonLightTheme}"
                             FontSize="{StaticResource MediumFontSize}"
-                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light}">
+                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource ThemeEnumToBooleanConverter}, ConverterParameter=Light}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
                                     <i:InvokeCommandAction Command="{Binding SetThemeCommand}" CommandParameter="Light" />
@@ -53,7 +54,7 @@
                             Content="{x:Static properties:Resources.SettingsPageRadioButtonDarkTheme}"
                             Margin="{StaticResource XSmallTopMargin}"
                             FontSize="{StaticResource MediumFontSize}"
-                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark}">
+                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource ThemeEnumToBooleanConverter}, ConverterParameter=Dark}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
                                     <i:InvokeCommandAction Command="{Binding SetThemeCommand}" CommandParameter="Dark" />
@@ -65,7 +66,7 @@
                             Content="{x:Static properties:Resources.SettingsPageRadioButtonWindowsDefaultTheme}"
                             FontSize="{StaticResource MediumFontSize}"
                             Margin="{StaticResource XSmallTopMargin}"
-                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default}">
+                            IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource ThemeEnumToBooleanConverter}, ConverterParameter=Default}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Checked">
                                     <i:InvokeCommandAction Command="{Binding SetThemeCommand}" CommandParameter="Default" />
@@ -74,6 +75,64 @@
                         </RadioButton>
                     </StackPanel>
                 </StackPanel>
+                
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{StaticResource SubtitleTextStyle}"
+                    Text="{x:Static properties:Resources.SettingsPageSaveTitle}" />
+                <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
+                    <TextBlock
+                        Style="{StaticResource BodyTextStyle}"
+                        Text="{x:Static properties:Resources.SettingsPageChooseAskAboutSave}" />
+                    <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                        <RadioButton
+                            GroupName="Save"
+                            Content="{x:Static properties:Resources.SettingsPageRadioButtonAlways}"
+                            FontSize="{StaticResource MediumFontSize}"
+                            IsChecked="{Binding SaveOption, Mode=OneWay, Converter={StaticResource SaveOptionsEnumToBooleanConverter}, ConverterParameter=Always}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding SetSaveOptionCommand}" CommandParameter="Always" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
+                        <RadioButton
+                            GroupName="Save"
+                            Content="{x:Static properties:Resources.SettingsPageRadioButtonSaveToDefault}"
+                            Margin="{StaticResource XSmallTopMargin}"
+                            FontSize="{StaticResource MediumFontSize}"
+                            IsChecked="{Binding SaveOption, Mode=OneWay, Converter={StaticResource SaveOptionsEnumToBooleanConverter}, ConverterParameter=ToDefaultPath}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding SetSaveOptionCommand}" CommandParameter="ToDefaultPath" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RadioButton>
+                    </StackPanel>
+                </StackPanel>
+                
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    Style="{StaticResource BodyTextStyle}"
+                    Text="{x:Static properties:Resources.SettingsPageDefaultPathTitle}" />
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Style="{StaticResource BodyTextBoxStyle}"
+                        Text="{Binding DefaultPathToSave, Mode=OneWay }" 
+                        HorizontalAlignment="Left"
+                        Margin="0,5,0,0"
+                        Width="300"
+                        IsReadOnly="True"/>
+                    <Button Content=". . ."
+                            VerticalAlignment="Bottom"
+                            Height="31"
+                            Width="31"
+                            BorderThickness="0,1,1,1"
+                            Command="{Binding SetDefaultPathToSave}"
+                    />
+                </StackPanel>
+                
 
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
@@ -90,12 +149,12 @@
 
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
-                    AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
+                    AutomationProperties.Name="{Binding Text, ElementName=SettingsPrivacyStatement}">
                     <Hyperlink
                         Command="{Binding PrivacyStatementCommand}"
-                        AutomationProperties.Name="{Binding Text, ElementName=settingsPrivacyStatement}">
+                        AutomationProperties.Name="{Binding Text, ElementName=SettingsPrivacyStatement}">
                         <TextBlock
-                            x:Name="settingsPrivacyStatement"
+                            x:Name="SettingsPrivacyStatement"
                             Style="{StaticResource BodyTextStyle}"
                             Text="{x:Static properties:Resources.SettingsPagePrivacyStatementText}" />
                     </Hyperlink>

@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Forms;
 
 using DayzMapsLoader.Presentation.Wpf.Contracts.Services;
 
@@ -6,18 +9,49 @@ namespace DayzMapsLoader.Presentation.Wpf.Services;
 
 public class SystemService : ISystemService
 {
-    public SystemService()
-    {
-    }
-
     public void OpenInWebBrowser(string url)
     {
-        // For more info see https://github.com/dotnet/corefx/issues/10361
         var psi = new ProcessStartInfo
         {
             FileName = url,
             UseShellExecute = true
         };
         Process.Start(psi);
+    }
+
+    public string OpenFolderDialog(string initialDirectory)
+    {
+        var folderPath = string.Empty;
+
+        using var dialog = new FolderBrowserDialog();
+        dialog.SelectedPath = initialDirectory;
+
+        var result = dialog.ShowDialog();
+
+        if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+            folderPath = dialog.SelectedPath;
+
+        return folderPath;
+    }
+
+    public void ShowErrorDialog(string errorMessage) => 
+        System.Windows.MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+    public async void HasWriteAccessAsync(string directoryPath)
+    {
+        var tempFilePath = Path.Combine(directoryPath, Guid.NewGuid().ToString("N"));
+        try
+        {
+            var random = new Random();
+            var bytes = new byte[1024];
+            random.NextBytes(bytes);
+            
+            await File.WriteAllBytesAsync(tempFilePath, bytes);
+        }
+        finally
+        {
+            if (File.Exists(tempFilePath))
+                File.Delete(tempFilePath);
+        }
     }
 }
