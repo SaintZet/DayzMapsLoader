@@ -23,7 +23,7 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
     private ICommand _downloadMapCommand;
     private ICommand _linkCommand;
     
-    private ProvidedMap _map;
+    private ProvidedMap _providedMap;
     private MapType _selectedMapType;
     private ObservableCollection<MapType> _mapTypes;
     private ObservableCollection<int> _zoomLevels;
@@ -39,10 +39,10 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
     public ICommand DownloadMapCommand => _downloadMapCommand ??= new RelayCommand(DownloadMap);
     public ICommand LinkCommand => _linkCommand ??= new RelayCommand(OnLinkCommand);
     
-    public ProvidedMap Map
+    public ProvidedMap ProvidedMap
     {
-        get => _map;
-        set => SetProperty(ref _map, value);
+        get => _providedMap;
+        set => SetProperty(ref _providedMap, value);
     }
 
     public MapType SelectedMapType 
@@ -76,10 +76,10 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
         if (parameter is not ProvidedMap providedMap)
             throw new ArgumentException("parameter is not correct!");
 
-        Map = providedMap;
-        MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.MapData.Id);
+        ProvidedMap = providedMap;
+        MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.Map.Id);
         SelectedMapType = MapTypes[0];
-        ZoomLevels = GetZoomLevelsObservableCollection(Map.MaxMapLevel);
+        ZoomLevels = GetZoomLevelsObservableCollection(ProvidedMap.MaxMapLevel);
     }
 
     public void OnNavigatedFrom()
@@ -102,7 +102,7 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
 
         var result = new ObservableCollection<MapType>();
         providedMapsByProviderId
-            .Where(x => x.MapData.Id == mapId)
+            .Where(x => x.Map.Id == mapId)
             .Select(i => i.MapType)
             .ToList()
             .ForEach(item => result.Add(item));
@@ -115,8 +115,10 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
         IsBusy = true;
         try
         {
-            var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.MapData.Id, SelectedMapType.Id, SelectedZoomLevel);
+            var query = new GetMapImageArchiveQuery(ProvidedMap.MapProvider.Id, ProvidedMap.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
             await _downloadArchiveService.DownloadArchive(query);
+            
+            _systemService.ShowInfoDialog($"Map of {ProvidedMap.Map.Name} from {ProvidedMap.MapProvider.Name} provider in {SelectedZoomLevel} zoom has been successfully loaded!");
         }
         finally
         {
@@ -125,5 +127,5 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
     }
     
     private void OnLinkCommand()
-        => _systemService.OpenInWebBrowser(_map.MapData.Link);
+        => _systemService.OpenInWebBrowser(_providedMap.Map.Link);
 }

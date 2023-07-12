@@ -34,9 +34,11 @@ public class SystemService : ISystemService
         return folderPath;
     }
 
-    public void ShowErrorDialog(string errorMessage) => 
-        System.Windows.MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    public void ShowErrorDialog(string message) => 
+        System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
+    public void ShowInfoDialog(string message)=> 
+        System.Windows.MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
     public async void HasWriteAccessAsync(string directoryPath)
     {
         var tempFilePath = Path.Combine(directoryPath, Guid.NewGuid().ToString("N"));

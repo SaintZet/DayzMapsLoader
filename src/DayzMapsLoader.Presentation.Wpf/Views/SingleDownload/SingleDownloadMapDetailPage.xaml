@@ -58,7 +58,7 @@
                         <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
                             <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Author" />
-                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.Author}" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding ProvidedMap.Map.Author}" />
                         </StackPanel>
 
                         <StackPanel Margin="{StaticResource SmallLeftTopMargin}">
@@ -71,7 +71,7 @@
                                     <TextBlock
                                         x:Name="Link"
                                         Style="{StaticResource BodyTextStyle}"
-                                        Text="{Binding Map.Map.Link}" />
+                                        Text="{Binding ProvidedMap.Map.Link}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
@@ -79,13 +79,13 @@
                         <StackPanel
 							Margin="{StaticResource SmallLeftTopMargin}">
                             <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Last Update" />
-                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Map.LastUpdate}" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding ProvidedMap.Map.LastUpdate}" />
                         </StackPanel>
 
                         <StackPanel
                             Margin="{StaticResource SmallLeftTopMargin}">
                             <TextBlock Style="{StaticResource SubtitleTextStyle}" Text="Version" />
-                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Map.Version}" />
+                            <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding ProvidedMap.Version}" />
                         </StackPanel>
 
                         <StackPanel

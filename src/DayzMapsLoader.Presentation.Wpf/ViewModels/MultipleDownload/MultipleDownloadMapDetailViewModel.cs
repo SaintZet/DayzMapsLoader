@@ -99,6 +99,8 @@ public class MultipleDownloadMapDetailViewModel : ObservableObject, INavigationA
         {
             var request = new GetAllMapsImagesArchiveQuery(Provider.Id, SelectedZoomLevel);
             await _downloadArchiveService.DownloadArchive(request);
+
+            _systemService.ShowInfoDialog($"{Provider.Name} provider maps in {SelectedZoomLevel} zoom have been loaded!");
         }
         finally
         {

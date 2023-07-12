@@ -11,7 +11,7 @@
     Style="{StaticResource CustomMetroWindow}"
     mc:Ignorable="d"
     MinWidth="680" MaxWidth="680"
-    MinHeight="580" MaxHeight="580"
+    MinHeight="585" MaxHeight="585"
     WindowStartupLocation="CenterScreen"
     Title="{x:Static properties:Resources.AppDisplayName}">
     <i:Interaction.Triggers>
