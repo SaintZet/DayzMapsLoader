@@ -24,7 +24,7 @@ public class IncludeDetailsExtensionsTests
         foreach (var providedMap in result)
         {
             Assert.NotNull(providedMap.MapProvider);
-            Assert.NotNull(providedMap.Map);
+            Assert.NotNull(providedMap.MapData);
             Assert.NotNull(providedMap.MapType);
         }
     }
@@ -45,7 +45,7 @@ public class IncludeDetailsExtensionsTests
         foreach (var providedMap in result)
         {
             Assert.Null(providedMap.MapProvider);
-            Assert.Null(providedMap.Map);
+            Assert.Null(providedMap.MapData);
             Assert.Null(providedMap.MapType);
         }
     }

@@ -14,7 +14,7 @@ public class ProvidedMapTests
         Assert.Equal(0, providedMap.Id);
         Assert.Equal(string.Empty, providedMap.NameForProvider);
         Assert.Equal(default(MapProvider), providedMap.MapProvider);
-        Assert.Equal(default(Map), providedMap.Map);
+        Assert.Equal(default(Map), providedMap.MapData);
         Assert.Equal(default(MapType), providedMap.MapType);
         Assert.Equal(string.Empty, providedMap.MapTypeForProvider);
         Assert.Equal(0, providedMap.MaxMapLevel);
@@ -36,7 +36,7 @@ public class ProvidedMapTests
         providedMap.Id = 1;
         providedMap.NameForProvider = "Map Name";
         providedMap.MapProvider = mapProvider;
-        providedMap.Map = map;
+        providedMap.MapData = map;
         providedMap.MapType = mapType;
         providedMap.MapTypeForProvider = "Map Type";
         providedMap.MaxMapLevel = 10;
@@ -48,7 +48,7 @@ public class ProvidedMapTests
         Assert.Equal(1, providedMap.Id);
         Assert.Equal("Map Name", providedMap.NameForProvider);
         Assert.Equal(mapProvider, providedMap.MapProvider);
-        Assert.Equal(map, providedMap.Map);
+        Assert.Equal(map, providedMap.MapData);
         Assert.Equal(mapType, providedMap.MapType);
         Assert.Equal("Map Type", providedMap.MapTypeForProvider);
         Assert.Equal(10, providedMap.MaxMapLevel);

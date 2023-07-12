@@ -77,7 +77,7 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
             throw new ArgumentException("parameter is not correct!");
 
         Map = providedMap;
-        MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.Map.Id);
+        MapTypes = await GetMapTypesAsync(providedMap.MapProvider.Id, providedMap.MapData.Id);
         SelectedMapType = MapTypes[0];
         ZoomLevels = GetZoomLevelsObservableCollection(Map.MaxMapLevel);
     }
@@ -102,7 +102,7 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
 
         var result = new ObservableCollection<MapType>();
         providedMapsByProviderId
-            .Where(x => x.Map.Id == mapId)
+            .Where(x => x.MapData.Id == mapId)
             .Select(i => i.MapType)
             .ToList()
             .ForEach(item => result.Add(item));
@@ -115,7 +115,7 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
         IsBusy = true;
         try
         {
-            var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.Map.Id, SelectedMapType.Id, SelectedZoomLevel);
+            var query = new GetMapImageArchiveQuery(Map.MapProvider.Id, Map.MapData.Id, SelectedMapType.Id, SelectedZoomLevel);
             await _downloadArchiveService.DownloadArchive(query);
         }
         finally
@@ -125,5 +125,5 @@ public class SingleDownloadMapDetailViewModel : ObservableObject, INavigationAwa
     }
     
     private void OnLinkCommand()
-        => _systemService.OpenInWebBrowser(_map.Map.Link);
+        => _systemService.OpenInWebBrowser(_map.MapData.Link);
 }

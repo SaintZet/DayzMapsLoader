@@ -20,7 +20,7 @@ namespace DayzMapsLoader.Infrastructure.Repositories
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByMapIdAsync(int mapId)
             => await (GetAll()
                     .IncludeDetails() ?? throw new InvalidOperationException())
-                    .Where(x => x.Map.Id == mapId)
+                    .Where(x => x.MapData.Id == mapId)
                     .ToListAsync();
 
         public async Task<IEnumerable<ProvidedMap>> GetAllProvidedMapsByProviderIdAsync(int providerId)
@@ -34,7 +34,7 @@ namespace DayzMapsLoader.Infrastructure.Repositories
                     .IncludeDetails() ?? throw new InvalidOperationException())
                     .FirstOrDefaultAsync(x => 
                         x.MapProvider.Id == providerId && 
-                        x.Map.Id == mapID && 
+                        x.MapData.Id == mapID && 
                         x.MapType.Id == typeId)
                     )!;
         
@@ -42,7 +42,7 @@ namespace DayzMapsLoader.Infrastructure.Repositories
             => await (GetAll()
                     .IncludeDetails() ?? throw new InvalidOperationException())
                     .Where(x => x.MapProvider.Id == providerId)
-                    .Select(x => x.Map)
+                    .Select(x => x.MapData)
                     .Distinct()
                     .ToListAsync();
     }
