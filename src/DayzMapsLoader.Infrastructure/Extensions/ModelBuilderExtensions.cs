@@ -286,7 +286,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Top",
                     MaxMapLevel = 8,
                     IsFirstQuadrant = false,
-                    Version = "1.0.0",
+                    Version = "1.19.0",
                     ImageExtension = "webp",
                 },
                 new
@@ -299,7 +299,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Sat",
                     MaxMapLevel = 8,
                     IsFirstQuadrant = false,
-                    Version = "1.0.0",
+                    Version = "1.19.0",
                     ImageExtension = "webp",
                 },
                 new
