@@ -31,7 +31,7 @@ public class MapDownloadArchiveServiceTests
         // Arrange
         var query = new GetProvidedMapsQueryByDetailsQuery(providerId, mapId, typeId);
         var map = await _mediator.Send(query).ConfigureAwait(false);
-        var expectedArchiveName = $"{map.MapProvider.Name}-{map.MapData.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
+        var expectedArchiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         // Act
         var (archiveData, archiveName) = await _downloadArchiveService.DownloadMapImageArchiveAsync(providerId, mapId, typeId, zoom);
@@ -44,7 +44,7 @@ public class MapDownloadArchiveServiceTests
         Assert.Single(archive.Entries);
 
         var entry = archive.Entries[0];
-        Assert.Equal($"{map.MapData.Name}.jpg", entry.Name);
+        Assert.Equal($"{map.Map.Name}.jpg", entry.Name);
 
         await using var entryStream = entry.Open();
         using var memoryStream = new MemoryStream();
@@ -62,7 +62,7 @@ public class MapDownloadArchiveServiceTests
         var query = new GetProvidedMapsQueryByDetailsQuery(providerId, mapId, typeId);
         var map = await _mediator.Send(query).ConfigureAwait(false);
 
-        var expectedArchiveName = $"{map.MapProvider.Name}-{map.MapData.Name}-{map.MapType.Name}-{map.Version}-{zoomLevel}.zip";
+        var expectedArchiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoomLevel}.zip";
         var mapSize = MapSize.ConvertZoomLevelRatioSize(zoomLevel);
 
         // Act
@@ -110,7 +110,7 @@ public class MapDownloadArchiveServiceTests
 
         foreach (var map in maps)
         {
-            var entryName = $"{map.MapData.Name}.jpg";
+            var entryName = $"{map.Map.Name}.jpg";
             var entry = archive.GetEntry(entryName);
             Assert.NotNull(entry);
 

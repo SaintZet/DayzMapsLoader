@@ -41,7 +41,7 @@ public class SingleDownloadMapsViewModel : ObservableObject, INavigationAware
         var query = new GetProvidedMapsByProviderIdQuery(_selectedProviderId);
         var providedMaps = await _mediator.Send(query);
 
-        providedMaps.GroupBy(x => x.MapData.Name)
+        providedMaps.GroupBy(x => x.Map.Name)
                              .Select(group => group.First())
                              .ToList()
                              .ForEach(providedMap => Source.Add(providedMap));

@@ -20,7 +20,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
-            var fileName = $"{map.MapData.Name}.jpg";
+            var fileName = $"{map.Map.Name}.jpg";
             var zipEntry = zipArchive.CreateEntry(fileName);
 
             using var originalFileStream = await GetMapInMemoryStreamAsync(map, zoom);
@@ -31,7 +31,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
         }
 
         var archiveData = compressedFileStream.ToArray();
-        var archiveName = $"{map.MapProvider.Name}-{map.MapData.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
+        var archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         return (archiveData, archiveName);
     }
@@ -68,7 +68,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
         }
 
         var archiveData = compressedFileStream.ToArray();
-        var archiveName = $"{map.MapProvider.Name}-{map.MapData.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
+        var archiveName = $"{map.MapProvider.Name}-{map.Map.Name}-{map.MapType.Name}-{map.Version}-{zoom}.zip";
 
         return (archiveData, archiveName);
     }
@@ -82,7 +82,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
         {
             foreach (var map in maps)
             {
-                var fileName = $"{map.MapData.Name}.jpg";
+                var fileName = $"{map.Map.Name}.jpg";
                 var zipEntry = zipArchive.CreateEntry(fileName);
 
                 await using var entryStream = zipEntry.Open();

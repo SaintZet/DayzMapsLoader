@@ -13,7 +13,7 @@ internal static class IncludeDetailsExtensions
 
         return queryable!
             .Include(p => p.MapProvider)
-            .Include(p => p.MapData)
+            .Include(p => p.Map)
             .Include(p => p.MapType);
     }
 }

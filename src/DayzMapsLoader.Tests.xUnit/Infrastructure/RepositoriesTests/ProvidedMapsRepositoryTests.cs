@@ -32,13 +32,13 @@ public class ProvidedMapsRepositoryTests
             new()
             {
                 MapProvider = new MapProvider { Name = "Test provider name 1" },
-                MapData = new Map { Name = "Test map name 1" },
+                Map = new Map { Name = "Test map name 1" },
                 MapType = new MapType { Name = "Test map type 1" },
             },
             new()
             {
                 MapProvider = new MapProvider { Name = "Test provider name 2" },
-                MapData = new Map { Name = "Test map name 2" },
+                Map = new Map { Name = "Test map name 2" },
                 MapType = new MapType { Name = "Test map type 2" },
             },
         };
@@ -71,13 +71,13 @@ public class ProvidedMapsRepositoryTests
             new()
             {
                 MapProvider = new MapProvider { Name = "Test provider name 1" },
-                MapData = map,
+                Map = map,
                 MapType = new MapType { Name = "Test map type 1" },
             },
             new()
             {
                 MapProvider = new MapProvider { Name = "Test provider name 2" },
-                MapData = map,
+                Map = map,
                 MapType = new MapType { Name = "Test map type 2" },
             },
         };
@@ -87,7 +87,7 @@ public class ProvidedMapsRepositoryTests
         
         var repository = new ProvidedMapsRepository(_dbContext);
         
-        var mapId = expectedProvidedMaps.First(x => x.MapData.Name == "Test map name 1").MapData.Id;
+        var mapId = expectedProvidedMaps.First(x => x.Map.Name == "Test map name 1").Map.Id;
         // Act
         var result = await repository.GetAllProvidedMapsByMapIdAsync(mapId);
 
@@ -110,13 +110,13 @@ public class ProvidedMapsRepositoryTests
             new()
             {
                 MapProvider = provider,
-                MapData = new Map { Name = "Test map name 1" },
+                Map = new Map { Name = "Test map name 1" },
                 MapType = new MapType { Name = "Test map type 1" },
             },
             new()
             {
                 MapProvider = provider,
-                MapData = new Map { Name = "Test map name 2" },
+                Map = new Map { Name = "Test map name 2" },
                 MapType = new MapType { Name = "Test map type 2" },
             },
         };
@@ -144,7 +144,7 @@ public class ProvidedMapsRepositoryTests
         var expectedProvidedMap = new ProvidedMap
         {
             MapProvider = new MapProvider(),
-            MapData = new Map(),
+            Map = new Map(),
             MapType = new MapType(),
         };
         
@@ -152,7 +152,7 @@ public class ProvidedMapsRepositoryTests
         await _dbContext.SaveChangesAsync();
 
         var providerId = expectedProvidedMap.MapProvider.Id;
-        var mapId = expectedProvidedMap.MapData.Id;
+        var mapId = expectedProvidedMap.Map.Id;
         var typeId = expectedProvidedMap.MapType.Id;
 
         IProvidedMapsRepository repository = new ProvidedMapsRepository(_dbContext);
@@ -164,7 +164,7 @@ public class ProvidedMapsRepositoryTests
         Assert.NotNull(result);
         Assert.Equal(expectedProvidedMap.Id, result.Id);
         Assert.Equal(expectedProvidedMap.MapProvider, result.MapProvider);
-        Assert.Equal(expectedProvidedMap.MapData, result.MapData);
+        Assert.Equal(expectedProvidedMap.Map, result.Map);
         Assert.Equal(expectedProvidedMap.MapType, result.MapType);
     }
     
@@ -180,13 +180,13 @@ public class ProvidedMapsRepositoryTests
             new()
             {
                 MapProvider = mapProvider1,
-                MapData = new Map { Name = "Test map name 1" },
+                Map = new Map { Name = "Test map name 1" },
                 MapType = new MapType { Name = "Test map type 1" },
             },
             new()
             {
                 MapProvider = mapProvider1,
-                MapData = new Map { Name = "Test map name 2" },
+                Map = new Map { Name = "Test map name 2" },
                 MapType = new MapType { Name = "Test map type 2" },
             },
         };
@@ -194,7 +194,7 @@ public class ProvidedMapsRepositoryTests
         var anotherMap = new ProvidedMap 
         {
             MapProvider = mapProvider2,
-            MapData = new Map { Name = "Test map name 3" },
+            Map = new Map { Name = "Test map name 3" },
             MapType = new MapType { Name = "Test map type 3" },
         };
 
@@ -212,6 +212,6 @@ public class ProvidedMapsRepositoryTests
 
         // Assert
         Assert.Equal(2, result.Count());
-        Assert.Equal(expectedMaps.Select(x => x.MapData.Name), result.Select(x => x.Name));
+        Assert.Equal(expectedMaps.Select(x => x.Map.Name), result.Select(x => x.Name));
     }
 }
