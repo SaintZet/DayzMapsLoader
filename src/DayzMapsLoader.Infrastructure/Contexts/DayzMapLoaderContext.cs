@@ -7,8 +7,7 @@ namespace DayzMapsLoader.Infrastructure.Contexts;
 
 public class DayzMapLoaderContext : DbContext
 {
-    public DayzMapLoaderContext()
-    { }
+    public DayzMapLoaderContext() { }
 
     public DayzMapLoaderContext(DbContextOptions<DayzMapLoaderContext> options)
         : base(options) { }

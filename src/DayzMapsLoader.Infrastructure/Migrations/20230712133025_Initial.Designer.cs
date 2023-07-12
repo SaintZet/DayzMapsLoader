@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DayzMapsLoader.Infrastructure.Migrations
 {
     [DbContext(typeof(DayzMapLoaderContext))]
-    [Migration("20230203204808_Initial")]
+    [Migration("20230712133025_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -249,7 +249,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = false,
                             MapId = 2,
                             MapProviderId = 1,
@@ -257,12 +257,12 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "livonia",
-                            Version = "1.17-1"
+                            Version = "1.21"
                         },
                         new
                         {
                             Id = 4,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = false,
                             MapId = 2,
                             MapProviderId = 1,
@@ -270,7 +270,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "livonia",
-                            Version = "1.17-1"
+                            Version = "1.21"
                         },
                         new
                         {
@@ -283,7 +283,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "namalsk",
-                            Version = "04.19"
+                            Version = "CE3"
                         },
                         new
                         {
@@ -296,7 +296,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "namalsk",
-                            Version = "04.19"
+                            Version = "CE3"
                         },
                         new
                         {
@@ -353,7 +353,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                         new
                         {
                             Id = 11,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = false,
                             MapId = 6,
                             MapProviderId = 1,
@@ -361,12 +361,12 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "banov",
-                            Version = "04.19"
+                            Version = "Feb.21"
                         },
                         new
                         {
                             Id = 12,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = false,
                             MapId = 6,
                             MapProviderId = 1,
@@ -374,7 +374,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "banov",
-                            Version = "04.04"
+                            Version = "Feb.21"
                         },
                         new
                         {
@@ -413,7 +413,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 8,
                             NameForProvider = "Livonia",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
@@ -426,12 +426,12 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 8,
                             NameForProvider = "Livonia",
-                            Version = "1.0.0"
+                            Version = "1.19.0"
                         },
                         new
                         {
                             Id = 17,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = true,
                             MapId = 3,
                             MapProviderId = 2,
@@ -439,25 +439,25 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "Namalsk",
-                            Version = "0.1.0"
+                            Version = "1.2.0"
                         },
                         new
                         {
                             Id = 18,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = true,
                             MapId = 3,
-                            MapProviderId = 1,
+                            MapProviderId = 2,
                             MapTypeForProvider = "Sat",
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "Namalsk",
-                            Version = "0.1.0"
+                            Version = "1.2.0"
                         },
                         new
                         {
                             Id = 19,
-                            ImageExtension = "jpg",
+                            ImageExtension = "png",
                             IsFirstQuadrant = true,
                             MapId = 4,
                             MapProviderId = 2,
@@ -470,7 +470,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                         new
                         {
                             Id = 20,
-                            ImageExtension = "jpg",
+                            ImageExtension = "png",
                             IsFirstQuadrant = true,
                             MapId = 4,
                             MapProviderId = 2,
@@ -483,7 +483,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                         new
                         {
                             Id = 21,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = true,
                             MapId = 5,
                             MapProviderId = 2,
@@ -491,12 +491,12 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "TakistanPlus",
-                            Version = "1.1.0"
+                            Version = "1.2.0"
                         },
                         new
                         {
                             Id = 22,
-                            ImageExtension = "jpg",
+                            ImageExtension = "webp",
                             IsFirstQuadrant = true,
                             MapId = 5,
                             MapProviderId = 2,
@@ -504,7 +504,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "TakistanPlus",
-                            Version = "1.1.0"
+                            Version = "1.2.0"
                         },
                         new
                         {
@@ -517,7 +517,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 1,
                             MaxMapLevel = 7,
                             NameForProvider = "Banov",
-                            Version = "1.1.0"
+                            Version = "1.6.0"
                         },
                         new
                         {
@@ -530,7 +530,7 @@ namespace DayzMapsLoader.Infrastructure.Migrations
                             MapTypeId = 2,
                             MaxMapLevel = 7,
                             NameForProvider = "Banov",
-                            Version = "1.1.0"
+                            Version = "1.6.0"
                         });
                 });
 

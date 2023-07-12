@@ -11,7 +11,7 @@ internal static class IncludeDetailsExtensions
         if (!include)
             return queryable;
 
-        return queryable
+        return queryable!
             .Include(p => p.MapProvider)
             .Include(p => p.Map)
             .Include(p => p.MapType);

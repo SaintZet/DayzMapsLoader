@@ -155,8 +155,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "topographic",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "1.17-1",
-                    ImageExtension = "jpg",
+                    Version = "1.21",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -168,8 +168,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "satellite",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "1.17-1",
-                    ImageExtension = "jpg",
+                    Version = "1.21",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -181,7 +181,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "topographic",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "04.19",
+                    Version = "CE3",
                     ImageExtension = "jpg",
                 },
                 new
@@ -194,7 +194,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "satellite",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "04.19",
+                    Version = "CE3",
                     ImageExtension = "jpg",
                 },
                 new
@@ -259,8 +259,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "topographic",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "04.19",
-                    ImageExtension = "jpg",
+                    Version = "Feb.21",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -272,8 +272,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "satellite",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "04.04",
-                    ImageExtension = "jpg",
+                    Version = "Feb.21",
+                    ImageExtension = "webp",
                 },
 
                 new
@@ -312,7 +312,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Top",
                     MaxMapLevel = 8,
                     IsFirstQuadrant = false,
-                    Version = "1.0.0",
+                    Version = "1.19.0",
                     ImageExtension = "webp",
                 },
                 new
@@ -325,7 +325,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Sat",
                     MaxMapLevel = 8,
                     IsFirstQuadrant = false,
-                    Version = "1.0.0",
+                    Version = "1.19.0",
                     ImageExtension = "webp",
                 },
                 new
@@ -338,21 +338,21 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Top",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
-                    Version = "0.1.0",
-                    ImageExtension = "jpg",
+                    Version = "1.2.0",
+                    ImageExtension = "webp",
                 },
                 new
                 {
                     Id = 18,
-                    MapProviderId = 1,
+                    MapProviderId = 2,
                     MapId = 3,
                     MapTypeId = 2,
                     NameForProvider = "Namalsk",
                     MapTypeForProvider = "Sat",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
-                    Version = "0.1.0",
-                    ImageExtension = "jpg",
+                    Version = "1.2.0",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -365,7 +365,7 @@ internal static class ModelBuilderExtensions
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
                     Version = "1.1.0",
-                    ImageExtension = "jpg",
+                    ImageExtension = "png",
                 },
                 new
                 {
@@ -378,7 +378,7 @@ internal static class ModelBuilderExtensions
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
                     Version = "1.1.0",
-                    ImageExtension = "jpg",
+                    ImageExtension = "png",
                 },
                 new
                 {
@@ -390,8 +390,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Top",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
-                    Version = "1.1.0",
-                    ImageExtension = "jpg",
+                    Version = "1.2.0",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -403,8 +403,8 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Sat",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = true,
-                    Version = "1.1.0",
-                    ImageExtension = "jpg",
+                    Version = "1.2.0",
+                    ImageExtension = "webp",
                 },
                 new
                 {
@@ -416,7 +416,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Top",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "1.1.0",
+                    Version = "1.6.0",
                     ImageExtension = "webp",
                 },
                 new
@@ -429,7 +429,7 @@ internal static class ModelBuilderExtensions
                     MapTypeForProvider = "Sat",
                     MaxMapLevel = 7,
                     IsFirstQuadrant = false,
-                    Version = "1.1.0",
+                    Version = "1.6.0",
                     ImageExtension = "webp",
                 }
 
