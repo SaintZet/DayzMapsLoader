@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build Project
+        run: dotnet build --configuration Release
+
+      - name: Run Tests
+        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx" src/DayzMapsLoader.Tests.xUnit/DayzMapsLoader.Tests.xUnit.csproj
