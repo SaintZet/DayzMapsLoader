@@ -1,0 +1,20 @@
+name: Build WPF Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest  # Выберите нужный вам образ операционной системы
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build WPF Application
+        run: msbuild src/DayzMapsLoader.sln /p:Configuration=Release /p:Platform="Any CPU" /t:"src/DayzMapsLoader.Presentation.Wpf/DayzMapsLoader.Presentation.Wpf.csproj:Build"
