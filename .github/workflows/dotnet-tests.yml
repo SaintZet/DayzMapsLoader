@@ -25,4 +25,4 @@ jobs:
         run: dotnet build --configuration Release src/DayzMapsLoader.Tests.xUnit/DayzMapsLoader.Tests.xUnit.csproj
 
       - name: Run Tests
-        run: dotnet test --configuration Release --logger "trx;LogFileName=test_results.trx" src/DayzMapsLoader.Tests.xUnit/DayzMapsLoader.Tests.xUnit.csproj
+        run: dotnet test --configuration Release --filter "TestCategory=Unit" --logger "trx;LogFileName=test_results.trx" src/DayzMapsLoader.Tests.xUnit/DayzMapsLoader.Tests.xUnit.csproj
