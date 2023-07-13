@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Выберите нужный вам образ операционной системы
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
@@ -17,4 +17,6 @@ jobs:
         uses: microsoft/setup-msbuild@v1
 
       - name: Build WPF Application
-        run: msbuild src/DayzMapsLoader.sln /p:Configuration=Release /p:Platform="Any CPU" /t:"src/DayzMapsLoader.Presentation.Wpf/DayzMapsLoader.Presentation.Wpf.csproj:Build"
+        run: |
+          cd src/DayzMapsLoader.Presentation.Wpf
+          msbuild /p:Configuration=Release /p:Platform="Any CPU"
