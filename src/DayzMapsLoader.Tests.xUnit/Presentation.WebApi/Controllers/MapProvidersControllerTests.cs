@@ -9,7 +9,7 @@ namespace DayzMapsLoader.Tests.xUnit.Presentation.WebApi.Controllers;
 public class MapProvidersControllerTests
 {
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public async Task GetAllMapProviders_ReturnsOkResultWithMapProviders()
     {
         // Arrange

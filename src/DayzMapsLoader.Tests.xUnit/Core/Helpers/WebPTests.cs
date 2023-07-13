@@ -7,7 +7,7 @@ namespace DayzMapsLoader.Tests.xUnit.Core.Helpers;
 public class WebPTests
     {
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public void Decode_ValidWebP_ReturnsBitmap()
         {
             // Arrange
@@ -26,7 +26,7 @@ public class WebPTests
         }
 
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public void Decode_InvalidWebP_ThrowsException()
         {
             // Arrange
@@ -38,7 +38,7 @@ public class WebPTests
         }
 
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public void GetInfo_ValidWebP_ReturnsImageInfo()
         {
             // Arrange
@@ -57,7 +57,7 @@ public class WebPTests
         }
 
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public void GetInfo_InvalidWebP_ThrowsException()
         {
             // Arrange

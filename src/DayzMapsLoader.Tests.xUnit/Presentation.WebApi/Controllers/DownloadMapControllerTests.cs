@@ -8,7 +8,7 @@ namespace DayzMapsLoader.Tests.xUnit.Presentation.WebApi.Controllers;
     public class DownloadMapControllerTests
     {
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public async Task GetMapImageArchive_ReturnsFileContentResult()
         {
             // Arrange
@@ -30,7 +30,7 @@ namespace DayzMapsLoader.Tests.xUnit.Presentation.WebApi.Controllers;
         }
 
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public async Task GetMapImagePartsArchive_ReturnsFileContentResult()
         {
             // Arrange
@@ -52,7 +52,7 @@ namespace DayzMapsLoader.Tests.xUnit.Presentation.WebApi.Controllers;
         }
 
         [Fact]
-        [Trait("Category", "Unity")]
+        [Trait("Category", "Unit")]
         public async Task GetAllMapsImagesArchive_ReturnsFileContentResult()
         {
             // Arrange

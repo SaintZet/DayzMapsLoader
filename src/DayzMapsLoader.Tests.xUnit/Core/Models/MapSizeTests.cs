@@ -5,7 +5,7 @@ namespace DayzMapsLoader.Tests.xUnit.Core.Models;
 public class MapSizeTests
 {
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public void MapSize_Constructor_SetsWidthAndHeight()
     {
         // Arrange
@@ -21,7 +21,7 @@ public class MapSizeTests
     }
 
     [Theory]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     [InlineData(0, 1, 1)]
     [InlineData(1, 2, 2)]
     [InlineData(2, 4, 4)]

@@ -92,7 +92,7 @@ public class FileServiceTests
     }
     
     [Fact]
-    [Trait("Category", "Unit")]
+    [Trait("Category", "Integration")]
     public void Save_OverwritesExistingFile_WhenFileExists()
     {
         // Arrange

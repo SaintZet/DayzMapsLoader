@@ -5,7 +5,7 @@ namespace DayzMapsLoader.Tests.xUnit.Core.Models;
 public class MapPartTests
 {
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public void MapPart_Save_SavesDataToFile()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class MapPartTests
     }
 
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public void MapPart_AsStream_ReturnsStreamWithData()
     {
         // Arrange

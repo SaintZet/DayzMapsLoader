@@ -11,7 +11,7 @@ namespace DayzMapsLoader.Tests.xUnit.Presentation.WebApi.Controllers;
 public class MapsControllerTests
 {
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public async Task GetAllMaps_ReturnsOkResultWithMaps()
     {
         // Arrange
@@ -36,7 +36,7 @@ public class MapsControllerTests
     }
 
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public async Task GetMapsByProviderId_ReturnsOkResultWithMaps()
     {
         // Arrange
@@ -62,7 +62,7 @@ public class MapsControllerTests
     }
 
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public async Task GetProvidedMapsByProviderId_ReturnsOkResultWithProvidedMaps()
     {
         // Arrange

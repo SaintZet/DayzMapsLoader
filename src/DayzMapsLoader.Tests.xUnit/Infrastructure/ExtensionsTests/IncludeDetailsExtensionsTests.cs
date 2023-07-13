@@ -30,7 +30,7 @@ public class IncludeDetailsExtensionsTests
     }
         
     [Fact]
-    [Trait("Category", "Unit")]
+    [Trait("Category", "Integration")]
     public void IncludeDetails_IncludeIsFalse_DoesNotIncludeNavigationProperties()
     {
         // Arrange

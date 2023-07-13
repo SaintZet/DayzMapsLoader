@@ -58,7 +58,7 @@ namespace DayzMapsLoader.Tests.xUnit.Infrastructure.ExtensionsTests
         }
 
         [Fact]
-        [Trait("Category", "Unit")]
+        [Trait("Category", "Integration")]
         public void AddDatabase_ShouldAddDbContextToServiceCollection()
         {
             // Arrange

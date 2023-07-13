@@ -5,7 +5,7 @@ namespace DayzMapsLoader.Tests.xUnit.Core.Models;
 public class MapPartsTests
 {
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public void MapParts_InitializesCorrectly()
     {
         // Arrange
@@ -20,7 +20,7 @@ public class MapPartsTests
     }
 
     [Fact]
-    [Trait("Category", "Unity")]
+    [Trait("Category", "Unit")]
     public void AddPart_AddsMapPartCorrectly()
     {
         // Arrange
