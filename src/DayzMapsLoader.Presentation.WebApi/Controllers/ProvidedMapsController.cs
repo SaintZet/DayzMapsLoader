@@ -31,7 +31,7 @@ public class ProvidedMapsController : BaseController
     /// </summary>
     /// <param name="mapId"> Map ID. </param>
     [HttpGet]
-    [Route("{mapId}/get-by-map")]
+    [Route("map={mapId:int}&get-by-map")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(IEnumerable<ProvidedMap>), 200)]
     public async Task<ActionResult<IEnumerable<ProvidedMap>>> GetProvidedMapsByMapId(int mapId)
@@ -49,7 +49,7 @@ public class ProvidedMapsController : BaseController
     /// ///
     /// <response code="200"> Returns a list of provided maps in json format. </response>
     [HttpGet]
-    [Route("{providerId}/get-by-provider")]
+    [Route("provider={providerId:int}&get-by-provider")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(IEnumerable<ProvidedMap>), 200)]
     public async Task<ActionResult<IEnumerable<ProvidedMap>>> GetProvidedMapsByProviderId(int providerId)

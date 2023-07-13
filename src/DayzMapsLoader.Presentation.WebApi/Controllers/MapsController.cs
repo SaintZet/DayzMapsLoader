@@ -34,7 +34,7 @@ public class MapsController : BaseController
     /// </summary>
     /// <param name="providerId"> Provider ID. </param>
     [HttpGet]
-    [Route("{providerId}/maps")]
+    [Route("provider={providerId:int}&maps")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(IEnumerable<Map>), 200)]
     public async Task<ActionResult<IEnumerable<Map>>> GetMapsByProviderId(int providerId)

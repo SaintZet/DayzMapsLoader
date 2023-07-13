@@ -21,7 +21,7 @@ public class DownloadMapController : BaseController
     /// <param name="zoom"> Zoom level. </param>
     /// <response code="200"> Returns a zip archive file with the requested images. </response>
     [HttpGet]
-    [Route("providers/{providerId}/maps/{mapId}/types/{typeId}/zoom/{zoom}/image-archive")]
+    [Route("provider={providerId:int}&map={mapId:int}&type={typeId:int}&zoom={zoom:int}&image-archive")]
     [ProducesResponseType(typeof(FileContentResult), 200)]
     public async Task<FileContentResult> GetMapImageArchive(int providerId, int mapId, int typeId, int zoom)
     {
@@ -40,7 +40,7 @@ public class DownloadMapController : BaseController
     /// <param name="zoom"> Zoom level. </param>
     /// <response code="200"> Returns a zip archive file with the requested images. </response>
     [HttpGet]
-    [Route("providers/{providerId}/maps/{mapId}/types/{typeId}/zoom/{zoom}/image-parts-archive")]
+    [Route("provider={providerId:int}&map={mapId:int}&type={typeId:int}&zoom={zoom:int}&image-parts-archive")]
     [ProducesResponseType(typeof(FileContentResult), 200)]
     public async Task<FileContentResult> GetMapImagePartsArchive(int providerId, int mapId, int typeId, int zoom)
     {
@@ -57,7 +57,7 @@ public class DownloadMapController : BaseController
     /// <param name="zoom"> Zoom level. </param>
     /// <response code="200"> Returns a zip archive file with all images for the provider. </response>
     [HttpGet]
-    [Route("providers/{providerId}/zoom/{zoom}/image-archive")]
+    [Route("provider={providerId:int}&zoom={zoom:int}&image-archive")]
     [ProducesResponseType(typeof(FileContentResult), 200)]
     public async Task<FileContentResult> GetAllMapsImagesArchive(int providerId, int zoom)
     {
