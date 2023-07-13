@@ -1,9 +1,15 @@
-name: Run Tests
+name: Run unit tests
 
 on:
   push:
     branches:
       - master
+    paths:
+      - 'src/DayzMapsLoader.Core/'
+      - 'src/DayzMapsLoader.Domain/'
+      - 'src/DayzMapsLoader.Infrastructure/'
+      - 'src/DayzMapsLoader.Presentation.WebApi/'
+      - 'src/DayzMapsLoader.Tests.xUnit/**'
 
 jobs:
   test:
