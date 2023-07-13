@@ -19,4 +19,5 @@ jobs:
       - name: Build WPF Application
         run: |
           cd src/DayzMapsLoader.Presentation.Wpf
-          msbuild /p:Configuration=Release /p:Platform="Any CPU"
+          dotnet restore
+          dotnet build --configuration Release
