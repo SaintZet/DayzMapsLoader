@@ -21,4 +21,4 @@ jobs:
           cd src/DayzMapsLoader.Presentation.Wpf
           dotnet restore
           dotnet build --configuration Release
-    if: ${{ github.event.head_commit.modified | any(startsWith('src/DayzMapsLoader.Presentation.Wpf')) }}
+    if: ${{ github.event.head_commit.modified || startsWith(github.event.head_commit.modified_files, 'src/DayzMapsLoader.Presentation.Wpf') }}
