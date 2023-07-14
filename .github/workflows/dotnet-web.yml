@@ -1,0 +1,26 @@
+name: Build WPF Application
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/DayzMapsLoader.Presentation.WebApi'
+      
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build WPF Application
+        run: |
+          cd src/DayzMapsLoader.Presentation.WebApi
+          dotnet restore
+          dotnet build --configuration Release
