@@ -119,7 +119,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
     <br>
     <div align="left">
       <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
-        <img src="images/SolutionTree/domain.png" alt="domain-layer">
+        <img src="images/SolutionTree/domain.png" alt="domain-layer" width="400">
       </a>
     </div>
 </details>
@@ -141,7 +141,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
-      <img src="images/SolutionTree/application.png" alt="application-layer">
+      <img src="images/SolutionTree/application.png" alt="application-layer" width="400">
     </a>
   </div>
 </details>
@@ -158,7 +158,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
-      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer">
+      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="400">
     </a>
   </div>
 </details>
@@ -178,7 +178,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
-      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api">
+      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="400">
     </a>
   </div>
 
@@ -188,10 +188,28 @@ Built using pattern MVVM pattern with modern approaches.
 <br>
 <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.Wpf">
-      <img src="images/SolutionTree/presentation-wpf.png" alt="presentation-wpf.png">
+      <img src="images/SolutionTree/presentation-wpf.png" alt="presentation-wpf" width="400">
+    </a>
+</div>
+
+</details>
+
+<details> <summary>Unit/integrations test</summary>
+<br>
+  The tests covered the main elements of the system. Secondary elements such as migrations are not covered, there is no coverage of the project's WPF.
+  <br>
+  <br>
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Tests.xUnit">
+      <img src="images/SolutionTree/tests-xunit.png" alt="tests-xunit" width="400">
     </a>
   </div>
 
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Tests.xUnit">
+      <img src="images/test-covarage.png" alt="test-covarage" width="500">
+    </a>
+  </div>
 </details>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
