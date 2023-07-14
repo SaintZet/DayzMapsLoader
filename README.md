@@ -167,7 +167,6 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   
 #### Web Api
 
-<br>
   <i>Public components</i>
   <br>
   <li> wwwroot - have custom UI for Swagger.</li>
@@ -184,8 +183,8 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   </div>
 
 #### Wpf
-<br>
-Wpf built using pattern MVVM pattern with modern approaches.
+
+Built using pattern MVVM pattern with modern approaches.
 <br>
 <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.Wpf">
