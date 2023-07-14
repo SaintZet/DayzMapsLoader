@@ -119,8 +119,7 @@ The concept of having all your interfaces (Infrastructure and Application) in on
     <br>
     <div align="left">
       <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Domain">
-      <!-- Images/SolutionTree/domain.png -->
-        <img src="images/SolutionTree/domain.png" alt="domain-layer">
+        <img src="images/SolutionTree/domain.png" alt="domain-layer" width="400">
       </a>
     </div>
 </details>
@@ -129,19 +128,20 @@ The concept of having all your interfaces (Infrastructure and Application) in on
 <br>
   <i>Public components</i>
   <br>
-  <li> Abstactions - interfaces for the Infrastructure layer (pattern Repository) and Services.</li>
+  <li> Contracts - interfaces for the Infrastructure layer (pattern Repository) and Services.</li>
   <li> Features - Queries and Commands for pattern CQRS.</li>
   <li> Extensions - here we have a method for configuring this layer for DI container.</li>
+  <li> Models - data necessary for internal work.</li>
   <br>
   <i>Internal components</i>
   <br>
+  <li> Builders - classes that implement pattern builder.</li>
   <li> Services - CQRS Handlers use it to get results.</li>
   <li> Helpers - bad practice, but these classes made code more readable by grouping related functions and providing a clear purpose for the code.</li>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Application">
-    <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/application.png" alt="application-layer">
+      <img src="images/SolutionTree/application.png" alt="application-layer" width="400">
     </a>
   </div>
 </details>
@@ -154,17 +154,19 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <li> Migrations - database migrations (EntityFramework).</li>
   <li> Repositories - implement pattern Repository. </li>
   <li> Extensions - here we have a method for configuring this layer for DI container.</li>
+  <li> Services - infrastructure services (i/o operation, network e.g.).</li>
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Infrastructure">
-    <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer">
+      <img src="images/SolutionTree/infrastructure.png" alt="infrastructure-layer" width="400">
     </a>
   </div>
 </details>
 
 <details> <summary>Presentation layer</summary>
-<br>
+  
+#### Web Api
+
   <i>Public components</i>
   <br>
   <li> wwwroot - have custom UI for Swagger.</li>
@@ -176,22 +178,36 @@ The concept of having all your interfaces (Infrastructure and Application) in on
   <br>
   <div align="left">
     <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
-    <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api">
+      <img src="images/SolutionTree/presentation-web-api.png" alt="presentation-web-api" width="400">
     </a>
   </div>
+
+#### Wpf
+
+Built using pattern MVVM pattern with modern approaches.
+<br>
+<div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.Wpf">
+      <img src="images/SolutionTree/presentation-wpf.png" alt="presentation-wpf" width="400">
+    </a>
+</div>
+
 </details>
 
-<details> <summary>Shared project</summary>
+<details> <summary>Unit/integrations test</summary>
 <br>
-  <i>Public components</i>
+  The tests covered the main elements of the system. Secondary elements such as migrations are not covered, there is no coverage of the project's WPF.
   <br>
-    All things that need for shared between different layers.<br>
   <br>
   <div align="left">
-    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Presentation.WebApi">
-    <!-- Images/SolutionTree/domain.png -->
-      <img src="images/SolutionTree/shared.png" alt="shared">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Tests.xUnit">
+      <img src="images/SolutionTree/tests-xunit.png" alt="tests-xunit" width="400">
+    </a>
+  </div>
+
+  <div align="left">
+    <a href="https://github.com/SaintZet/DayzMapsLoader/tree/master/src/DayzMapsLoader.Tests.xUnit">
+      <img src="images/test-covarage.png" alt="test-covarage" width="500">
     </a>
   </div>
 </details>
@@ -213,7 +229,7 @@ This is an example of how to list things you need to use the software and how to
   ```
  * Dotnet ef
      ```sh
-     dotnet tool install --global dotnet-ef
+     dotnet tool install dotnet-ef -g
      ```
 
 ### Installation
@@ -234,7 +250,7 @@ This is an example of how to list things you need to use the software and how to
    ```
  4. At this point you can have EF create database and create schema from the migration .NET CLI:
      ```sh
-     dotnet ef database update
+     dotnet ef database update --startup-project ../DayzMapsLoader.Presentation.WebApi --project ../DayzMapsLoader.Infrastructure
      ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -279,7 +295,8 @@ And of course - to contribute to the development of the project, help with exist
     - [ ] version
     - [ ] image quality
     - [ ] image extension
- - [ ] Client application (in the process)
+ - [x] Desctop client on WPF
+ - [ ] Web client on React (in the process)
  - [ ] Hosting server and client
  - [ ] Improve performance - store images on the server and just download them when changed something (e.g version map).
 
@@ -319,7 +336,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACTS -->
 ## Contacts
 
-Chepets Serhii - [@LinkedIn](https://www.linkedin.com/in/serhii-chepets/) - chepets9685@gmail.com
+Chepets Serhii - [@LinkedIn](https://www.linkedin.com/in/serhii-chepets/) - serhii.chepets@gmail.com
 
 Yaroslav Tymchenko -[@LinkedIn](https://www.linkedin.com/in/yaroslavtymchenko/) - ytimchenko57@gmail.com
 
