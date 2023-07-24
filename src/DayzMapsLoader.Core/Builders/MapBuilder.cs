@@ -9,67 +9,63 @@ using System.Drawing.Imaging;
 
 namespace DayzMapsLoader.Core.Builders;
 
-internal class MapBuilder : IMapBuilder
+internal class MapBuilder : IMapBuilder, IAsyncDisposable
 {
     private readonly int _sizeImprovementPercent;
-    private readonly MapSize _mapSize;
+    private readonly Bitmap _result;
+    private readonly Graphics _graphic;
+    private readonly MapSize _ratioMapSize;
 
-    public MapBuilder(MapSize mapSize, int sizeImprovementPercent)
+    public MapBuilder(MapSize mapSize, int zoom,  int sizeImprovementPercent)
     {
         if (sizeImprovementPercent is > 100 or < 0)
             throw new ArgumentException("Value must be between 0 and 100");
         
-        _mapSize = mapSize;
         _sizeImprovementPercent = sizeImprovementPercent;
-    }
-
-    public Bitmap Build(MapParts source, ImageExtension extension)
-    {
-        var resultWidth = _mapSize.Width;
-        var resultHeight = _mapSize.Height;
+        var resultWidth = mapSize.Width;
+        var resultHeight = mapSize.Height;
 
         if (_sizeImprovementPercent != 0)
         {
-            resultWidth *= _sizeImprovementPercent;
-            resultHeight *= _sizeImprovementPercent;
+	        resultWidth *= _sizeImprovementPercent;
+	        resultHeight *= _sizeImprovementPercent;
         }
 
-        Bitmap result = new(resultWidth, resultHeight, PixelFormat.Format32bppArgb);
+        _result = new Bitmap(resultWidth, resultHeight, PixelFormat.Format32bppArgb);
 
-        using var graphic = Graphics.FromImage(result);
-        var countVerticals = source.Weight;
-        var countHorizontals = source.Height;
+        _graphic = Graphics.FromImage(_result);
+        _ratioMapSize = MapSize.ConvertZoomLevelRatioSize(zoom);
+    }
 
-        for (var y = 0; y < countVerticals; y++)
-        {
-            for (var x = 0; x < countHorizontals; x++)
-            {
-                using var image = GetCorrectBitmap(source.GetPartOfMap(x, y), extension);
+    public void Append(MapPart part, ImageExtension extension)
+    {
+	    using var image = GetCorrectBitmap(part, extension);
 
-                int widthPartResultImage, heightPartResultImage;
+	    int widthPartResultImage, heightPartResultImage;
 
-                if (_sizeImprovementPercent != 0)
-                {
-                    widthPartResultImage = image.Width * _sizeImprovementPercent / countVerticals;
-                    heightPartResultImage = image.Height * _sizeImprovementPercent / countHorizontals;
-                }
-                else
-                {
-                    widthPartResultImage = image.Width;
-                    heightPartResultImage = image.Height;
-                }
+	    if (_sizeImprovementPercent != 0)
+	    {
+		    widthPartResultImage = image.Width * _sizeImprovementPercent / _ratioMapSize.Height;
+		    heightPartResultImage = image.Height * _sizeImprovementPercent / _ratioMapSize.Width;
+	    }
+	    else
+	    {
+		    widthPartResultImage = image.Width;
+		    heightPartResultImage = image.Height;
+	    }
 
-                using var resizedImage = ImageResizer.Resize(image, widthPartResultImage, heightPartResultImage);
+	    using var resizedImage = ImageResizer.Resize(image, widthPartResultImage, heightPartResultImage);
 
-                widthPartResultImage = x * widthPartResultImage;
-                heightPartResultImage = y * heightPartResultImage;
+	    widthPartResultImage = part.X * widthPartResultImage;
+	    heightPartResultImage = part.Y * heightPartResultImage;
 
-                graphic.DrawImage(resizedImage, widthPartResultImage, heightPartResultImage);
-            }
-        }
-        graphic.Save();
+	    _graphic.DrawImage(resizedImage, widthPartResultImage, heightPartResultImage);
+    }
 
-        return result;
+    public Bitmap Build()
+    {
+        _graphic.Save();
+        return _result;
     }
 
     private static Bitmap GetCorrectBitmap(MapPart mapPart, ImageExtension extension) =>
@@ -79,4 +75,10 @@ internal class MapBuilder : IMapBuilder
             ImageExtension.webp => WebP.RawWebpToBitmap(mapPart.Data),
             _ => throw new NotImplementedException(),
         };
+
+    public ValueTask DisposeAsync()
+    {
+	    _graphic.Dispose();
+	    return new ValueTask();
+    }
 }

@@ -15,7 +15,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
     <PackageReference Include="SmartFormat" Version="3.2.1" />
   </ItemGroup>
 

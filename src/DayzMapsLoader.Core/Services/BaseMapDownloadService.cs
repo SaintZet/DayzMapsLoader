@@ -14,18 +14,13 @@ namespace DayzMapsLoader.Core.Services;
 
 internal abstract class BaseMapDownloadService
 {
-    protected readonly IProvidedMapsRepository _providedMapsRepository;
-    protected readonly IMultipleThirdPartyApiService _thirdPartyApiService;
+    protected readonly IProvidedMapsRepository ProvidedMapsRepository;
+    protected readonly IMultipleThirdPartyApiService ThirdPartyApiService;
     
-    private readonly IMapBuilder _mapBuilder;
-
     protected BaseMapDownloadService(IProvidedMapsRepository providedMapsRepository, IMultipleThirdPartyApiService thirdPartyApiService)
     {
-        _providedMapsRepository = providedMapsRepository;
-        _thirdPartyApiService = thirdPartyApiService;
-
-        var mapSize = new MapSize(MapImageConstants.ImageWidthPixels, MapImageConstants.ImageHeightPixels);
-        _mapBuilder = new MapBuilder(mapSize, MapImageConstants.ImageSizeImprovementPercent);
+        ProvidedMapsRepository = providedMapsRepository;
+        ThirdPartyApiService = thirdPartyApiService;
     }
 
     protected async Task<MemoryStream> GetMapInMemoryStreamAsync(ProvidedMap map, int zoom)
@@ -34,17 +29,25 @@ internal abstract class BaseMapDownloadService
     protected async Task<byte[]> GetMapInBytesAsync(ProvidedMap map, int zoom)
     {
         using var memoryStream = await GetMergedMapMemoryStream(map, zoom);
-
         return memoryStream.ToArray();
     }
 
     private async Task<MemoryStream> GetMergedMapMemoryStream(ProvidedMap map, int zoom)
     {
-        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
+	    var partsEnumerable = ThirdPartyApiService.GetMapPartsAsync(map, zoom).ConfigureAwait(false);
+	    var enumerator = partsEnumerable.GetAsyncEnumerator();
+	    var mapSize = new MapSize(MapImageConstants.ImageWidthPixels, MapImageConstants.ImageHeightPixels);
+	    Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
+	    
+	    await using var builder = new MapBuilder(mapSize, zoom, MapImageConstants.ImageSizeImprovementPercent);
 
-        Enum.TryParse(map.ImageExtension, true, out ImageExtension extension);
+	    while (await enumerator.MoveNextAsync())
+	    {
+		    builder.Append(enumerator.Current, extension);
+	    }
 
-        var image = _mapBuilder.Build(mapParts, extension);
+
+        var image = builder.Build();
 
         var memoryStream = new MemoryStream();
 

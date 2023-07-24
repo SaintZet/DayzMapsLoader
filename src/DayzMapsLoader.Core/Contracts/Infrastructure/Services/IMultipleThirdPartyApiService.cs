@@ -5,5 +5,5 @@ namespace DayzMapsLoader.Core.Contracts.Infrastructure.Services;
 
 public interface IMultipleThirdPartyApiService
 {
-    public Task<MapParts> GetMapPartsAsync(ProvidedMap map, int zoom);
+    public IAsyncEnumerable<MapPart> GetMapPartsAsync(ProvidedMap map, int zoom);
 }
