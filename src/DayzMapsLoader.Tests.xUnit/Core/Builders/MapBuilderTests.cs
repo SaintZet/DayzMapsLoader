@@ -34,30 +34,27 @@ public class MapBuilderTests
     [Theory]
     [Trait("Category", "Unit")]
     [MemberData(nameof(GetTestData))]
-    public void Test_MergeImage_ShouldProduceExpectedResult(ImageExtension extension)
+    public async Task Test_MergeImage_ShouldProduceExpectedResult(ImageExtension extension)
     {
         // Arrange
         var originalImage = ImageDataProvider.GetOriginalImage(extension);
 
         var mapSize = new MapSize(originalImage.Height, originalImage.Width);
-        var mapBuilder = new MapBuilder(mapSize, _sizeImprovementPercent);
-
-        var imageParts = new MapParts(new MapSize(_imageCountHorizontal, _imageCountVertical));
+        await using var mapBuilder = new MapBuilder(mapSize, 1, _sizeImprovementPercent);
 
         for (var y = 0; y < _imageCountVertical; y++)
         {
             for (var x = 0; x < _imageCountHorizontal; x++)
             {
                 var bytes = ImageDataProvider.GetByteArrayFromEmbeddedResource(extension.ToString(), x , y);
-
-                var imagePart = new MapPart(bytes);
-
-                imageParts.AddPart(x, y, imagePart);
+			
+                var imagePart = new MapPart(x, y, bytes);
+				mapBuilder.Append(imagePart, extension);
             }
         }
 
         //Act
-        var resultBitmap = mapBuilder.Build(imageParts, extension);
+        var resultBitmap = mapBuilder.Build();
 
         //Assert
         var resultCompare = Compare(originalImage, resultBitmap);

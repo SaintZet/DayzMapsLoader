@@ -11,7 +11,7 @@ public class MapPartTests
         // Arrange
         const string testFilePath = "testFile.dat";
         byte[] testData = { 1, 2, 3, 4, 5 };
-        var mapPart = new MapPart(testData);
+        var mapPart = new MapPart(1, 1, testData);
 
         // Act
         mapPart.Save(testFilePath);
@@ -32,7 +32,7 @@ public class MapPartTests
     {
         // Arrange
         byte[] testData = { 1, 2, 3, 4, 5 };
-        var mapPart = new MapPart(testData);
+        var mapPart = new MapPart(1,1, testData);
 
         // Act
         var stream = mapPart.AsStream();

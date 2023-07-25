@@ -14,7 +14,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
     public async Task<(byte[] data, string name)> DownloadMapImageArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
-        var map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
+        var map = await ProvidedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
         using MemoryStream compressedFileStream = new();
 
@@ -38,33 +38,26 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
     public async Task<(byte[] data, string name)> DownloadMapImagePartsArchiveAsync(int providerId, int mapID, int typeId, int zoom)
     {
-        var map = await _providedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
+        var map = await ProvidedMapsRepository.GetProvidedMapAsync(providerId, mapID, typeId).ConfigureAwait(false);
 
-        var mapParts = await _thirdPartyApiService.GetMapPartsAsync(map, zoom);
-
-        var axisY = mapParts.Weight;
-        var axisX = mapParts.Height;
-
+        var partsEnumerable = ThirdPartyApiService.GetMapPartsAsync(map, zoom).ConfigureAwait(false);
+        var enumerator = partsEnumerable.GetAsyncEnumerator();
         using MemoryStream compressedFileStream = new();
-
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))
         {
-            for (var y = 0; y < axisY; y++)
-            {
-                for (var x = 0; x < axisX; x++)
-                {
-                    var image = mapParts.GetPartOfMap(x, y).Data;
-                    var originalFileStream = new MemoryStream(image);
+	        while (await enumerator.MoveNextAsync())
+	        {
+		        var part = enumerator.Current;
+		        var originalFileStream = new MemoryStream(part.Data);
 
-                    var pathToFile = Path.Combine($@"Horizontal_{y}", $"({y}.{x}).png");
-                    var zipEntry = zipArchive.CreateEntry(pathToFile);
+		        var pathToFile = Path.Combine($@"Horizontal_{part.Y}", $"({part.Y}.{part.X}).png");
+		        var zipEntry = zipArchive.CreateEntry(pathToFile);
 
-                    originalFileStream.Seek(0, SeekOrigin.Begin);
+		        originalFileStream.Seek(0, SeekOrigin.Begin);
 
-                    await using var zipEntryStream = zipEntry.Open();
-                    originalFileStream.CopyTo(zipEntryStream);
-                }
-            }
+		        await using var zipEntryStream = zipEntry.Open();
+		        await originalFileStream.CopyToAsync(zipEntryStream);
+	        }
         }
 
         var archiveData = compressedFileStream.ToArray();
@@ -75,7 +68,7 @@ internal class MapDownloadArchiveService : BaseMapDownloadService, IMapDownloadA
 
     public async Task<(byte[] data, string name)> DownloadAllMapsImagesArchiveAsync(int providerId, int zoom)
     {
-        var maps = await _providedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
+        var maps = await ProvidedMapsRepository.GetAllProvidedMapsByProviderIdAsync(providerId).ConfigureAwait(false);
 
         using var compressedFileStream = new MemoryStream();
         using (var zipArchive = new ZipArchive(compressedFileStream, ZipArchiveMode.Create, false))

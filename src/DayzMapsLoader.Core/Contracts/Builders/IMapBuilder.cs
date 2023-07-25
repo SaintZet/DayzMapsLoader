@@ -6,5 +6,6 @@ namespace DayzMapsLoader.Core.Contracts.Builders;
 
 internal interface IMapBuilder
 {
-    public Bitmap Build(MapParts source, ImageExtension extension);
+	void Append(MapPart part, ImageExtension extension);
+    Bitmap Build();
 }
